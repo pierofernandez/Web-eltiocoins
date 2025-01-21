@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { RootLayout } from "../layouts/RootLayout";
+import { HomePage, CouchingPage, CuentasPage, DivisionRivalsPage, FutChampionsPage, MonedasPage } from "../pages";
 
 export const router = createBrowserRouter([
     {
@@ -8,15 +9,27 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <div>Inicio</div>
+                element: <HomePage />
             },
             {
                 path: 'monedas',
-                element: <div>Monedas</div>
+                element: <MonedasPage />
             },
             {
-                path: 'nosotros',
-                element: <div>sobre Nosotros</div>
+                path: 'futchampions',
+                element: <FutChampionsPage />
+            },
+            {
+                path: 'divisionrivals',
+                element: <DivisionRivalsPage />
+            },
+            {
+                path: 'cuentas',
+                element: <CuentasPage />
+            },
+            {
+                path: 'couching',
+                element: <CouchingPage />
             },
         ]
     }
