@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { RootLayout } from "../layouts/RootLayout";
-import { HomePage, CouchingPage, CuentasPage, DivisionRivalsPage, FutChampionsPage, MonedasPage } from "../pages";
+import { HomePage, CuentasPage, DivisionRivalsPage, FutChampionsPage, MonedasPage } from "../pages";
 
 export const router = createBrowserRouter([
     {
@@ -27,10 +27,7 @@ export const router = createBrowserRouter([
                 path: 'cuentas',
                 element: <CuentasPage />
             },
-            {
-                path: 'couching',
-                element: <CouchingPage />
-            },
+        
         ]
     }
 ]

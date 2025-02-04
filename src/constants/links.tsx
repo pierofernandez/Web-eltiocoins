@@ -26,11 +26,6 @@ export const navbarLinks = [
         tittle: 'Cuentas',
         href: '/cuentas',
     },
-    {
-        id: 6,
-        tittle: 'Couching',
-        href: '/couching',
-    },
 ];
 
 export const socialLinks = [

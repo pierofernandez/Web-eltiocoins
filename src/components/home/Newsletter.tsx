@@ -13,11 +13,10 @@ export const Newsletter = () => {
 			<div className='container z-10 relative p-5 md:p-0'>
 				<div className='w-full text-black bg-white p-12 space-y-5 md:w-[50%] lg:w-[40%]'>
 					<p className='text-xs uppercase font-semibold'>
-						Suscríbete y recibe promociones
-						exclusivas
+						Vuelvete un pro player con el servicio de Couching
 					</p>
 					<p className='text-xs font-medium w-[80%] leading-5'>
-						Introduce tu correo para recibir ofertas
+						Introduce tu correo para más información
 					</p>
 					<form className='flex flex-col gap-5 xl:flex-row'>
 						<input
