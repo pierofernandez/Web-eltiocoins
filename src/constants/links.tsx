@@ -3,29 +3,25 @@ import { FaFacebookF, FaInstagram, FaTiktok, FaXTwitter } from "react-icons/fa6"
 export const navbarLinks = [
     {
         id: 1,
-        tittle: 'inicio',
+        title: 'inicio',
         href: '/',
     },
     {
         id: 2,
-        tittle: 'Monedas',
+        title: 'Monedas',
         href: '/monedas',
     },
     {
         id: 3,
-        tittle: 'FutChampions',
+        title: 'FutChampions',
         href: '/futchampions',
     },
     {
         id: 4,
-        tittle: 'DivisiónRivals',
+        title: 'DivisiónRivals',
         href: '/divisionrivals',
     },
-    {
-        id: 5,
-        tittle: 'Cuentas',
-        href: '/cuentas',
-    },
+    
 ];
 
 export const socialLinks = [
