@@ -21,13 +21,11 @@ export const NavbarMobile = () => {
 			<div className='flex flex-col gap-20'>
 				<Link
 					to='/'
-					className='text-4xl font-bold tracking-tighter transition-all'
+					className=' place-items-center transition-all'
 					onClick={() => setActiveNavMobile(false)}
 				>
-					<p>
-						Celulares
-						<span className='text-cyan-600'>Baratos</span>
-					</p>
+					<img src="/public/img/logotiocoins.png" alt="logotiocoins" className='max-w-20' />
+
 				</Link>
 
 				<nav className='flex flex-col items-center gap-5'>
@@ -38,9 +36,9 @@ export const NavbarMobile = () => {
 							className={({ isActive }) => `
                                 ${
 																	isActive
-																		? 'text-cyan-600 underline'
+																		? 'text-white'
 																		: ''
-																} transition-all duration-300 font-semibold text-xl hover:text-cyan-600 hover:underline
+																} transition-all duration-300 font-semibold text-xl hover:text-white
                             `}
 							onClick={() => setActiveNavMobile(false)}
 						>

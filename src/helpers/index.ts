@@ -52,3 +52,30 @@ export const prepareProducts = (products: Product[]) => {
 		};
 	});
 };
+
+//funcion para formatear fecha a fonrmato 3 de enero de 2025
+
+export const formatDateLong = (date: string) : string => {
+
+	const dateObject = new Date(date);
+
+	return dateObject.toLocaleDateString('es-ES', {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+	});
+};
+
+
+export const getStatus = (status: string): string => {
+
+	switch (status) {
+		case 'Pending':
+			return 'Pendiente';
+		case 'Paid':
+			return 'Pagado';
+		default:
+			return 'status';
+	}
+
+}

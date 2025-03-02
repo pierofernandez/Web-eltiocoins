@@ -36,8 +36,6 @@ export type Database = {
     Tables: {
       addresses: {
         Row: {
-          address_line1: string
-          address_line2: string | null
           city: string
           country: string
           created_at: string
@@ -47,8 +45,6 @@ export type Database = {
           state: string
         }
         Insert: {
-          address_line1: string
-          address_line2?: string | null
           city: string
           country?: string
           created_at?: string
@@ -58,8 +54,6 @@ export type Database = {
           state: string
         }
         Update: {
-          address_line1?: string
-          address_line2?: string | null
           city?: string
           country?: string
           created_at?: string
@@ -84,7 +78,7 @@ export type Database = {
           email: string
           full_name: string
           id: string
-          phone: string
+          phone: string | null
           user_id: string
         }
         Insert: {
@@ -92,7 +86,7 @@ export type Database = {
           email: string
           full_name: string
           id?: string
-          phone: string
+          phone?: string | null
           user_id: string
         }
         Update: {
@@ -100,7 +94,7 @@ export type Database = {
           email?: string
           full_name?: string
           id?: string
-          phone?: string
+          phone?: string | null
           user_id?: string
         }
         Relationships: []

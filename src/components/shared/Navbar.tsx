@@ -1,11 +1,16 @@
-import { Link, NavLink } from "react-router-dom";
-import { Logo } from "./Logo";
-import { navbarLinks } from "../../constants/links";
-import { useCartStore } from "../../store/cart.store";
-import { useGlobalStore } from "../../store/global.store";
-import { HiOutlineSearch, HiOutlineShoppingBag } from "react-icons/hi";
-import { FaBarsStaggered } from "react-icons/fa6";
-
+import { Link, NavLink } from 'react-router-dom';
+import { navbarLinks } from '../../constants/links';
+import {
+	HiOutlineSearch,
+	HiOutlineShoppingBag,
+	HiOutlineUser,
+} from 'react-icons/hi';
+import { FaBarsStaggered } from 'react-icons/fa6';
+import { Logo } from './Logo';
+import { useGlobalStore } from '../../store/global.store';
+import { useCartStore } from '../../store/cart.store';
+import { useCustomer, useUser } from '../../hooks';
+import { LuLoaderCircle } from 'react-icons/lu';
 
 export const Navbar = () => {
 	const openSheet = useGlobalStore(state => state.openSheet);
@@ -18,8 +23,13 @@ export const Navbar = () => {
 		state => state.setActiveNavMobile
 	);
 
+	const { session, isLoading } = useUser();
+
+	const userId = session?.user.id;
+	const {data: customer} = useCustomer(userId!);
+
 	return (
-		<header className='bg-[#DDAF13] text-black py-4 flex items-center justify-between px-5 border-b'>
+		<header className='bg-[#DDAF13] text-black py-4 flex items-center justify-between px-5 border-b border-slate-200 lg:px-12'>
 			<Logo />
 
 			<nav className='space-x-5 hidden md:flex'>
@@ -29,8 +39,8 @@ export const Navbar = () => {
 						to={link.href}
 						className={({ isActive }) =>
 							`${
-								isActive ? 'text-black underline' : ''
-							} transition-all duration-300 font-medium hover:text-black hover:underline `
+								isActive ? 'text-white hover:underline' : ''
+							} transition-all duration-300 font-medium hover:text-white hover:underline `
 						}
 					>
 						{link.title}
@@ -43,15 +53,23 @@ export const Navbar = () => {
 					<HiOutlineSearch size={25} />
 				</button>
 
-				<div className='relative'>
-					{/* User Nav */}
-					<Link
-						to='/account'
-						className='border-2 border-black w-9 h-9 rounded-full grid place-items-center text-lg font-bold'
-					>
-						R
+				{isLoading ? (
+					<LuLoaderCircle className='animate-spin' size={60} />
+				) : session ? (
+					<div className='relative'>
+						{/* User Nav */}
+						<Link
+							to='/account'
+							className='border-2 border-black w-9 h-9 rounded-full grid place-items-center text-lg font-bold'
+						>
+							{customer && customer.full_name[0]}
+						</Link>
+					</div>
+				) : (
+					<Link to='/login'>
+						<HiOutlineUser size={25} />
 					</Link>
-				</div>
+				)}
 
 				<button
 					className='relative'

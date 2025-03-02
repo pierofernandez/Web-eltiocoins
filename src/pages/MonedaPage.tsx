@@ -2,7 +2,7 @@ import { LuMinus, LuPlus } from 'react-icons/lu';
 import { Separator } from '../components/shared/Separator';
 import { formatPrice } from '../helpers';
 import { CiDeliveryTruck } from 'react-icons/ci';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { BsChatLeftText } from 'react-icons/bs';
 import { ProductDescription } from '../components/one-product/ProductDescription';
 import { GridImages } from '../components/one-product/GridImages';
@@ -12,6 +12,8 @@ import { Loader } from '../components/shared/Loader';
 import { useProduct } from '../hooks/products/UseProduct';
 import { VariantProduct } from '../components/interfaces';
 import { useCounterStore } from '../store/counter.store';
+import toast from 'react-hot-toast';
+import { useCartStore } from '../store/cart.store';
 
 interface Acc {
 	[key: string]: {
@@ -33,6 +35,7 @@ export const MonedaPage = () => {
 
 
 
+
 	const [selectedVariant, setSelectedVariant] = 
 		useState<VariantProduct | null>(null);
 
@@ -40,6 +43,9 @@ export const MonedaPage = () => {
 	const increment = useCounterStore(state => state.increment);
 	const decrement = useCounterStore(state => state.decrement);
 
+	const addItem = useCartStore(state => state.addItem);
+
+	const navigate = useNavigate();
 
 	// Agrupamos las variantes por color
 	const colors = useMemo(() => {
@@ -84,6 +90,46 @@ export const MonedaPage = () => {
 
 	// Obtener el stock
 	const isOutOfStock = selectedVariant?.stock === 0;
+
+
+
+
+	// Función para añadir al carrito
+	const addToCart = () => {
+		if (selectedVariant) {
+			addItem({
+				variantId: selectedVariant.id,
+				productId: product?.id || '',
+				name: product?.name || '',
+				image: product?.images[0] || '',
+				color: selectedVariant.color_name,
+				price: selectedVariant.price,
+				quantity: count,
+			});
+			toast.success('Producto añadido al carrito', {
+				position: 'bottom-right',
+			});
+		}
+	};
+
+	// Función para comprar ahora
+	const buyNow = () => {
+		if (selectedVariant) {
+			addItem({
+				variantId: selectedVariant.id,
+				productId: product?.id || '',
+				name: product?.name || '',
+				image: product?.images[0] || '',
+				color: selectedVariant.color_name,
+				price: selectedVariant.price,
+				quantity: count,
+			});
+
+			navigate('/checkout');
+		}
+	};
+
+	//resetear el slug cuando cambia de url
 
 
 	useEffect(() => {
@@ -201,10 +247,10 @@ export const MonedaPage = () => {
 
 							{/* BOTONES ACCIÓN */}
 							<div className='flex flex-col gap-3'>
-								<button className='bg-[#f3f3f3] uppercase font-semibold tracking-widest text-xs py-4 rounded-full transition-all duration-300 hover:bg-[#e2e2e2]'>
+								<button className='bg-[#f3f3f3] uppercase font-semibold tracking-widest text-xs py-4 rounded-full transition-all duration-300 hover:bg-[#e2e2e2]' onClick={addToCart}>
 									Agregar al carro
 								</button>
-								<button className='bg-black text-white uppercase font-semibold tracking-widest text-xs py-4 rounded-full'>
+								<button className='bg-black text-white uppercase font-semibold tracking-widest text-xs py-4 rounded-full' onClick={buyNow}>
 									Comprar ahora
 								</button>
 							</div>
