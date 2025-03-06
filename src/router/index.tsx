@@ -79,5 +79,6 @@ export const router = createBrowserRouter([
     {
         path: '/checkout/:id/thank-you',
         element: <ThankyouPage />
-    }
+    },
+    
 ]);

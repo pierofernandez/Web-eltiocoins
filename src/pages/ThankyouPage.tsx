@@ -11,7 +11,7 @@ export const ThankyouPage = () => {
 
 	const { data, isLoading, isError } = useOrder(Number(id));
 
-	const {isLoading: isLoadingSession} = useUser();
+	const { isLoading: isLoadingSession } = useUser();
 
 	const navigate = useNavigate();
 
@@ -52,23 +52,25 @@ export const ThankyouPage = () => {
 					<h3 className='font-medium'>Tu pedido está confirmado</h3>
 
 					<p className='text-sm'>
-						Gracias por realizar tu compra en Celularesbaratos. Para
+						Gracias por realizar tu compra en eltiocoins. Para
 						realizar la transferencia te compartimos los siguientes
-						datos
+						datos:
 					</p>
 
-					<div className='space-y-0.5 text-sm'>
-						<p>BANCO PICHINCHA</p>
-						<p>Razón Social: CelularesBaratos</p>
-						<p>RUC: 123456789000</p>
-						<p>Tipo de cuenta: Corriente</p>
-						<p>Número de cuenta: 1234567890</p>
+
+
+					<div className='text-sm'>
+						<p><strong>Método de pago:</strong> PayPal</p>
+						<p><strong>Fecha de creación: </strong> {data.create_at}</p>
+						<p><strong>Correo electrónico de PayPal:</strong> {data.customer.email}</p>
+						<p><strong>Estado del pago:</strong> Confirmado </p>
 					</div>
+
 
 					<p className='text-sm'>
 						Una vez realizada la transferencia, comparte tu
-						comprobante a ventas@celularesbaratos.com para procesarla
-						y hacerte la entrega de tu dispositivo a domicilio.
+						comprobante al WhatsApp o eltiocoins@gmail.com para procesarla
+						y hacerte la entrega de tu pedido.
 					</p>
 				</div>
 
@@ -136,7 +138,7 @@ export const ThankyouPage = () => {
 							<p>{data.address.country}</p>
 						</div>
 
-						
+
 					</div>
 				</div>
 

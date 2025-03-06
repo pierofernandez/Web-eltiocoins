@@ -9,21 +9,36 @@ import { ItemsCheckout } from './ItemsCheckout';
 import { useCartStore } from '../../store/cart.store';
 import { ImSpinner2 } from 'react-icons/im';
 import { useCreateOrder } from '../../hooks';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 export const FormCheckout = () => {
 	const {
 		register,
 		formState: { errors },
 		handleSubmit,
+		getValues,
 	} = useForm<AddressFormValues>({
 		resolver: zodResolver(addressSchema),
 	});
 
+
+
 	const { mutate: createOrder, isPending } = useCreateOrder();
+
+	const [isProcessing, setIsProcessing] = useState(false);
+
+	const isFormValid = Object.keys(errors).length === 0;
+
 
 	const cleanCart = useCartStore(state => state.cleanCart);
 	const cartItems = useCartStore(state => state.items);
 	const totalAmount = useCartStore(state => state.totalAmount);
+
+	const navigate = useNavigate();
+
 
 	const onSubmit = handleSubmit(data => {
 		const orderInput = {
@@ -37,9 +52,15 @@ export const FormCheckout = () => {
 		};
 
 		createOrder(orderInput, {
-			onSuccess: () => {
+			onSuccess: (order) => {
+				if (!order.id) {
+					console.error("Error: La orden creada no tiene un ID.");
+					return;
+				}
 				cleanCart();
-			},
+				navigate(`/checkout/${order.id}/thank-you`);
+			}
+			
 		});
 	});
 
@@ -54,6 +75,7 @@ export const FormCheckout = () => {
 			</div>
 		);
 	}
+
 
 	return (
 		<div>
@@ -89,39 +111,22 @@ export const FormCheckout = () => {
 						{...register('country')}
 					>
 						<option value='Ecuador'>Ecuador</option>
-                        <option value="'Chile'">Chile</option>
-                        <option value="'España'">España</option>
-                        <option value="'Honduras'">Honduras</option>
-                        <option value="'USA'">USA</option>
-                        <option value="'Guatemala'">Guatemala</option>
-                        <option value="'Mexico'">Mexico</option>
-                        <option value="'Peru'">Peru</option>
-                        <option value="'Argentina'">Argentina</option>
-                        <option value="'Colombia'">Colombia</option>
-                        <option value="'El Salvador'">El Salvador</option>
+						<option value="'Chile'">Chile</option>
+						<option value="'España'">España</option>
+						<option value="'Honduras'">Honduras</option>
+						<option value="'USA'">USA</option>
+						<option value="'Guatemala'">Guatemala</option>
+						<option value="'Mexico'">Mexico</option>
+						<option value="'Peru'">Peru</option>
+						<option value="'Argentina'">Argentina</option>
+						<option value="'Colombia'">Colombia</option>
+						<option value="'El Salvador'">El Salvador</option>
 
 					</select>
 				</div>
 
 
-				<div className='flex flex-col'>
-					<div className='flex justify-between items-center text-sm border border-slate-600 bg-stone-100 py-4 rounded-ss-md rounded-se-md px-6'>
-						<span>Depósito Bancario</span>
-					</div>
 
-					<div className='bg-stone-100 text-[13px] p-5 space-y-0.5 border border-gray-200 rounded-es-md rounded-ee-md'>
-						<p>Compra a traves de transferencia bancaria</p>
-						<p>BANCO PICHINCHA</p>
-						<p>Razón Social: CelularesBaratos</p>
-						<p>RUC: 123456789000</p>
-						<p>Tipo de cuenta: Corriente</p>
-						<p>Número de cuenta: 1234567890</p>
-						<p>
-							La información será compartida nuevamente una vez que se
-							haya finalizado la compra
-						</p>
-					</div>
-				</div>
 
 				<div className='flex flex-col gap-6'>
 					<h3 className='font-semibold text-3xl'>
@@ -131,12 +136,70 @@ export const FormCheckout = () => {
 					<ItemsCheckout />
 				</div>
 
-				<button
-					type='submit'
-					className='bg-black text-white py-3.5 font-bold tracking-wide rounded-md mt-2'
-				>
-					Finalizar Pedido
-				</button>
+
+
+				<PayPalScriptProvider options={{ clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID }}>
+					<PayPalButtons
+						disabled={!isFormValid || isPending || isProcessing}
+						createOrder={(_, actions) => {
+							setIsProcessing(true);
+							if (!actions.order) {
+								throw new Error("No se pudo crear la orden de PayPal.");
+							}
+							return actions.order.create({
+								intent: "CAPTURE",
+								purchase_units: [
+									{
+										amount: {
+											value: totalAmount.toFixed(2),
+											currency_code: "USD",
+										},
+									},
+								],
+							});
+						}}
+						onApprove={(_, actions) => {
+							if (!actions.order) {
+								throw new Error("No se pudo capturar la orden de PayPal.");
+							}
+							return actions.order.capture().then((details) => {
+								setIsProcessing(false);
+								console.log("Pago completado:", details);
+		
+								// Obtener los valores actuales del formulario
+								const formData = getValues(); // <-- Se obtiene la data correctamente
+		
+								// Crear orden en el backend
+								createOrder(
+									{
+										address: formData, // Usamos los valores obtenidos del formulario
+										cartItems: cartItems.map(item => ({
+											variantId: item.variantId,
+											quantity: item.quantity,
+											price: item.price,
+										})),
+										totalAmount,
+									},
+									{
+										onSuccess: (data) => {
+											cleanCart();
+											navigate(`/checkout/${data.id}/thank-you`);
+										},
+									}
+								);
+							});
+						}}
+						onError={(error) => {
+							setIsProcessing(false);
+							console.error("Error en el pago:", error);
+							alert("Hubo un error al procesar el pago. Por favor, intenta nuevamente.");
+						}}
+					/>
+
+
+				</PayPalScriptProvider>
+
+
 			</form>
 		</div>
 	);
