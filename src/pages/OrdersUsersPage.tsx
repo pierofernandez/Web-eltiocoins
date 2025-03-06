@@ -34,7 +34,7 @@ export const OrdersUserPage = () => {
 					</Link>
 				</>
 			) : (
-				<TableOrders orders={orders}/>
+				<TableOrders orders={orders} />
 			)}
 		</div>
 	);
