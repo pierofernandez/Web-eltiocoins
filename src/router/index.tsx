@@ -4,6 +4,8 @@ import { HomePage, CuentasPage, DivisionRivalsPage, FutChampionsPage, MonedasPag
 import { FutChampionPage } from "../pages/FutChampionPage";
 import { DivisionRivalPage } from "../pages/DivisionRivalPage";
 import { ClientLayout } from "../layouts/ClientLayout";
+import { PrivacyPolicy } from "../pages/PrivacyPolicy";
+import { Refundpolicy } from "../pages/Refundpolicy";
 
 export const router = createBrowserRouter([
     {
@@ -49,6 +51,14 @@ export const router = createBrowserRouter([
             {
                 path: 'register',
                 element: <RegisterPage />
+            },
+            {
+                path: 'privacypolicy',
+                element: <PrivacyPolicy />
+            },
+            {
+                path: 'refundpolicy',
+                element: <Refundpolicy />
             },
             {
                 path: 'account',

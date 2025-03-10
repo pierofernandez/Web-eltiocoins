@@ -2,11 +2,20 @@ import { BiWorld } from 'react-icons/bi';
 import { FaHammer } from 'react-icons/fa6';
 import { HiMiniReceiptRefund } from 'react-icons/hi2';
 import { MdLocalShipping } from 'react-icons/md';
+import Aos from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 
 export const FeatureGrid = () => {
+
+	useEffect(() => {
+		Aos.init({duration: 1000});
+	}, []);
 	return (
-		<div className='grid grid-cols-2 gap-8 mt-6 mb-16 lg:grid-cols-4 lg:gap-5'>
-			<div className='flex items-center gap-6'>
+		<div data-aos="zoom-in-left"  className='grid grid-cols-2 gap-8 mt-6 mb-16 lg:grid-cols-4 lg:gap-5'>
+
+
+			<div className='flex items-center gap-6 '>
 				<MdLocalShipping size={40} className='text-slate-600' />
 
 				<div className='space-y-1'>

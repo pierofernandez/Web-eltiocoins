@@ -1,43 +1,66 @@
-const brands = [
-	{
-		image: 'img/modos-de-juego/divisionrivals-logo.png',
-		alt: 'divisionrivals',
-	},
-	{
-		image: '/img/modos-de-juego/futchampions-logo.png',
-		alt: 'futchampions',
-	},
-	{
-		image: '/img/modos-de-juego/monedas-logo.png',
-		alt: 'coins',
-	},
-	{
-		image: '/img/modos-de-juego/cuentas-logo.png',
-		alt: 'cuentas',
-	},
-	{
-		image: '/img/modos-de-juego/couching-logo.png',
-		alt: 'couching',
-	},
+import React, { useEffect } from "react";
+import Lightning from "../animations/Lightning";
+import Aos from "aos";
+import 'aos/dist/aos.css';
 
-];
+
+interface CardProps {
+    image: string;
+    title: string;
+    description: string;
+}
+
+const Card: React.FC<CardProps> = ({ image, title, description }) => {
+
+    useEffect(() => {
+        Aos.init({ duration: 1000 });
+    }, []);
+    return (
+        <div 
+            data-aos="fade-up"
+            data-aos-anchor-placement="bottom-bottom" className="relative p-12 rounded-2xl shadow-lg w-96 text-center overflow-hidden">
+            {/* Lightning Effect as Background */}
+            <div className="absolute inset-0 z-0 overflow-hidden">
+                <Lightning
+                    hue={48}
+                    xOffset={0.5} // Centra horizontalmente
+                    yOffset={0.5} // Centra verticalmente
+                    speed={1}
+                    intensity={2} // Aumenta la intensidad
+                    size={1.5} // Ajusta el tamaño del rayo
+                />
+            </div>
+            {/* Content */}
+            <div className="relative z-10">
+                <img src={image} alt={title} className="mx-auto w-32 h-32 mb-6" />
+                <h3 className="text-2xl font-bold mb-4 text-white">{title}</h3>
+                <p className="text-lg mb-6 text-white">{description}</p>
+                <button className="bg-[#DDAF13] text-white px-8 py-4 rounded-full font-semibold text-lg">
+                    Comprar Ahora
+                </button>
+            </div>
+        </div>
+    );
+};
 
 export const Brands = () => {
-	return (
-		<div className='flex flex-col items-center gap-3 pt-16 pb-12'>
-			<h2 className='font-bold text-2xl'>Todos Nuestros Servicios</h2>
+    return (
+        <>
 
-			<p className='w-2/3 text-center text-sm md:text-base'>
-				Tenemos disponible todo los modos de juegos de EA FC 25 Ultimate Team de tu preferencia
-			</p>
-
-			<div className='grid grid-cols-3  gap-6 mt-8 items-center md:grid-cols-5'>
-				{brands.map((brand, index) => (
-					<div key={index}>
-						<img src={brand.image} alt={brand.alt} />
-					</div>
-				))}
-			</div>
-		</div>
-	);
+            <h2 data-aos="fade-up" className="text-5xl font-semibold text-center text-black mb-12">Nuestros Servicios</h2>
+            <div className="p-16 text-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center">
+                    <Card image="/img/modos-de-juego/monedas-logo.png" title="Monedas Seguras" description="Entrega Rápida" />
+                    <Card image="/img/modos-de-juego/futchampions-logo.png" title="Jugamos tu Fut Champions" description="Jugadores Verificados" />
+                    <Card image="img/modos-de-juego/divisionrivals-logo.png" title="Te llevamos a Élite" description="Jugadores Verificados" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 place-items-center gap-40 col-span-full mt-20">
+                        <Card image="/img/modos-de-juego/couching-logo.png" title="Servicio de Couching" description="Valoramos tu progreso" />
+                        <Card image="/img/modos-de-juego/cuentas-logo.png" title="Cuentas Boosteadas" description="Tú eliges el jugador" />
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 };
+
+export default Brands;

@@ -64,7 +64,7 @@ export const LoginPage = () => {
 
 					<p className='text-sm text-stone-800'>
 						¿No tienes una cuenta?
-						<Link to='/registro' className='underline ml-2'>
+						<Link to='/register' className='underline ml-2'>
 							Regístrate
 						</Link>
 					</p>

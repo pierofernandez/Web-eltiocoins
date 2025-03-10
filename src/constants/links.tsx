@@ -1,4 +1,4 @@
-import { FaFacebookF, FaInstagram, FaTiktok, FaXTwitter } from "react-icons/fa6";
+import { FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa6";
 
 export const navbarLinks = [
     {
@@ -25,28 +25,23 @@ export const navbarLinks = [
 ];
 
 export const socialLinks = [
+
 	{
 		id: 1,
-		title: 'Facebook',
-		href: 'https://www.facebook.com',
-		icon: <FaFacebookF />,
-	},
-	{
-		id: 2,
-		title: 'Twitter',
-		href: 'https://www.twitter.com',
-		icon: <FaXTwitter />,
-	},
-	{
-		id: 3,
 		title: 'Instagram',
-		href: 'https://www.instagram.com',
+		href: 'https://www.instagram.com/eltiocoins/',
 		icon: <FaInstagram />,
 	},
 	{
-		id: 4,
+		id: 2,
+		title: 'WhatsApp',
+		href: 'https://goo.su/R4SXY7',
+		icon: <FaWhatsapp />,
+	},
+	{
+		id: 3,
 		title: 'Tiktok',
-		href: 'https://www.tiktok.com',
+		href: 'https://www.tiktok.com/@eltiocoins',
 		icon: <FaTiktok />,
 	},
 ];

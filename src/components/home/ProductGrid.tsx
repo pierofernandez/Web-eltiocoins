@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { PreparedProducts } from "../interfaces";
 import { CardProduct } from "../products/CardProduct";
+import Aos from "aos";
+import 'aos/dist/aos.css';
 
 
 interface Props {
@@ -8,8 +11,14 @@ interface Props {
 }
 
 export const ProductGrid = ({ title, products }: Props) => {
+
+    useEffect(() => {
+        Aos.init({ duration: 1000 });
+    }, []);
     return (
-        <div className='my-32'>
+        <div data-aos="fade-right"
+            data-aos-offset="100"
+            data-aos-easing="ease-in-sine" className='my-32'>
             <h2 className='text-3xl font-semibold text-center mb-8 md:text-4xl lg:text-5xl'>
                 {title}
             </h2>
