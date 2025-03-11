@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 export const FeatureGrid = () => {
 
 	useEffect(() => {
-		Aos.init({duration: 1000});
+		Aos.init({duration: 10000});
 	}, []);
 	return (
 		<div data-aos="zoom-in-left"  className='grid grid-cols-2 gap-8 mt-6 mb-16 lg:grid-cols-4 lg:gap-5'>

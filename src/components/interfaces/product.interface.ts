@@ -17,6 +17,7 @@ export interface VariantProduct {
 export interface Product {
 	id: string;
 	name: string;
+	category: string;
 	platform: string;
 	slug: string;
 	features: string[];

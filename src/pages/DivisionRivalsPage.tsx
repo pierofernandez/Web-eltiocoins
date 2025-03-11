@@ -4,6 +4,8 @@ import { ContainerFilter } from '../components/products/ContainerFilter';
 import { prepareProducts } from '../helpers';
 import { useFilteredProducts } from '../hooks';
 import { Pagination } from '../components/shared/Pagination';
+import { InformationBoosting } from '../components/home/InformationBoosting';
+import Reviews from '../components/home/Reviews';
 
 export const DivisionRivalsPage = () => {
 	const [page, setPage] = useState(1);
@@ -20,7 +22,7 @@ export const DivisionRivalsPage = () => {
 
     // Filtramos solo los productos con name "Monedas" y los ordenamos por precio de menor a mayor
 	const preparedProducts = prepareProducts(products)
-    .filter(product => product.name === "Division Rivals")
+    .filter(product => product.category === "divisionrivals")
     .sort((a, b) => a.price - b.price); // Ordenar por precio ascendente
 
 	return (
@@ -66,6 +68,10 @@ export const DivisionRivalsPage = () => {
 					)
 				}
 			</div>
+
+			<InformationBoosting/>
+
+			<Reviews/>
 		</>
 	);
 };

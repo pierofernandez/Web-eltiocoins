@@ -4,6 +4,8 @@ import { ContainerFilter } from '../components/products/ContainerFilter';
 import { prepareProducts } from '../helpers';
 import { useFilteredProducts } from '../hooks';
 import { Pagination } from '../components/shared/Pagination';
+import InformationCoins from '../components/home/InformationCoins';
+import Reviews from '../components/home/Reviews';
 
 export const MonedasPage = () => {
 	const [page, setPage] = useState(1);
@@ -20,7 +22,7 @@ export const MonedasPage = () => {
 
     // Filtramos solo los productos con name "Monedas" y los ordenamos por precio de menor a mayor
 	const preparedProducts = prepareProducts(products)
-    .filter(product => product.name === "Monedas")
+    .filter(product => product.category === "monedas")
     .sort((a, b) => a.price - b.price); // Ordenar por precio ascendente
 
 	return (
@@ -66,6 +68,9 @@ export const MonedasPage = () => {
 					)
 				}
 			</div>
+			<InformationCoins/>
+
+			<Reviews/>
 		</>
 	);
 };

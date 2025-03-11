@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const Instagram: React.FC = () => {
-  const instagramUrl = 'https://www.instagram.com/tu_usuario/'; // Reemplaza con tu usuario de Instagram
+  const instagramUrl = 'https://www.instagram.com/eltiocoins/'; // Reemplaza con tu usuario de Instagram
 
   return (
     <div style={styles.container}>

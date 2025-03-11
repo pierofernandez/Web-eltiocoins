@@ -2,7 +2,7 @@ import React from 'react';
 
 export const WhatsApp: React.FC = () => {
   // Número de teléfono y mensaje predeterminado
-  const phoneNumber = '+977548397'; // Reemplaza con tu número de WhatsApp
+  const phoneNumber = '+51977548397'; // Reemplaza con tu número de WhatsApp
   const defaultMessage = 'Hola, envíame tu captura de pago o preguntame si tienes alguna duda!.'; // Mensaje predeterminado
 
   // URL de WhatsApp

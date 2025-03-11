@@ -2,7 +2,6 @@ export * from './HomePage';
 export * from './MonedasPage';
 export * from './FutChampionsPage';
 export * from './DivisionRivalsPage';
-export * from './CuentasPage';
 export * from './MonedaPage';
 export * from './LoginPage';
 export * from './RegisterPage';

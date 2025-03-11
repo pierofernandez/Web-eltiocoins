@@ -1,11 +1,12 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RootLayout } from "../layouts/RootLayout";
-import { HomePage, CuentasPage, DivisionRivalsPage, FutChampionsPage, MonedasPage, MonedaPage, LoginPage, RegisterPage, OrdersUserPage, CheckoutPage, ThankyouPage, OrderUserPage } from "../pages";
+import { HomePage, DivisionRivalsPage, FutChampionsPage, MonedasPage, MonedaPage, LoginPage, RegisterPage, OrdersUserPage, CheckoutPage, ThankyouPage, OrderUserPage } from "../pages";
 import { FutChampionPage } from "../pages/FutChampionPage";
 import { DivisionRivalPage } from "../pages/DivisionRivalPage";
 import { ClientLayout } from "../layouts/ClientLayout";
 import { PrivacyPolicy } from "../pages/PrivacyPolicy";
 import { Refundpolicy } from "../pages/Refundpolicy";
+import { NotFound } from "../pages/NotFount";
 
 export const router = createBrowserRouter([
     {
@@ -40,10 +41,7 @@ export const router = createBrowserRouter([
                 path: 'divisionrivals/:slug',
                 element: <DivisionRivalPage />
             },
-            {
-                path: 'cuentas',
-                element: <CuentasPage />
-            },
+            
             {
                 path: 'login',
                 element: <LoginPage />
@@ -59,6 +57,10 @@ export const router = createBrowserRouter([
             {
                 path: 'refundpolicy',
                 element: <Refundpolicy />
+            },
+            {
+                path: '*',
+                element: <NotFound />
             },
             {
                 path: 'account',

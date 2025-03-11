@@ -24,11 +24,7 @@ export const HomePage = () => {
 
         <div>
             <Cookie/>
-
-            
-
             <FeatureGrid />
-
             <ProductGrid
 
                 title='Nuevos Productos'
@@ -45,13 +41,9 @@ export const HomePage = () => {
             )}
 
             <Brands />
-
-
             <Questions />
-
             <Instagram />
             <WhatsApp />
-
             <StatsTemplate/>
 
         </div>

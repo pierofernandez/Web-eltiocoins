@@ -185,6 +185,7 @@ export type Database = {
       }
       products: {
         Row: {
+          category: string
           created_at: string
           description: Json
           features: string[]
@@ -195,6 +196,7 @@ export type Database = {
           slug: string
         }
         Insert: {
+          category: string
           created_at?: string
           description: Json
           features: string[]
@@ -205,6 +207,7 @@ export type Database = {
           slug: string
         }
         Update: {
+          category?: string
           created_at?: string
           description?: Json
           features?: string[]
