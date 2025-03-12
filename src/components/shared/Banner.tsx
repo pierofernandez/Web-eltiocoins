@@ -1,4 +1,3 @@
-import { FaCoins } from "react-icons/fa6";
 import { useState, useEffect } from 'react';
 
 export const Banner = () => {
@@ -24,7 +23,7 @@ export const Banner = () => {
   const seconds = timeLeft % 60;
 
   return (
-    <div className="relative isolate flex flex-col items-center gap-4 overflow-hidden bg-gray-50 px-4 py-3 sm:flex-row sm:items-center sm:gap-x-6 sm:px-6 sm:py-2.5 sm:before:flex-1">
+    <div className="relative isolate flex items-center justify-center bg-gray-50 px-4 py-3 sm:px-6 sm:py-2.5">
       {/* Fondo decorativo (izquierda) */}
       <div
         aria-hidden="true"
@@ -54,36 +53,25 @@ export const Banner = () => {
       </div>
 
       {/* Contenido principal */}
-      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:justify-start">
-        <p className="text-sm leading-6 text-gray-900 sm:text-base">
+      <div className="flex items-center justify-center gap-1.5 whitespace-nowrap">
+        <p className="text-[10px] sm:text-xs leading-6 text-gray-900">
           <strong className="font-semibold"></strong>
           <svg
             viewBox="0 0 2 2"
             aria-hidden="true"
-            className="mx-2 inline size-0.5 fill-current"
+            className="mx-1 inline size-0.5 fill-current"
           >
           </svg>
-          20 % de descuento con el codigo ROCIOVALENTINA
+          20 % de descuento con el código ROCIOVALENTINA
         </p>
 
-        <p className="text-red-700">se expira en </p>
+        <p className="text-red-700 text-[10px] sm:text-xs">Se expira en </p>
 
-        <span className="countdown font-mono text-2xl">
+        <span className="countdown font-mono text-sm sm:text-base">
           <span style={{ "--value": hours } as React.CSSProperties} aria-live="polite">{hours}</span>h
           <span style={{ "--value": minutes } as React.CSSProperties} aria-live="polite">{minutes}</span>m
           <span style={{ "--value": seconds } as React.CSSProperties} aria-live="polite">{seconds}</span>s
         </span>
-      </div>
-
-      {/* Botón de cierre (derecha) */}
-      <div className="flex flex-1 justify-end">
-        <button
-          type="button"
-          className="-m-3 p-3 focus-visible:outline-offset-[-4px]"
-        >
-          <span className="sr-only">Dismiss</span>
-          <FaCoins aria-hidden="true" className="size-5 text-gray-900" />
-        </button>
       </div>
     </div>
   );
