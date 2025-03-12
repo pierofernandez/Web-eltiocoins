@@ -7,7 +7,7 @@ export const Instagram: React.FC = () => {
     <div style={styles.container}>
       <a href={instagramUrl} target="_blank" rel="noopener noreferrer" style={styles.button}>
         <img
-          src='/public/img/Instagram.svg.png'
+          src='/img/Instagram.svg.png'
           alt="Instagram"
           style={styles.icon}
         />
