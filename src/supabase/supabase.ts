@@ -219,6 +219,27 @@ export type Database = {
         }
         Relationships: []
       }
+      promotions: {
+        Row: {
+          created_at: string
+          id: string
+          prom_couching: number | null
+          prom_exclusive: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          prom_couching?: number | null
+          prom_exclusive?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          prom_couching?: number | null
+          prom_exclusive?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: number

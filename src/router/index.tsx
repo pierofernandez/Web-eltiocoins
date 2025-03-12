@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RootLayout } from "../layouts/RootLayout";
-import { HomePage, DivisionRivalsPage, FutChampionsPage, MonedasPage, MonedaPage, LoginPage, RegisterPage, OrdersUserPage, CheckoutPage, ThankyouPage, OrderUserPage } from "../pages";
+import { HomePage, DivisionRivalsPage, FutChampionsPage, MonedasPage, MonedaPage, LoginPage, RegisterPage, OrdersUserPage, CheckoutPage, ThankyouPage, OrderUserPage, ComplaintsBook } from "../pages";
 import { FutChampionPage } from "../pages/FutChampionPage";
 import { DivisionRivalPage } from "../pages/DivisionRivalPage";
 import { ClientLayout } from "../layouts/ClientLayout";
@@ -57,6 +57,10 @@ export const router = createBrowserRouter([
             {
                 path: 'refundpolicy',
                 element: <Refundpolicy />
+            },
+            {
+                path: 'complaintsbook',
+                element: <ComplaintsBook />
             },
             {
                 path: '*',
