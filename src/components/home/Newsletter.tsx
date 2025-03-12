@@ -49,7 +49,7 @@ export const Newsletter = () => {
 							onClick={handleSubscribe}
 							className="focus:outline-none focus:ring-offset-2 focus:ring border border-white sm:border-transparent w-full sm:w-auto bg-white py-4 px-6 hover:bg-opacity-75"
 						>
-							Suscribete
+							Información
 						</button>
 					</div>
 					{message && <p className="text-white mt-4">{message}</p>}

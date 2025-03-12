@@ -72,6 +72,42 @@ export type Database = {
           },
         ]
       }
+      complaints_book: {
+        Row: {
+          affair: string
+          claim_or_complaint: string
+          created_at: string
+          details: string
+          dni: number
+          email: string
+          id: string
+          name: string
+          phone: number
+        }
+        Insert: {
+          affair: string
+          claim_or_complaint: string
+          created_at?: string
+          details: string
+          dni: number
+          email: string
+          id?: string
+          name: string
+          phone: number
+        }
+        Update: {
+          affair?: string
+          claim_or_complaint?: string
+          created_at?: string
+          details?: string
+          dni?: number
+          email?: string
+          id?: string
+          name?: string
+          phone?: number
+        }
+        Relationships: []
+      }
       customers: {
         Row: {
           created_at: string
