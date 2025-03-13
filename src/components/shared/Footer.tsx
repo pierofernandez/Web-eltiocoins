@@ -79,7 +79,7 @@ export const Footer = () => {
               <Link to='/refundpolicy' className='text-slate-300 hover:text-white'>
                 Políticas de Reembolso
               </Link>
-              <Link to='complaintsbook' className='text-slate-300 hover:text-white'>
+              <Link to='/complaintsbook' className='text-slate-300 hover:text-white'>
                 Libro de Reclamaciones
               </Link>
             </nav>

@@ -1,6 +1,12 @@
 import React from "react";
 
 export const Questions = () => {
+
+  const phoneNumber = '+51977548397'; // Reemplaza con tu número de WhatsApp
+  const defaultMessage = 'Hola!, Tienes alguna pregunta?, hazmela saber!'; // Mensaje predeterminado
+
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(defaultMessage)}`;
+
   const faqs = [
     {
       question: "¿Cómo comprar en eltiocoins?",
@@ -38,7 +44,9 @@ export const Questions = () => {
       <p data-aos="zoom-in-left" style={styles.description}>
       ¿Tienes otra pregunta y no encuentras la respuesta que buscas?
       Ponte en contacto con nuestro equipo de soporte{" "}
-        <a href="https://wa.me/$977548397?text=$Hola estamos atento a tu pregunta." style={styles.link}>
+        <a  href={whatsappUrl}  style={styles.link}         rel="noopener noreferrer"         target="_blank"
+
+        >
           envianos un mensaje
         </a>{" "}
          y nos pondremos en contacto con usted lo antes posible.
