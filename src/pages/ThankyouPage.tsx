@@ -149,7 +149,7 @@ export const ThankyouPage = () => {
 
 					<Link
 						to='/monedas'
-						className='text-white bg-black py-4 text-sm rounded-md px-5 tracking-tight font-semibold'
+						className='text-black bg-[#5BD054] py-4 text-sm rounded-md px-5 tracking-tight font-semibold'
 					>
 						Seguir comprando
 					</Link>

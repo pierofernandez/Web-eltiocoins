@@ -8,9 +8,9 @@ export default {
 				padding: '1rem',
 			},
 
-      fontFamily: {
-        montserrat: ['Montserrat', 'sans-serif'],
-      }
+			fontFamily: {
+				montserrat: ['Montserrat', 'sans-serif'],
+			},
 		},
 	},
 	plugins: [require('@tailwindcss/typography')],

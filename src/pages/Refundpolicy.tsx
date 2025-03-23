@@ -2,17 +2,17 @@ import { FaClock } from "react-icons/fa6";
 
 export const Refundpolicy = () => {
     return (
-        <div style={{ backgroundColor: 'white', minHeight: '100vh', padding: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', maxWidth: '1200px', width: '100%' }}>
-                <h1 style={{ fontSize: '30px', color: '#646464', marginTop: '20px', marginBottom: '10px', fontWeight: 'bold' }}>Política de reembolso</h1>
-                <h1 style={{ fontSize: '12px', color: '#333', marginBottom: '20px', fontWeight: '400', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <FaClock style={{ color: '#d9534f' }} />
+        <div style={{ minHeight: '100vh', padding: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ background:'#323232', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(77, 77, 77, 0.5)', maxWidth: '1200px', width: '100%' }}>
+                <h1 style={{ fontSize: '30px', color: '#70F468', marginTop: '20px', marginBottom: '10px', fontWeight: 'bold' }}>Política de reembolso</h1>
+                <h1 style={{ fontSize: '12px', marginBottom: '20px', fontWeight: '400', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <FaClock style={{  }} />
                     Última modificación: 2025-03-08
                 </h1>
 
                 <section style={{ marginTop: '30px' }}>
-                    <h2 style={{ fontSize: '20px', color: '#d9534f', marginTop: '20px', marginBottom: '10px', fontWeight: 'bold' }}>I. Solicitar reembolso</h2>
-                    <p style={{ fontSize: '16px', color: '#555', lineHeight: '1.6', fontWeight: '500' }}>
+                    <h2 style={{ fontSize: '20px', color: '#70F468', marginTop: '20px', marginBottom: '10px', fontWeight: 'bold' }}>I. Solicitar reembolso</h2>
+                    <p style={{ fontSize: '16px', lineHeight: '1.6', fontWeight: '500' }}>
                     eltiocoins permite a los compradores solicitar reembolsos por productos en condiciones razonables. <br />
                     Emitiremos reembolsos en las siguientes condiciones: <br /> <br />
                     1. Productos no recibidos: Los productos no se entregaron completamente a los compradores dentro del tiempo de entrega programado. En este caso, los compradores pueden solicitar un reembolso. <br />
@@ -33,10 +33,10 @@ export const Refundpolicy = () => {
                     Si el comprador no proporciona evidencia relevante dentro del límite de tiempo, se considerará que renuncia automáticamente a la oportunidad de resolver la disputa. <br /> <br />
 
                     </p>
-                    <p style={{ fontSize: '16px', color: 'black', lineHeight: '1.6', fontWeight: 'bold' }}>
+                    <p style={{ fontSize: '16px', color: '#70F468', lineHeight: '1.6', fontWeight: 'bold' }}>
                     Política de cancelación de pedidos
                     </p>
-                    <p style={{ fontSize: '16px', color: '#555', lineHeight: '1.6', fontWeight: '500' }}>
+                    <p style={{ fontSize: '16px', lineHeight: '1.6', fontWeight: '500' }}>
                     Debido a la naturaleza de nuestros productos/servicios, todas las compras son finales y no se aceptan cancelaciones una vez que el pedido ha sido realizado. Al completar una compra, el comprador reconoce y acepta que no habrá reembolsos ni modificaciones en el pedido. <br /> <br />
                     En cuanto al reembolso, por favor contacta con nuestro servicio de atención al cliente en línea 24/7 bajo condiciones razonables. Tu solicitud de reembolso será verificada después de que envíes el número de pedido y el motivo del reembolso. Si la solicitud es aprobada, el reembolso será devuelto a la cuenta o tarjeta bancaria del comprador. <br /> <br />
                     Tiempo de procesamiento del reembolso: Procesaremos la solicitud de reembolso en 5 días hábiles, pero el tiempo exacto del reembolso está determinado por la velocidad de procesamiento de los diferentes bancos.

@@ -62,7 +62,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     number: {
         fontSize: "2.5rem",
         fontWeight: "bold",
-        color: "#DDAF13",
+        color: "#70F468",
         marginBottom: "10px",
     },
     label: {

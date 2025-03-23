@@ -5,8 +5,8 @@ import { Loader } from '../components/shared/Loader';
 import { LuLoaderCircle } from 'react-icons/lu';
 
 export const LoginPage = () => {
-	const [email, setEmail] = useState('bdj04113@dcobe.com');
-	const [password, setPassword] = useState('Abc123');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
 	const { mutate, isPending } = useLogin();
 	const { session, isLoading } = useUser();
@@ -57,12 +57,12 @@ export const LoginPage = () => {
 							onChange={e => setPassword(e.target.value)}
 						/>
 
-						<button className='bg-black text-white uppercase font-semibold tracking-widest text-xs py-4 rounded-full mt-5 w-full'>
+						<button className='bg-[#70F468] text-black uppercase font-semibold tracking-widest text-xs py-4 rounded-full mt-5 w-full'>
 							Iniciar sesión
 						</button>
 					</form>
 
-					<p className='text-sm text-stone-800'>
+					<p className='text-sm text-white'>
 						¿No tienes una cuenta?
 						<Link to='/register' className='underline ml-2'>
 							Regístrate

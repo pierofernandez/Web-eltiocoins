@@ -26,22 +26,22 @@ export const Search = () => {
 
 	return (
 		<>
-			<div className='py-5 px-7 flex gap-10 items-center border-b border-slate-200'>
+			<div className=' py-5 px-7 flex gap-10 items-center border-b border-white'>
 				<form
 					className='flex gap-3 items-center flex-1'
 					onSubmit={handleSearch}
 				>
-					<HiOutlineSearch size={22} />
+					<HiOutlineSearch className='text-white' size={22} />
 					<input
 						type='text'
 						placeholder='¿Qué busca?'
-						className='outline-none w-full text-sm '
+						className='outline-none w-full text-sm text-white placeholder-white bg-transparent'
 						value={searchTerm}
 						onChange={e => setSearchTerm(e.target.value)}
 					/>
 				</form>
 				<button onClick={closeSheet}>
-					<IoMdClose size={25} className='text-black' />
+					<IoMdClose size={25} className='text-white' />
 				</button>
 			</div>
 
@@ -64,16 +64,16 @@ export const Search = () => {
 										className='h-20 w-20 object-contain p-3'
 									/>
 
-									<div className='flex flex-col gap-1'>
+									<div className='flex flex-col gap-1 text-white'>
 										<p className='text-sm font-semibold group-hover:underline'>
 											{product.name}
 										</p>
 
-										<p className='text-[13px] text-gray-600'>
+										<p className='text-[13px] text-gray-400'>
 											{product.variants[0].color_name}
 										</p>
 
-										<p className='text-sm font-medium text-gray-600'>
+										<p className='text-sm font-medium text-gray-400'>
 											{formatPrice(product.variants[0].price)}
 										</p>
 									</div>
@@ -82,7 +82,7 @@ export const Search = () => {
 						))}
 					</ul>
 				) : (
-					<p className='text-sm text-gray-600'>
+					<p className='text-sm text-white'>
 						No se encontraron resultados
 					</p>
 				)}

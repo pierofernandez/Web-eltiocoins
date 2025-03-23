@@ -99,14 +99,14 @@ export const RegisterPage = () => {
 							</p>
 						)}
 
-						<button className='bg-black text-white uppercase font-semibold tracking-widest text-xs py-4 rounded-full mt-5 w-full'>
+						<button className='bg-[#70F468] text-black uppercase font-semibold tracking-widest text-xs py-4 rounded-full mt-5 w-full'>
 							Registrarme
 						</button>
 					</form>
 
-					<p className='text-sm text-stone-800'>
+					<p className='text-sm text-white'>
 						¿Ya tienes una cuenta?
-						<Link to='/registro' className='underline ml-2'>
+						<Link to='/login' className='underline ml-2'>
 							Inicia sesión
 						</Link>
 					</p>

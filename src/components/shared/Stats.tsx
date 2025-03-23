@@ -12,10 +12,10 @@ export const Testimonion = () => {
           {stats.map((stat) => (
             <div
               key={stat.id}
-              className="mx-auto flex max-w-xs flex-col gap-y-4 rounded-xl bg-white p-6 shadow-lg transition-all hover:shadow-xl" 
+              className="mx-auto flex max-w-xs flex-col gap-y-4 rounded-xl p-6 shadow-lg transition-all hover:shadow-xl" 
             >
-              <dt className="text-lg font-medium text-gray-700">{stat.name}</dt>
-              <dd className="order-first text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+              <dt className="text-lg font-medium text-white">{stat.name}</dt>
+              <dd className="order-first text-4xl font-bold tracking-tight text-white sm:text-5xl">
                 {stat.value}
               </dd>
             </div>

@@ -31,7 +31,7 @@ export const CartItem = ({ item }: Props) => {
 	};
 
 	return (
-		<li className='flex justify-between items-center gap-5'>
+		<li className='flex justify-between items-center gap-5 text-white'>
 			<div className='flex'>
 				<img
 					src={item.image}
@@ -43,13 +43,13 @@ export const CartItem = ({ item }: Props) => {
 			<div className='flex-1 space-y-3'>
 				<div className='flex justify-between'>
 					<p className='font-semibold'>{item.name}</p>
-					<p className='text-sm font-medium text-gray-600 mt-1'>
+					<p className='text-sm font-medium text-white mt-1'>
 						{formatPrice(item.price)}
 					</p>
 				</div>
 
 				<div className='flex gap-3'>
-					<p className='text-[13px] text-gray-600'>
+					<p className='text-[13px] text-gray-400'>
 						{item.color}
 					</p>
 				</div>
@@ -60,18 +60,18 @@ export const CartItem = ({ item }: Props) => {
 							onClick={decrement}
 							disabled={item.quantity === 1}
 						>
-							<LuMinus size={15} />
+							<LuMinus className='text-white' size={15} />
 						</button>
-						<span className='text-slate-500 text-sm'>
+						<span className='text-white text-sm'>
 							{item.quantity}
 						</span>
-						<button onClick={increment}>
+						<button className='text-white' onClick={increment}>
 							<LuPlus size={15} />
 						</button>
 					</div>
 
-					<button
-						className='underline font-medium text-[10px]'
+					<button 
+						className='text-white underline font-medium text-[10px]'
 						onClick={() => removeItem(item.variantId)}
 					>
 						Eliminar

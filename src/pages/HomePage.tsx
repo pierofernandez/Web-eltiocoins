@@ -22,7 +22,7 @@ export const HomePage = () => {
 
     return (
 
-        <div>
+        <div >
             <Cookie/>
             <FeatureGrid />
             <ProductGrid

@@ -24,7 +24,7 @@ export const Cookie = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center sm:justify-end space-y-2 sm:space-y-0 sm:space-x-4 mt-3">
                     <button
-                        className="px-4 py-2 bg-[#DDAF13] text-white rounded hover:bg-[#DDAF13] transition duration-300 ease-in-out w-full sm:w-auto"
+                        className="px-4 py-2 bg-[#70F468] text-black rounded hover:bg-[#5BD054] transition duration-300 ease-in-out w-full sm:w-auto"
                         onClick={handleAccept}
                     >
                         Accept

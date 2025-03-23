@@ -40,7 +40,7 @@ const Card: React.FC<CardProps> = ({ image, title, description, link }) => {
                 <p className="text-lg mb-6 text-white">{description}</p>
                 {/* Botón con enlace */}
                 <Link to={link}>
-                    <button className="bg-[#DDAF13] text-white px-8 py-4 rounded-full font-semibold text-lg">
+                    <button className="bg-[#70F468] text-black px-8 py-4 rounded-full font-semibold text-lg">
                         Comprar Ahora
                     </button>
                 </Link>
@@ -52,7 +52,7 @@ const Card: React.FC<CardProps> = ({ image, title, description, link }) => {
 export const Brands = () => {
     return (
         <>
-            <h2 data-aos="fade-up" className="text-5xl font-semibold text-center text-black mb-12">Nuestros Servicios</h2>
+            <h2 data-aos="fade-up" className="text-5xl font-semibold text-center  mb-12">Nuestros Servicios</h2>
             <div className="p-16 text-center">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center">
                     <Card image="/img/modos-de-juego/monedas-logo.png" title="Monedas Seguras" description="Entrega Rápida" link="/monedas" />

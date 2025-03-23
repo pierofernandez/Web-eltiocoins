@@ -5,13 +5,13 @@ export const Reviews = () => {
     return (
         <div className='flex items-center justify-center mt-20 min-w-full flex-wrap gap-20'>
             {/* Tarjeta 1 */}
-            <div className="w-96 h-72 bg-white shadow-md py-6 px-6 rounded-md flex flex-col justify-between ">
+            <div className="w-96 h-72 bg-[#323232] shadow-md py-6 px-6 rounded-md flex flex-col justify-between ">
                 <div className="stars flex gap-2 mb-2">
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
                 </div>
 
                 <div className="flex gap-2 flex-col justify-center items-start ">
@@ -38,13 +38,13 @@ export const Reviews = () => {
             </div>
 
             {/* Tarjeta 2 */}
-            <div className="w-96 h-72 bg-white shadow-md py-6 px-6 rounded-md flex flex-col justify-between ">
+            <div className="w-96 h-72 bg-[#323232] shadow-md py-6 px-6 rounded-md flex flex-col justify-between ">
                 <div className="stars flex gap-2 mb-2">
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
-                    <MdStarBorder className="bi bi-star text-2xl text-slate-800"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
+                    <MdStarBorder className="bi bi-star text-2xl text-slate-400"/> 
                 </div>
 
                 <div className="flex gap-2 flex-col justify-center items-start">
@@ -71,13 +71,13 @@ export const Reviews = () => {
             </div>
 
             {/* Tarjeta 3 */}
-            <div className="w-96 h-72 bg-white shadow-md py-6 px-6 rounded-md flex flex-col justify-between ">
+            <div className="w-96 h-72 bg-[#323232] shadow-md py-6 px-6 rounded-md flex flex-col justify-between ">
                 <div className="stars flex gap-2 mb-2">
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
-                    <MdStar className="bi bi-star text-2xl text-slate-800"/> 
-                    <MdStarBorder className="bi bi-star text-2xl text-slate-800"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
+                    <MdStar className="bi bi-star text-2xl text-slate-400"/> 
+                    <MdStarBorder className="bi bi-star text-2xl text-slate-400"/> 
                 </div>
 
                 <div className="flex gap-2 flex-col justify-center items-start">

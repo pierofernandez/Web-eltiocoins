@@ -66,101 +66,101 @@ export const ComplaintsBook = () => {
             {/* Toaster para mostrar las notificaciones */}
             <Toaster position="top-center" reverseOrder={false} />
 
-            <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-screen-xl bg-white p-8 rounded-lg shadow-lg">
-                <h1 className="text-center mb-7 text-black font-extrabold text-3xl">Libro de Reclamaciones</h1>
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-screen-xl bg-[#323232] p-8 rounded-lg shadow-lg">
+                <h1 className="text-center mb-7 font-extrabold text-3xl">Libro de Reclamaciones</h1>
 
-                <h1 className="text-left mb-7 text-black font-medium">1. Datos del Cliente</h1>
+                <h1 className="text-left mb-7  font-medium">1. Datos del Cliente</h1>
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        <label className="block uppercase tracking-wide  text-xs font-bold mb-2">
                             Nombre Completo
                         </label>
                         <input
                             {...register("name")}
-                            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                            className="appearance-none block w-full bg-gray-200  border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                             placeholder="ejm: Jhon Braulio Sanchez Inga*"
                         />
                         {errors.name && <p className="text-red-500 text-xs italic">{errors.name.message}</p>}
                     </div>
 
                     <div className="w-full md:w-1/2 px-3">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        <label className="block uppercase tracking-wide text-xs font-bold mb-2">
                             E-mail
                         </label>
                         <input
                             {...register("email")}
-                            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                            className="appearance-none block w-full bg-gray-200  border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                             placeholder="ejm: Jhon12@hotmail.com*"
                         />
                         {errors.email && <p className="text-red-500 text-xs italic">{errors.email.message}</p>}
                     </div>
 
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        <label className="block uppercase tracking-wide  text-xs font-bold mb-2">
                             Documento de Identidad (DNI)
                         </label>
                         <input
                             {...register("dni")}
-                            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                            className="appearance-none block w-full bg-gray-200  border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                             placeholder="ejm: 0434834721*"
                         />
                         {errors.dni && <p className="text-red-500 text-xs italic">{errors.dni.message}</p>}
                     </div>
 
                     <div className="w-full md:w-1/2 px-3">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        <label className="block uppercase tracking-wide  text-xs font-bold mb-2">
                             Teléfono
                         </label>
                         <input
                             {...register("phone")}
-                            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                            className="appearance-none block w-full bg-gray-200 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                             placeholder="ejm: 940475937*"
                         />
                         {errors.phone && <p className="text-red-500 text-xs italic">{errors.phone.message}</p>}
                     </div>
                 </div>
 
-                <h1 className="text-left mb-7 text-black font-medium">2. Reclamación y pedido del cliente</h1>
+                <h1 className="text-left mb-7 font-medium">2. Reclamación y pedido del cliente</h1>
 
                 <div className="w-full px-3 mb-6">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                    <label className="block uppercase tracking-wide  text-xs font-bold mb-2">
                         Reclamo / Queja
                     </label>
                     <input
                         {...register("claim_or_complaint")}
-                        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                        className="appearance-none block w-full bg-gray-200 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                         placeholder="ejm: Reclamo / Queja*"
                     />
                     {errors.claim_or_complaint && <p className="text-red-500 text-xs italic">{errors.claim_or_complaint.message}</p>}
                 </div>
 
                 <div className="w-full px-3 mb-6">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                    <label className="block uppercase tracking-wide  text-xs font-bold mb-2">
                         Asunto
                     </label>
                     <input
                         {...register("affair")}
-                        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                        className="appearance-none block w-full bg-gray-200  border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                         placeholder="ejm: No me llegó las monedas*"
                     />
                     {errors.affair && <p className="text-red-500 text-xs italic">{errors.affair.message}</p>}
                 </div>
 
                 <div className="w-full px-3 mb-6">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                    <label className="block uppercase tracking-wide  text-xs font-bold mb-2">
                         Detalles del problema
                     </label>
                     <textarea
                         {...register("details")}
-                        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white h-48 resize-none"
+                        className="appearance-none block w-full bg-gray-200  border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white h-48 resize-none"
                     ></textarea>
                     {errors.details && <p className="text-red-500 text-xs italic">{errors.details.message}</p>}
                 </div>
 
                 {/* Campo de política de privacidad */}
                 <div className="w-full px-3 mb-6">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                    <label className="block uppercase tracking-wide text-xs font-bold mb-2">
                         <input
                             type="checkbox"
                             {...register("privacyPolicy")}
@@ -173,7 +173,7 @@ export const ComplaintsBook = () => {
 
                 <button
                     type="submit"
-                    className="shadow bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded"
+                    className="shadow bg-[#70F468] hover:bg-[#5BD054] text-black font-semibold py-2 px-4 rounded"
                 >
                     Enviar
                 </button>

@@ -31,18 +31,18 @@ export const ContainerFilter = ({
 			<Separator />
 
 			<div className='flex flex-col gap-3'>
-				<h3 className='text-lg font-medium text-black'>Plataformas</h3>
+				<h3 className='text-lg font-medium '>Plataformas</h3>
 
 				<div className='flex flex-col gap-2'>
 					{availablePlatform.map(platform => (
 						<label key={platform} className='inline-flex items-center'>
 							<input
 								type='checkbox'
-								className='text-black border-black focus:ring-black accent-black'
+								className=' border-white focus:ring-white accent-white'
 								checked={selectedPlatforms.includes(platform)}
 								onChange={() => handlePlatformChange(platform)}
 							/>
-							<span className='ml-2 text-black text-sm cursor-pointer'>
+							<span className='ml-2 text-sm cursor-pointer'>
 								{platform}
 							</span>
 						</label>

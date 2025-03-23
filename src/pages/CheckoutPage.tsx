@@ -33,7 +33,7 @@ export const CheckoutPage = () => {
 				minHeight: 'calc(100vh - 100px',
 			}}
 		>
-			<header className='h-[100px] bg-white text-black flex items-center justify-center flex-col px-10 border-b border-slate-200'>
+			<header className='h-[100px] bg-[#151616] text-black flex items-center justify-center flex-col px-10 border-b border-white'>
 				<Link
 					to='/'
 					className='text-4xl font-bold self-center tracking-tighter transition-all md:text-5xl md:self-start'
@@ -67,7 +67,7 @@ export const CheckoutPage = () => {
 						</div>
 
 						<div
-							className='bg-stone-100 w-[50%] sticky top-0 right-0 p-10 hidden md:block'
+							className='bg-[#323232] w-[50%] sticky top-0 right-0 p-10 hidden md:block'
 							style={{
 								minHeight: 'calc(100vh - 100px)',
 							}}

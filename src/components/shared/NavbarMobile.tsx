@@ -9,7 +9,7 @@ export const NavbarMobile = () => {
 	);
 
 	return (
-		<div className='bg-[#DDAF13] text-black h-screen w-full shadow-lg animate-slide-in-left fixed z-50 flex justify-center py-32'>
+		<div className='bg-[#70F468] text-black h-screen w-full shadow-lg animate-slide-in-left fixed z-50 flex justify-center py-32'>
 			<button
 				className='absolute top-5 right-5'
 				onClick={() => setActiveNavMobile(false)}
@@ -24,7 +24,7 @@ export const NavbarMobile = () => {
 					className=' place-items-center transition-all'
 					onClick={() => setActiveNavMobile(false)}
 				>
-					<img src="/public/img/logotiocoins.png" alt="logotiocoins" className='max-w-20' />
+					<img src="/img/logotiocoins.png" alt="logotiocoins" className='max-w-20' />
 
 				</Link>
 
@@ -36,9 +36,9 @@ export const NavbarMobile = () => {
 							className={({ isActive }) => `
                                 ${
 																	isActive
-																		? 'text-white'
+																		? 'text-black'
 																		: ''
-																} transition-all duration-300 font-semibold text-xl hover:text-white
+																} transition-all duration-300 font-semibold text-xl hover:text-[#323232]
                             `}
 							onClick={() => setActiveNavMobile(false)}
 						>

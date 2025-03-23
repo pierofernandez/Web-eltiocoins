@@ -34,7 +34,7 @@ export const Navbar = () => {
 
 			<Banner/>
 			
-			<header className='bg-[#DDAF13] text-black py-4 flex items-center justify-between px-5  border-slate-200 lg:px-12'>
+			<header className='bg-[#70F468] text-black py-4 flex items-center justify-between px-5  lg:px-12'>
 				<Logo />
 
 				<nav className='space-x-5 hidden md:flex'>
@@ -43,8 +43,8 @@ export const Navbar = () => {
 							key={link.id}
 							to={link.href}
 							className={({ isActive }) =>
-								`${isActive ? 'text-white hover:underline' : ''
-								} transition-all duration-300 font-medium hover:text-white hover:underline `
+								`${isActive ? 'text-black hover:underline' : ''
+								} transition-all duration-300 font-medium hover:text-[#323232] hover:underline `
 							}
 						>
 							{link.title}

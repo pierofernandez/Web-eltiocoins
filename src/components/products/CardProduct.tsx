@@ -75,7 +75,7 @@ export const CardProduct = ({
 				</div>
 
 				<button
-					className='bg-white border border-slate-200 absolute w-full bottom-0 py-3 rounded-3xl flex items-center justify-center gap-1 text-sm font-medium hover:bg-stone-100 translate-y-[100%] transition-all duration-300 group-hover:translate-y-0'
+					className='bg-[#323232] hover:text-black text-white absolute w-full bottom-0 py-3 rounded-3xl flex items-center justify-center gap-1 text-sm font-medium hover:bg-[#5BD054] translate-y-[100%] transition-all duration-300 group-hover:translate-y-0'
 					onClick={handleAddClick}
 				>
 					<FiPlus />

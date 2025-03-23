@@ -185,7 +185,7 @@ export const MonedaPage = () => {
 								key={feature}
 								className='text-sm flex items-center gap-2 tracking-tight font-medium'
 							>
-								<span className='bg-black w-[5px] h-[5px] rounded-full' />
+								<span className='bg-white w-[5px] h-[5px] rounded-full' />
 								{feature}
 							</li>
 						))}
@@ -232,11 +232,11 @@ export const MonedaPage = () => {
 							<div className='space-y-3'>
 								<p className='text-sm font-medium'>Cantidad:</p>
 
-								<div className='flex gap-8 px-5 py-3 border border-slate-200 w-fit rounded-full'>
+								<div className='flex gap-8 px-5 py-3 border border-white w-fit rounded-full'>
 									<button onClick={decrement} disabled={count === 1}>
 										<LuMinus size={15} />
 									</button>
-									<span className='text-slate-500 text-sm'>
+									<span className='text-white text-sm'>
 										{count}
 									</span>
 									<button onClick={increment}>
@@ -247,10 +247,10 @@ export const MonedaPage = () => {
 
 							{/* BOTONES ACCIÓN */}
 							<div className='flex flex-col gap-3'>
-								<button className='bg-[#f3f3f3] uppercase font-semibold tracking-widest text-xs py-4 rounded-full transition-all duration-300 hover:bg-[#e2e2e2]' onClick={addToCart}>
+								<button className='bg-[#323232] uppercase font-semibold tracking-widest text-xs py-4 rounded-full transition-all duration-300 hover:bg-[#817e7e]' onClick={addToCart}>
 									Agregar al carro
 								</button>
-								<button className='bg-black text-white uppercase font-semibold tracking-widest text-xs py-4 rounded-full' onClick={buyNow}>
+								<button className='bg-[#5BD054] text-black uppercase font-semibold tracking-widest text-xs py-4 rounded-full' onClick={buyNow}>
 									Comprar ahora
 								</button>
 							</div>

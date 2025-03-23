@@ -33,7 +33,7 @@ export const Banner = () => {
 				<Link
 					to='/monedas'
 					data-aos='zoom-out-left'
-					className='bg-red-700 hover:bg-gray-950 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out'
+					className='bg-[#70F468] hover:bg-[#5BD054] text-black font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out'
 				>
 					Comprar ahora
 				</Link>

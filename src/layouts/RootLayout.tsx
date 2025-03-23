@@ -14,7 +14,7 @@ export const RootLayout = () => {
 	const activeNavMobile = useGlobalStore(state => state.activeNavMobile);
 
 	return (
-		<div className='h-screen flex flex-col font-montserrat'>
+		<div className='h-screen  flex flex-col font-montserrat'>
 			<Navbar />
 
 			{pathname === '/' && <Banner />}

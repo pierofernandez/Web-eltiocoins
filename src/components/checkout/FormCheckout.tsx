@@ -60,7 +60,7 @@ export const FormCheckout = () => {
 				cleanCart();
 				navigate(`/checkout/${order.id}/thank-you`);
 			}
-			
+
 		});
 	});
 
@@ -80,7 +80,7 @@ export const FormCheckout = () => {
 	return (
 		<div>
 			<form className='flex flex-col gap-6' onSubmit={onSubmit}>
-				<div className='flex flex-col gap-3'>
+				<div className='flex flex-col gap-3 '>
 					<h3 className='text-lg font-semibold tracking-normal'>
 						Entrega Inmediata
 					</h3>
@@ -90,6 +90,7 @@ export const FormCheckout = () => {
 						errors={errors}
 						name='state'
 						placeholder='Estado / Provincia'
+						className='text-white outline-none border border-gray-500 p-2 rounded-md'
 					/>
 
 					<InputAddress
@@ -97,6 +98,7 @@ export const FormCheckout = () => {
 						errors={errors}
 						name='city'
 						placeholder='Ciudad'
+						className='text-white outline-none border border-gray-500 p-2 rounded-md'
 					/>
 
 					<InputAddress
@@ -104,23 +106,26 @@ export const FormCheckout = () => {
 						errors={errors}
 						name='postalCode'
 						placeholder='Código Postal (Opcional)'
+						className='text-white outline-none border border-gray-500 p-2 rounded-md'
 					/>
 
+
+
 					<select
-						className='border border-slate-200 rounded-md p-3'
+						className='border border-slate-200 rounded-md p-3 text-white bg-transparent'
 						{...register('country')}
 					>
-						<option value='Ecuador'>Ecuador</option>
-						<option value="'Chile'">Chile</option>
-						<option value="'España'">España</option>
-						<option value="'Honduras'">Honduras</option>
-						<option value="'USA'">USA</option>
-						<option value="'Guatemala'">Guatemala</option>
-						<option value="'Mexico'">Mexico</option>
-						<option value="'Peru'">Peru</option>
-						<option value="'Argentina'">Argentina</option>
-						<option value="'Colombia'">Colombia</option>
-						<option value="'El Salvador'">El Salvador</option>
+						<option className='text-black' value='Ecuador'>Ecuador</option>
+						<option className='text-black' value="'Chile'">Chile</option>
+						<option className='text-black' value="'España'">España</option>
+						<option className='text-black' value="'Honduras'">Honduras</option>
+						<option className='text-black' value="'USA'">USA</option>
+						<option className='text-black' value="'Guatemala'">Guatemala</option>
+						<option className='text-black' value="'Mexico'">Mexico</option>
+						<option className='text-black' value="'Peru'">Peru</option>
+						<option className='text-black' value="'Argentina'">Argentina</option>
+						<option className='text-black' value="'Colombia'">Colombia</option>
+						<option className='text-black' value="'El Salvador'">El Salvador</option>
 
 					</select>
 				</div>
@@ -165,10 +170,10 @@ export const FormCheckout = () => {
 							return actions.order.capture().then((details) => {
 								setIsProcessing(false);
 								console.log("Pago completado:", details);
-		
+
 								// Obtener los valores actuales del formulario
 								const formData = getValues(); // <-- Se obtiene la data correctamente
-		
+
 								// Crear orden en el backend
 								createOrder(
 									{

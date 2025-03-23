@@ -78,16 +78,16 @@ const styles: { [key: string]: React.CSSProperties } = {
     lineHeight: "1",
     fontWeight: "600",
     textAlign: "center",
-    color: "black",
+    color: "white",
     marginBottom: "3rem",
   },
   description: {
     fontSize: "1rem",
-    color: "#555",
+    color: "white",
     marginBottom: "30px",
   },
   link: {
-    color: "#DDAF13",
+    color: "#70F468",
     textDecoration: "none",
     fontWeight: "bold",
   },
@@ -97,7 +97,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     gap: "20px",
   },
   card: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#323232",
     padding: "20px",
     borderRadius: "8px",
     textAlign: "left",
@@ -110,7 +110,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   answer: {
     fontSize: "1rem",
-    color: "#555",
+    color: "gray-900 ",
   },
 };
 

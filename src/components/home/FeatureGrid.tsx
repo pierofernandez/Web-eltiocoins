@@ -16,7 +16,7 @@ export const FeatureGrid = () => {
 
 
 			<div className='flex items-center gap-6 '>
-				<MdLocalShipping size={40} className='text-slate-600' />
+				<MdLocalShipping size={40} className='text-white' />
 
 				<div className='space-y-1'>
 					<p className='font-semibold'>Pedidos al instante</p>
@@ -25,7 +25,7 @@ export const FeatureGrid = () => {
 			</div>
 
 			<div className='flex items-center gap-6'>
-				<HiMiniReceiptRefund size={70} className='text-slate-600' />
+				<HiMiniReceiptRefund size={70} className='text-white' />
 
 				<div className='space-y-1'>
 					<p className='font-semibold'>Devoluciones</p>
@@ -36,7 +36,7 @@ export const FeatureGrid = () => {
 			</div>
 
 			<div className='flex items-center gap-6'>
-				<FaHammer size={40} className='text-slate-600' />
+				<FaHammer size={40} className='text-white' />
 
 				<div className='space-y-1'>
 					<p className='font-semibold'>Soporte 24/7</p>
@@ -47,7 +47,7 @@ export const FeatureGrid = () => {
 			</div>
 
 			<div className='flex items-center gap-6'>
-				<BiWorld size={40} className='text-slate-600' />
+				<BiWorld size={40} className='text-white' />
 
 				<div className='space-y-1'>
 					<p className='font-semibold'>Garantía</p>
