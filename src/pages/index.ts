@@ -10,3 +10,8 @@ export * from './CheckoutPage';
 export * from './ThankyouPage';
 export * from './OrderUserPage';
 export * from './ComplaintsBook';
+export * from './PrivacyPolicy';
+export * from './Refundpolicy';
+export * from './NotFount';
+export * from './ForgotPasswordPage';
+export * from './UpdatePasswordPage';

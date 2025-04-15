@@ -47,16 +47,16 @@ export const createOrder = async (order: OrderInput) => {
 
 	// 3. Guardar la dirección del envío
 	const { data: addressData, error: addressError } = await supabase
-		.from('addresses')
-		.insert({
-            city: order.address.city,
-			state: order.address.state,
-			postal_code: order.address.postalCode,
-			country: order.address.country,
-			customer_id: customerId,
-		})
-		.select()
-		.single();
+    .from('addresses')
+    .insert({
+        city: order.address.city ,
+        state: order.address.state,
+        postal_code: order.address.postalCode,
+        country: order.address.country,
+        customer_id: customerId,
+    })
+    .select()
+    .single();
 
 	if (addressError) {
 		console.log(addressError);
@@ -213,7 +213,7 @@ export const getOrderById = async (orderId: number) => {
 		address: {
 			city: order.addresses?.city,
 			state: order.addresses?.state,
-			postalCode: order.addresses?.postal_code,
+			postalCode: order.addresses?.postalcode,
 			country: order.addresses?.country,
 		},
 		orderItems: order.order_items.map(item => ({

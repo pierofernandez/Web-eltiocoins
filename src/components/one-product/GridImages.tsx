@@ -13,7 +13,7 @@ export const GridImages = ({ images }: Props) => {
 
 	return (
 		<div className='flex-1 flex flex-col gap-3 relative'>
-			<div className='bg-[#bbbaba] h-[500px] p-4'>
+			<div className='lg:h-[500px]'>
 				<img
 					src={activeImage}
 					alt='Imagen de Producto'

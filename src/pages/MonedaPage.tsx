@@ -215,7 +215,6 @@ export const MonedaPage = () => {
 						</div>
 					</div>
 
-					{/* OPCIONES DE ALMACENAMIENTO */}
 
 
 					{/* COMPRAR */}
@@ -280,7 +279,7 @@ export const MonedaPage = () => {
 			</div>
 
 			{/* DESCRIPCIÓN */}
-			<ProductDescription content={product.description} />
+			<ProductDescription  content={product.description} />
 		</>
 	);
 };

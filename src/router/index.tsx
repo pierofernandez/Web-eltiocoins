@@ -1,12 +1,15 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RootLayout } from "../layouts/RootLayout";
-import { HomePage, DivisionRivalsPage, FutChampionsPage, MonedasPage, MonedaPage, LoginPage, RegisterPage, OrdersUserPage, CheckoutPage, ThankyouPage, OrderUserPage, ComplaintsBook } from "../pages";
+import { HomePage, DivisionRivalsPage, FutChampionsPage, MonedasPage, MonedaPage, LoginPage, RegisterPage, OrdersUserPage, ThankyouPage, OrderUserPage, ComplaintsBook } from "../pages";
 import { FutChampionPage } from "../pages/FutChampionPage";
 import { DivisionRivalPage } from "../pages/DivisionRivalPage";
 import { ClientLayout } from "../layouts/ClientLayout";
 import { PrivacyPolicy } from "../pages/PrivacyPolicy";
 import { Refundpolicy } from "../pages/Refundpolicy";
 import { NotFound } from "../pages/NotFount";
+import { ForgotPasswordPage } from "../pages/ForgotPasswordPage";
+import { UpdatePasswordPage } from "../pages/UpdatePasswordPage";
+import { CheckoutPage } from "../pages/CheckoutPage";
 
 export const router = createBrowserRouter([
     {
@@ -51,6 +54,14 @@ export const router = createBrowserRouter([
                 element: <RegisterPage />
             },
             {
+                path: 'forgot-password',
+                element: <ForgotPasswordPage/>
+            },
+            {
+                path: 'update-password',
+                element: <UpdatePasswordPage/>
+            },
+            {
                 path: 'privacypolicy',
                 element: <PrivacyPolicy />
             },
@@ -89,8 +100,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/checkout',
-        element: <CheckoutPage />
-        
+        element: <CheckoutPage />,
     },
     {
         path: '/checkout/:id/thank-you',

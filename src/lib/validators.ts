@@ -18,7 +18,7 @@ export const addressSchema = z.object({
 		.string()
 		.min(1, 'El estado es requerido')
 		.max(50, 'El estado no debe exceder los 50 carácteres'),
-	postalCode: z
+	postalcode: z
 		.string()
 		.max(10, 'El código postal no debe exceder los 10 carácteres')
 		.optional(),
