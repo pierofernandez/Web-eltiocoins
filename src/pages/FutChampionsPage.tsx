@@ -27,9 +27,27 @@ export const FutChampionsPage = () => {
 
 	return (
 		<>
-			<h1 className='text-5xl font-semibold text-center mb-12'>
-				Fut Champions
-			</h1>
+			{/* Título Gaming Moderno */}
+			<section className="py-12 px-4 sm:px-6 lg:px-8 relative">
+				<div className="max-w-7xl mx-auto">
+					<div className="text-center mb-8">
+						<div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full mb-6">
+							<div className="w-2 h-2 bg-purple-300 rounded-full animate-pulse"></div>
+							<span className="text-white text-sm font-medium tracking-wider uppercase">Elite</span>
+						</div>
+						<h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
+							<span className="bg-gradient-to-r from-purple-400 via-blue-500 to-cyan-500 bg-clip-text text-transparent">
+							 FUT
+							</span>
+							<br />
+							<span className="text-white drop-shadow-lg">
+							 CHAMPIONS
+							</span>
+						</h1>
+						<div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-blue-500 mx-auto rounded-full"></div>
+					</div>
+				</div>
+			</section>
 
 			<div className='grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'>
 				{/* FILTROS */}

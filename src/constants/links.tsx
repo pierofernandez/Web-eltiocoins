@@ -21,6 +21,11 @@ export const navbarLinks = [
         title: 'Boosting División Rivals',
         href: '/divisionrivals',
     },
+    {
+        id: 5,
+        title: '¿Cómo Comprar?',
+        href: '/paso-a-paso',
+    },
     
 ];
 

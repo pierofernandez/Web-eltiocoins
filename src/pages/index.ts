@@ -15,3 +15,4 @@ export * from './Refundpolicy';
 export * from './NotFount';
 export * from './ForgotPasswordPage';
 export * from './UpdatePasswordPage';
+export * from './PasoAPasoPage';

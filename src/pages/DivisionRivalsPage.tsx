@@ -27,9 +27,27 @@ export const DivisionRivalsPage = () => {
 
 	return (
 		<>
-			<h1 className='text-5xl font-semibold text-center mb-12'>
-				Division Rivals
-			</h1>
+			{/* Título Gaming Moderno */}
+			<section className="py-12 px-4 sm:px-6 lg:px-8 relative">
+				<div className="max-w-7xl mx-auto">
+					<div className="text-center mb-8">
+						<div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full mb-6">
+							<div className="w-2 h-2 bg-green-300 rounded-full animate-pulse"></div>
+							<span className="text-white text-sm font-medium tracking-wider uppercase">Rivals</span>
+						</div>
+						<h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
+							<span className="bg-gradient-to-r from-green-400 via-emerald-500 to-teal-500 bg-clip-text text-transparent">
+							 DIVISION
+							</span>
+							<br />
+							<span className="text-white drop-shadow-lg">
+							 RIVALS
+							</span>
+						</h1>
+						<div className="w-24 h-1 bg-gradient-to-r from-green-400 to-emerald-500 mx-auto rounded-full"></div>
+					</div>
+				</div>
+			</section>
 
 			<div className='grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'>
 				{/* FILTROS */}

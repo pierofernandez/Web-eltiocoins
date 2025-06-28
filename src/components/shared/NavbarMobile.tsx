@@ -9,7 +9,7 @@ export const NavbarMobile = () => {
 	);
 
 	return (
-		<div className='bg-[#70F468] text-black h-screen w-full shadow-lg animate-slide-in-left fixed z-50 flex justify-center py-32'>
+		<div className='bg-[#00F964] text-black h-screen w-full shadow-lg animate-slide-in-left fixed z-50 flex justify-center py-32'>
 			<button
 				className='absolute top-5 right-5'
 				onClick={() => setActiveNavMobile(false)}
@@ -38,7 +38,7 @@ export const NavbarMobile = () => {
 																	isActive
 																		? 'text-black'
 																		: ''
-																} transition-all duration-300 font-semibold text-xl hover:text-[#323232]
+																} transition-all duration-300 font-semibold text-xl hover:text-[white]
                             `}
 							onClick={() => setActiveNavMobile(false)}
 						>

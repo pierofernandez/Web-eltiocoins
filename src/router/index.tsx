@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RootLayout } from "../layouts/RootLayout";
-import { HomePage, DivisionRivalsPage, FutChampionsPage, MonedasPage, MonedaPage, LoginPage, RegisterPage, OrdersUserPage, ThankyouPage, OrderUserPage, ComplaintsBook } from "../pages";
+import { HomePage, DivisionRivalsPage, FutChampionsPage, MonedasPage, MonedaPage, LoginPage, RegisterPage, OrdersUserPage, ThankyouPage, OrderUserPage, ComplaintsBook, PasoAPasoPage } from "../pages";
 import { FutChampionPage } from "../pages/FutChampionPage";
 import { DivisionRivalPage } from "../pages/DivisionRivalPage";
 import { ClientLayout } from "../layouts/ClientLayout";
@@ -43,6 +43,10 @@ export const router = createBrowserRouter([
             {
                 path: 'divisionrivals/:slug',
                 element: <DivisionRivalPage />
+            },
+            {
+                path: 'paso-a-paso',
+                element: <PasoAPasoPage />
             },
             
             {

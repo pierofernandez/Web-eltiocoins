@@ -38,8 +38,8 @@ export const Navbar = () => {
 				<div className='w-full flex justify-between items-center mb-3'>
 					<Logo/>
 
-					{/* Buscador centrado con ícono funcional */}
-					<div className="flex-1 flex justify-center">
+					{/* Buscador centrado solo en desktop */}
+					<div className="hidden sm:flex flex-1 justify-center">
 						<div
 							onClick={() => openSheet('search')}
 							className="flex items-center bg-zinc-800 border border-zinc-600 rounded-md px-3 py-2 w-full max-w-2xl cursor-text hover:ring-2 hover:ring-green-400 transition"
@@ -55,18 +55,26 @@ export const Navbar = () => {
 					</div>
 
 					<div className='flex items-center gap-5 ml-4'>
+						{/* Icono de búsqueda solo en móviles */}
+						<button
+							className='sm:hidden'
+							onClick={() => openSheet('search')}
+						>
+							<HiOutlineSearch size={30} className="hover:text-green-400 transition" />
+						</button>
+
 						{isLoading ? (
-							<LuLoaderCircle className='animate-spin' size={22} />
+							<LuLoaderCircle className='animate-spin' size={30} />
 						) : session ? (
 							<Link
 								to='/account'
-								className='w-9 h-9 rounded-full bg-zinc-800 text-white grid place-items-center font-semibold border border-zinc-600 hover:border-green-400 transition'
+								className='w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-zinc-800 text-white grid place-items-center font-semibold border border-zinc-600 hover:border-green-400 transition text-sm sm:text-base'
 							>
 								{customer && customer.full_name[0]}
 							</Link>
 						) : (
 							<Link to='/login'>
-								<PiUserLight size={40} className="hover:text-green-400 transition" />
+								<PiUserLight size={30} className="hover:text-green-400 transition" />
 							</Link>
 						)}
 
@@ -77,14 +85,14 @@ export const Navbar = () => {
 							<span className='absolute -bottom-2 -right-2 w-5 h-5 bg-green-400 text-black text-xs rounded-full grid place-items-center font-bold'>
 								{totalItemsInCart}
 							</span>
-							<GiShoppingCart size={40} className="hover:text-green-400 transition" />
+							<GiShoppingCart size={30} className="hover:text-green-400 transition" />
 						</button>
 
 						<button
 							className='md:hidden ml-2'
 							onClick={() => setActiveNavMobile(true)}
 						>
-							<FaBarsStaggered size={22} className="hover:text-green-400 transition" />
+							<FaBarsStaggered size={30} className="hover:text-green-400 transition" />
 						</button>
 					</div>
 				</div>
