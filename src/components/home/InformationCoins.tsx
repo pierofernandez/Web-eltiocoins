@@ -1,171 +1,333 @@
-
 export const InformationCoins = () => {
+    console.log('InformationCoins component is rendering');
     return (
-        <>
-            <h1 className=" mt-40 text-3xl font-bold mb-6">¿Qué son las monedas EA FC 25?
+        <div className="relative py-16 md:py-24">
+            {/* Background gaming effect */}
+            
+            <div className="relative z-10">
+                {/* Header Section */}
+                <div className="text-center mb-16">
+                    <h1 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
+                        ¿Qué son las monedas EA FC 25?
+                    </h1>
+                    <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 mx-auto rounded-full"></div>
+                </div>
 
-            </h1>
-            <div className="w-full max-w-9xl mx-auto p-8 rounded-lg bg-[#323232] shadow-md ">
-                <p className="mb-6">
-                    Las FC 25 Coins son una moneda virtual que se utiliza en el modo FC 25 Ultimate Team (FUT) de la serie de videojuegos FC desarrollada por EA Sports. Los jugadores usan FC Coins para comprar sobres, canjear por mejores jugadores y mejorar sus equipos.
+                {/* Main Content */}
+                <div className="max-w-6xl mx-auto px-4 space-y-12">
+                    {/* First Section */}
+                    <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-2xl blur-xl"></div>
+                        <div className="relative bg-gradient-to-br from-gray-900/90 via-gray-800/90 to-gray-900/90 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 shadow-2xl">
+                            <div className="flex items-center mb-6">
+                                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4">
+                                    <span className="text-2xl">🪙</span>
+                                </div>
+                                <h2 className="text-2xl font-bold text-white">Monedas Virtuales</h2>
+                            </div>
+                            <p className="text-gray-300 leading-relaxed text-lg">
+                                Las FC 25 Coins son una moneda virtual que se utiliza en el modo FC 25 Ultimate Team (FUT) de la serie de videojuegos FC desarrollada por EA Sports. Los jugadores usan FC Coins para comprar sobres, canjear por mejores jugadores y mejorar sus equipos.
+                            </p>
+                        </div>
+                    </div>
 
-                </p>
+                    {/* Gaming Methods Section */}
+                    <div className="text-center mb-16">
+                        <h1 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-green-400 via-emerald-500 to-teal-600 bg-clip-text text-transparent drop-shadow-lg">
+                            ¿Cómo conseguir monedas EA FC 25?
+                        </h1>
+                        <div className="w-24 h-1 bg-gradient-to-r from-green-400 to-teal-600 mx-auto rounded-full"></div>
+                    </div>
 
-                <h2 className="text-2xl font-semibold mt-8 mb-4">Ganar monedas FC:</h2>
-                <p className="mb-6">
-                    los jugadores pueden ganar monedas FC jugando partidos, completando desafíos e intercambiando artículos en el mercado de transferencias del juego. También pueden vender jugadores, consumibles y otros artículos de su club para ganar más monedas.
-                </p>
-                <h2 className="text-2xl font-semibold mt-8 mb-4">Uso de FC Coins:</h2>
-                <p className="mb-6">
-                    el uso principal de FC Coins es comprar paquetes de jugadores en la tienda o comprar jugadores y otros artículos en el mercado de transferencias. Esto ayuda a los jugadores a construir equipos más fuertes mediante la adquisición de mejores jugadores y artículos.                </p>
+                    {/* Methods Grid */}
+                    <div className="grid md:grid-cols-2 gap-8">
+                        {/* Method 1 */}
+                        <div className="group">
+                            <div className="relative bg-gradient-to-br from-green-900/90 via-emerald-800/90 to-green-900/90 backdrop-blur-sm border border-green-700/50 rounded-2xl p-6 shadow-2xl hover:shadow-green-500/20 transition-all duration-300 hover:scale-105">
+                                <div className="flex items-center mb-4">
+                                    <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg flex items-center justify-center mr-3">
+                                        <span className="text-xl">⚽</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white">Jugando Partidos</h3>
+                                </div>
+                                <ul className="space-y-3 text-gray-300">
+                                    <li className="flex items-start">
+                                        <span className="w-2 h-2 bg-green-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                        <span><strong className="text-green-400">Division Rivals:</strong> compite para ganar monedas y recompensas semanales</span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <span className="w-2 h-2 bg-green-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                        <span><strong className="text-green-400">Squad Battles:</strong> juega contra IA para obtener recompensas</span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <span className="w-2 h-2 bg-green-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                        <span><strong className="text-green-400">FUT Champions:</strong> participa en la liga de fin de semana</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
-                <h2 className="text-2xl font-semibold mt-8 mb-4">Compra y venta:</h2>
-                <p className="mb-6">
-                    en el mercado de transferencias, los jugadores pueden poner a la venta artículos y establecer un precio inicial y un precio de "compra inmediata". Otros jugadores pueden pujar por estos artículos o comprarlos inmediatamente al precio de "compra inmediata".                </p>
+                        {/* Method 2 */}
+                        <div className="group">
+                            <div className="relative bg-gradient-to-br from-blue-900/90 via-indigo-800/90 to-blue-900/90 backdrop-blur-sm border border-blue-700/50 rounded-2xl p-6 shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 hover:scale-105">
+                                <div className="flex items-center mb-4">
+                                    <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center mr-3">
+                                        <span className="text-xl">🎯</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white">Objetivos y Desafíos</h3>
+                                </div>
+                                <ul className="space-y-3 text-gray-300">
+                                    <li className="flex items-start">
+                                        <span className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                        <span><strong className="text-blue-400">Objetivos diarios:</strong> completa desafíos para recompensas</span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <span className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                        <span><strong className="text-blue-400">Objetivos de temporada:</strong> desafíos a largo plazo con grandes recompensas</span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <span className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                        <span><strong className="text-blue-400">SBC:</strong> completa desafíos de creación de escuadrones</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
-                <h2 className="text-2xl font-semiboldmt-8 mb-4">Puntos y monedas de FC:</h2>
-                <p className="mb-6">
-                    Las dos monedas principales de FC 25 son las monedas de FC 25 y los puntos. Los puntos FIFA son la moneda premium del juego. Solo se pueden comprar con dinero real. Por lo tanto, para la mayoría de los jugadores, las monedas de EA FC 25 son el pan de cada día del juego. Todo lo relacionado con FIFA Ultimate Team requiere monedas.                </p>
+                        {/* Method 3 */}
+                        <div className="group">
+                            <div className="relative bg-gradient-to-br from-purple-900/90 via-violet-800/90 to-purple-900/90 backdrop-blur-sm border border-purple-700/50 rounded-2xl p-6 shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 hover:scale-105">
+                                <div className="flex items-center mb-4">
+                                    <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-violet-600 rounded-lg flex items-center justify-center mr-3">
+                                        <span className="text-xl">💼</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white">Mercado de Transferencias</h3>
+                                </div>
+                                <ul className="space-y-3 text-gray-300">
+                                    <li className="flex items-start">
+                                        <span className="w-2 h-2 bg-purple-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                        <span><strong className="text-purple-400">Comprar barato, vender caro:</strong> estrategia de trading</span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <span className="w-2 h-2 bg-purple-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                        <span><strong className="text-purple-400">Invertir:</strong> en jugadores que aumenten su valor</span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <span className="w-2 h-2 bg-purple-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                        <span><strong className="text-purple-400">Vender artículos:</strong> jugadores, consumibles y más</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
+                        {/* Method 4 */}
+                        <div className="group">
+                            <div className="relative bg-gradient-to-br from-orange-900/90 via-amber-800/90 to-orange-900/90 backdrop-blur-sm border border-orange-700/50 rounded-2xl p-6 shadow-2xl hover:shadow-orange-500/20 transition-all duration-300 hover:scale-105">
+                                <div className="flex items-center mb-4">
+                                    <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-amber-600 rounded-lg flex items-center justify-center mr-3">
+                                        <span className="text-xl">🚀</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white">Boosters y Bonificaciones</h3>
+                                </div>
+                                <ul className="space-y-3 text-gray-300">
+                                    <li className="flex items-start">
+                                        <span className="w-2 h-2 bg-orange-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                        <span><strong className="text-orange-400">Catálogo EA Sports:</strong> compra boosters de monedas</span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <span className="w-2 h-2 bg-orange-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                        <span><strong className="text-orange-400">Progreso de temporada:</strong> recompensas con mejoras de monedas</span>
+                                    </li>
+                                    <li className="flex items-start">
+                                        <span className="w-2 h-2 bg-orange-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                        <span><strong className="text-orange-400">Eventos especiales:</strong> bonificaciones temporales</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Why Buy Section */}
+                    <div className="text-center mb-16">
+                        <h1 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-600 bg-clip-text text-transparent drop-shadow-lg">
+                            ¿Por qué comprar EA FC Coins?
+                        </h1>
+                        <div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-red-600 mx-auto rounded-full"></div>
+                    </div>
+
+                    {/* Benefits Grid */}
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {[
+                            {
+                                icon: "⚡",
+                                title: "Equipo Competitivo",
+                                description: "Construye rápidamente un equipo de alto nivel para dominar la competencia",
+                                color: "from-yellow-500 to-orange-600",
+                                bgColor: "from-yellow-900/90 via-orange-800/90 to-yellow-900/90",
+                                borderColor: "border-yellow-700/50",
+                                shadowColor: "hover:shadow-yellow-500/20",
+                                textColor: "text-yellow-400"
+                            },
+                            {
+                                icon: "⏰",
+                                title: "Ahorra Tiempo",
+                                description: "Para jugadores con tiempo limitado, comprar monedas es la solución perfecta",
+                                color: "from-blue-500 to-cyan-600",
+                                bgColor: "from-blue-900/90 via-cyan-800/90 to-blue-900/90",
+                                borderColor: "border-blue-700/50",
+                                shadowColor: "hover:shadow-blue-500/20",
+                                textColor: "text-blue-400"
+                            },
+                            {
+                                icon: "🎉",
+                                title: "Promociones Especiales",
+                                description: "Aprovecha eventos limitados y jugadores exclusivos disponibles por tiempo limitado",
+                                color: "from-purple-500 to-pink-600",
+                                bgColor: "from-purple-900/90 via-pink-800/90 to-purple-900/90",
+                                borderColor: "border-purple-700/50",
+                                shadowColor: "hover:shadow-purple-500/20",
+                                textColor: "text-purple-400"
+                            },
+                            {
+                                icon: "🏆",
+                                title: "Ventaja Competitiva",
+                                description: "Accede a los mejores jugadores para competir en divisiones superiores",
+                                color: "from-green-500 to-emerald-600",
+                                bgColor: "from-green-900/90 via-emerald-800/90 to-green-900/90",
+                                borderColor: "border-green-700/50",
+                                shadowColor: "hover:shadow-green-500/20",
+                                textColor: "text-green-400"
+                            },
+                            {
+                                icon: "😊",
+                                title: "Disfrute Personal",
+                                description: "Forma el equipo de tus sueños con tus jugadores favoritos",
+                                color: "from-pink-500 to-rose-600",
+                                bgColor: "from-pink-900/90 via-rose-800/90 to-pink-900/90",
+                                borderColor: "border-pink-700/50",
+                                shadowColor: "hover:shadow-pink-500/20",
+                                textColor: "text-pink-400"
+                            },
+                            {
+                                icon: "🎮",
+                                title: "Menos Frustración",
+                                description: "Evita la aleatoriedad de los paquetes con una ruta directa hacia el éxito",
+                                color: "from-indigo-500 to-purple-600",
+                                bgColor: "from-indigo-900/90 via-purple-800/90 to-indigo-900/90",
+                                borderColor: "border-indigo-700/50",
+                                shadowColor: "hover:shadow-indigo-500/20",
+                                textColor: "text-indigo-400"
+                            }
+                        ].map((benefit, index) => (
+                            <div key={index} className="group">
+                                <div className={`relative bg-gradient-to-br ${benefit.bgColor} backdrop-blur-sm border ${benefit.borderColor} rounded-2xl p-6 shadow-2xl ${benefit.shadowColor} transition-all duration-300 hover:scale-105 h-full`}>
+                                    <div className="flex items-center mb-4">
+                                        <div className={`w-12 h-12 bg-gradient-to-r ${benefit.color} rounded-xl flex items-center justify-center mr-3`}>
+                                            <span className="text-2xl">{benefit.icon}</span>
+                                        </div>
+                                        <h3 className="text-lg font-bold text-white">{benefit.title}</h3>
+                                    </div>
+                                    <p className="text-gray-300 leading-relaxed">{benefit.description}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Trust Section */}
+                    <div className="text-center mb-16">
+                        <h1 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 bg-clip-text text-transparent drop-shadow-lg">
+                            El Lugar Más Confiable
+                        </h1>
+                        <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-indigo-600 mx-auto rounded-full"></div>
+                    </div>
+
+                    {/* Trust Content */}
+                    <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/10 to-indigo-600/10 rounded-2xl blur-xl"></div>
+                        <div className="relative bg-gradient-to-br from-gray-900/90 via-gray-800/90 to-gray-900/90 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 shadow-2xl">
+                            <div className="flex items-center justify-center mb-8">
+                                <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-indigo-600 rounded-2xl flex items-center justify-center mr-4">
+                                    <span className="text-3xl">🛡️</span>
+                                </div>
+                                <h2 className="text-3xl font-bold text-white">eltiocoins.com</h2>
+                            </div>
+                            
+                            <div className="grid md:grid-cols-2 gap-8">
+                                <div className="space-y-4">
+                                    <div className="flex items-start">
+                                        <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg flex items-center justify-center mr-3 mt-1">
+                                            <span className="text-white text-sm">✓</span>
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-white mb-2">5 Años de Experiencia</h3>
+                                            <p className="text-gray-300">Plataforma líder con miles de clientes satisfechos en todas las plataformas</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex items-start">
+                                        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center mr-3 mt-1">
+                                            <span className="text-white text-sm">✓</span>
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-white mb-2">Servicio 24/7</h3>
+                                            <p className="text-gray-300">Entrega de monedas y atención al cliente disponible todo el año</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex items-start">
+                                        <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mr-3 mt-1">
+                                            <span className="text-white text-sm">✓</span>
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-white mb-2">Comfort Trade</h3>
+                                            <p className="text-gray-300">Método de entrega seguro y verificado para proteger tus activos</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="space-y-4">
+                                    <div className="flex items-start">
+                                        <div className="w-8 h-8 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-lg flex items-center justify-center mr-3 mt-1">
+                                            <span className="text-white text-sm">✓</span>
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-white mb-2">Precios Más Bajos</h3>
+                                            <p className="text-gray-300">Investigación diaria de mercado para ofrecer los mejores precios</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex items-start">
+                                        <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-600 rounded-lg flex items-center justify-center mr-3 mt-1">
+                                            <span className="text-white text-sm">✓</span>
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-white mb-2">Entrega Ultrarrápida</h3>
+                                            <p className="text-gray-300">Equipo profesional que completa pedidos en tiempo récord</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex items-start">
+                                        <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mr-3 mt-1">
+                                            <span className="text-white text-sm">✓</span>
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-white mb-2">Comunidad Activa</h3>
+                                            <p className="text-gray-300">Únete a WhatsApp para ganar monedas gratis semanalmente</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="mt-8 p-6 bg-gradient-to-r from-cyan-600/20 to-indigo-600/20 rounded-xl border border-cyan-500/30">
+                                <p className="text-center text-gray-300 text-lg leading-relaxed">
+                                    <strong className="text-cyan-400">¡Bienvenido a eltiocoins!</strong> A partir de ahora, eres nuestro cliente más afortunado. 
+                                    Compra FC 25 Coins de forma rápida, económica y segura en la plataforma más confiable del mercado.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h1 className="mt-10 text-3xl font-bold mb-6">¿Cómo conseguir 25 monedas EA FC? </h1>
-            <div className="w-full max-w-9xl mx-auto p-8 bg-[#323232] rounded-lg shadow-md ">
-                <p className=" mb-6">
-                    Para conseguir monedas de FC en el modo FC Ultimate Team (FUT), puedes seguir varios métodos, tanto a través del juego como del intercambio. Estas son algunas de las principales formas de ganar monedas de FIFA:
-
-                </p>
-
-                <h2 className="text-2xl font-semibold mt-8 mb-4">1. Jugando partidos
-
-                </h2>
-                <ul className="list-disc list-inside mb-6">
-                    <li><strong className="">Division Rivals:</strong> compite en partidos de División Rivales para ganar monedas y recompensas semanales.</li>
-                    <li><strong className="">Squad Battles:</strong>  juega contra equipos controlados por la IA en Squad Battles para obtener monedas y recompensas semanales.</li>
-                    <li><strong className="">FUT Champions:</strong> participa en la liga de fin de semana de FUT Champions para obtener importantes recompensas si tienes un buen desempeño.</li>
-                    <li><strong className="">Friendly Matches:</strong> jugar partidos amistosos con amigos también puede ayudarte a ganar monedas, aunque las recompensas generalmente son más bajas.</li>
-                </ul>
-
-                <h2 className="text-2xl font-semibold  mt-8 mb-4">2. Cumplimiento de objetivos e hitos
-
-                </h2>
-                <ul className="list-disc list-inside  mb-6">
-                    <li><strong className="">Objetivos diarios y semanales:</strong> completa varios desafíos y objetivos para obtener recompensas de monedas.</li>
-                    <li><strong className="">Objetivos de temporada: </strong> estos objetivos a largo plazo suelen ofrecer recompensas importantes, incluidas monedas, paquetes y jugadores.</li>
-                </ul>
-
-                <h2 className="text-2xl font-semiboldmt-8 mb-4">3. Negociación en el mercado de fichajes
-
-                </h2>
-                <ul className="list-disc list-inside  mb-6">
-                    <li><strong className=""> Comprar barato, vender caro:</strong> compra jugadores y artículos a precios más bajos y véndelos a precios más altos para obtener ganancias.</li>
-                    <li><strong className="">Cambiar jugadores:</strong> identificar jugadores infravalorados, comprarlos y revenderlos a un precio más alto.</li>
-                    <li><strong className="">Invertir: </strong>invierte en jugadores y artículos que esperas que aumenten su valor con el tiempo, especialmente después de eventos o nuevos lanzamientos de SBC.</li>
-                </ul>
-
-                <h2 className="text-2xl font-semibold  mt-8 mb-4">4. Completar desafíos de creación de escuadrones (SBC)
-
-
-                </h2>
-                <ul className="list-disc list-inside  mb-6">
-                    <li><strong className=""> SBC básicos y avanzados:</strong>  completa estos desafíos para obtener recompensas de paquetes que se pueden vender por monedas.</li>
-                    <li><strong className="">SBC promocionales:</strong> durante las promociones, los SBC especiales pueden ofrecer paquetes valiosos y artículos para los jugadores.</li>
-                </ul>
-
-                <h2 className="text-2xl font-semibold mt-8 mb-4">5. Venta de artículos no deseados
-
-
-
-
-                </h2>
-                <ul className="list-disc list-inside mb-6">
-                    <li><strong className="">Jugadores: </strong>  enumera los jugadores que no necesitas en el mercado de transferencias.</li>
-                    <li><strong className="">Consumibles:</strong> Vende contratos, tarjetas de fitness, estilos de química y otros consumibles.</li>
-                    <li><strong className="">Artículos del club: </strong>  También se pueden vender uniformes, escudos, estadios y otros artículos del club.</li>
-
-                </ul>
-
-                <h2 className="text-2xl font-semibold mt-8 mb-4">6. Ganar aumentos de monedas
-
-                </h2>
-                <ul className="list-disc list-inside mb-6">
-                    <li><strong className="">Catálogo de EA Sports: </strong> compra artículos de aumento de monedas del Catálogo de EA Sports (si está disponible) para aumentar tus ganancias de monedas por partido.</li>
-                    <li><strong className="">Progreso de la temporada: </strong>algunas recompensas de temporada incluyen mejoras de monedas, lo que aumenta la cantidad de monedas obtenidas por partido durante una cierta cantidad de juegos.</li>
-
-                </ul>
-            </div>
-
-            <h1 className="mt-10 text-3xl font-bold mb-6">¿Por qué deberías comprar EA FC Coin?    </h1>
-            <div className="w-full max-w-9xl mx-auto p-8 bg-[#323232] rounded-lg shadow-md ">
-                <p className=" mb-6">
-                    Si bien ganar EA FC Coins a través del juego y el comercio es el método más común, algunos jugadores pueden considerar comprar FC Coins por diversas razones.
-                </p>
-                <h2 className="text-2xl font-semibold mt-8 mb-4">1. Construir rápidamente un equipo competitivo
-                </h2>
-                <ul className="list-disc list-inside mb-6">
-                    <li><strong className=""> Mejora inmediata: </strong>  comprar monedas permite a los jugadores comprar jugadores de alta calificación y mejorar su equipo rápidamente, haciéndolos más competitivos en los partidos en línea.</li>
-                    <li><strong className="">Mejores jugadores: </strong>  los jugadores pueden adquirir jugadores de primer nivel, lo que puede mejorar significativamente el rendimiento de su equipo.</li>
-                </ul>
-
-                <h2 className="text-2xl font-semibold mt-8 mb-4">2. Limitaciones de tiempo
-                </h2>
-                <ul className="list-disc list-inside  mb-6">
-                    <li><strong className="">Tiempo de juego limitado:</strong> los jugadores que no tienen mucho tiempo para invertir en jugar partidos o negociar en el mercado de transferencias pueden optar por comprar monedas para mejorar su equipo sin pasar horas jugando.
-
-                    </li>
-                </ul>
-
-                <h2 className="text-2xl font-semibold  mt-8 mb-4">3. Participación en promociones
-                </h2>
-                <ul className="list-disc list-inside  mb-6">
-                    <li><strong className=""> Eventos especiales:</strong> durante las promociones y los eventos especiales, suele haber jugadores y paquetes disponibles por tiempo limitado. Tener una gran cantidad de monedas puede ayudar a los jugadores a aprovechar estas oportunidades.</li>
-                </ul>
-
-                <h2 className="text-2xl font-semibold  mt-8 mb-4">4. Ventaja competitiva
-                </h2>
-                <ul className="list-disc list-inside  mb-6">
-                    <li><strong className=""> Divisiones superiores:</strong>   para quienes quieran competir en divisiones superiores o en FUT Champions, es fundamental contar con un equipo fuerte. Las monedas se pueden usar para comprar a los mejores jugadores y consumibles para obtener una ventaja.</li>
-                </ul>
-
-                <h2 className="text-2xl font-semiboldmt-8 mb-4">5. Disfrute y satisfacción
-
-                </h2>
-                <ul className="list-disc list-inside mb-6">
-                    <li><strong className=""> Disfrute personal: </strong> algunos jugadores disfrutan más del juego al tener acceso a sus jugadores favoritos y formar el equipo de sus sueños, lo que se puede facilitar comprando monedas.</li>
-
-                </ul>
-
-                <h2 className="text-2xl font-semibold  mt-8 mb-4">6. Evitar la frustración
-                </h2>
-                <ul className="list-disc list-inside  mb-6">
-                    <li><strong className="">Menos frustración: </strong> crear un equipo competitivo solo a través del juego puede resultar frustrante debido a la aleatoriedad de las recompensas de los paquetes. Comprar monedas ofrece una ruta más directa para adquirir los jugadores deseados.</li>
-
-                </ul>
-            </div>
-
-
-            <h1 className="mt-10 text-3xl font-bold mb-6">El lugar seguro y confiable para comprar monedas FC 25 - eltiocoins</h1>
-            <div className="w-full max-w-9xl mx-auto p-8 bg-[#323232] rounded-lg shadow-md ">
-                <p className=" mb-6">
-                Ahora ya sabes por qué deberías conseguir monedas FUT. Lo único que necesitas es un sitio web fiable para realizar los pedidos. ¡Felicitaciones! Ya estás en el lugar correcto. eltiocoins es una plataforma en línea líder para monedas EA FC baratas con 5 años de experiencia. Innumerables jugadores de todas las plataformas han mejorado su experiencia de juego aquí. Ofrecemos un servicio de entrega de monedas FC las 24 horas del día, los 7 días de la semana y atención al cliente para jugadores de FC PS/Xbox/PC durante todo el año. Compra monedas FIFA 25 baratas de eltiocoins hoy y serás nuestro próximo cliente habitual.                </p>
-
-                <p className="mb-6">
-                El método de entrega predeterminado de las monedas FC 25 UT es Comfort Trade. Con este método, solo tienes que esperar a que nuestro comerciante entregue tu pedido. Los desarrolladores no recomiendan comprar monedas, pero nuestro método de entrega verificado y confiable garantizará la seguridad de tus activos de juego si compras monedas FUT 25 en eltiocoins Por lo tanto, puedes realizar tu pedido con confianza.
-                </p>
-
-                <p className="mb-6">
-                eltiocoins.com siempre vende las monedas FC 25 con el precio más bajo de todo el mercado. Esto no se debe únicamente a nuestro excelente equipo de investigación de mercado, que insiste en comparar precios todos los días, sino también al apoyo constante de muchos jugadores, lo que nos da una motivación ilimitada. Eso no es todo, los jugadores de FC también pueden disfrutar de descuentos festivos, ofertas especiales y grandes obsequios semanales.
-                </p>
-
-                <p className=" mb-6">
-                La ventaja de eltiocoins.com en términos de entrega no es solo la garantía absoluta, sino también la eficiencia ultrarrápida. Cuando compra FC 25 Coins , el pedido generalmente se completa en un período de tiempo muy corto con el método Comfort Trade. Esto se debe a que el equipo de entrega profesional de eltiocoins y los proveedores estables nos han dado la confianza suficiente para hacerle tal promesa. Ya sea que necesite EA FC 25 Coins a la venta a bajo precio en PS, XBOX o PC, ¡podemos ayudarlo rápidamente!
-                </p>
-
-                <p className=" mb-6">
-                Compra FC 25 Coins de forma rápida y económica en eltiocoins, el lugar más confiable para brindar el servicio de FC Coin. No solo puedes disfrutar siempre de servicios de 5 estrellas aquí, sino que también tendrás muchas oportunidades de ganar FC Coins gratis. ¡No dudes en unirte a nuestra comunidad abierta de WhatsApp y para ganar FC Coins cada semana! Estimados jugadores de FC, ¡Bienvenidos a eltiocoins, a partir de ahora, eres el cliente más afortunado!
-                </p>
-                
-            </div>
-        </>
+        </div>
     );
 };
 
