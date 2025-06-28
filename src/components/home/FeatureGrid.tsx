@@ -1,7 +1,4 @@
-import { BiWorld } from 'react-icons/bi';
-import { FaHammer, FaRocket, FaShieldAlt, FaHeadset } from 'react-icons/fa';
-import { HiMiniReceiptRefund } from 'react-icons/hi2';
-import { MdLocalShipping } from 'react-icons/md';
+import { FaRocket, FaShieldAlt, FaHeadset } from 'react-icons/fa';
 import { GiLightningTrio } from 'react-icons/gi';
 import { Link } from 'react-router-dom';
 import Aos from 'aos';
