@@ -21,15 +21,13 @@ interface Acc {
 export const FutChampionPage = () => {
 	const { slug } = useParams<{ slug: string }>();
 
-	const [currentSlug	, setCurrentSlug] = useState(slug);
+	const [currentSlug, setCurrentSlug] = useState(slug);
 
 	const { product, isLoading, isError } = useProduct(currentSlug || '');
 
 	const [selectedColor, setSelectedColor] = useState<string | null>(
 		null
 	);
-
-
 
 	const [selectedVariant, setSelectedVariant] =
 		useState<VariantProduct | null>(null);
@@ -62,14 +60,11 @@ export const FutChampionPage = () => {
 	}, [availableColors, selectedColor]);
 
 	// Actualizar el almacenamiento seleccionado cuando cambia el color
-	
-
-	// Obtener la variante seleccionada
 	useEffect(() => {
-		if (selectedColor ) {
+		if (selectedColor) {
 			const variant = product?.variants.find(
 				variant =>
-					variant.color === selectedColor 
+					variant.color === selectedColor
 			);
 
 			setSelectedVariant(variant as VariantProduct);
@@ -78,7 +73,6 @@ export const FutChampionPage = () => {
 
 	// Obtener el stock
 	const isOutOfStock = selectedVariant?.stock === 0;
-
 
 	//RESETEAR EL SLUG ACTUAL CUANDO CAMBIA EN LA URL
 	useEffect(() => {
@@ -89,17 +83,17 @@ export const FutChampionPage = () => {
 	}, [slug]);
 
 	if (isLoading) {
-    return <Loader />;
-  }
-  
-  if (isError || !product) {
-    return (
-      <div className="flex justify-center items-center h-[80vh]">
-        <p>Producto no encontrado o hubo un error al cargar el producto</p>
-      </div>
-    );
-  }
-  
+		return <Loader />;
+	}
+
+	if (isError || !product) {
+		return (
+			<div className="flex justify-center items-center h-[80vh]">
+				<p>Producto no encontrado o hubo un error al cargar el producto</p>
+			</div>
+		);
+	}
+
 	return (
 		<>
 			<div className='h-fit flex flex-col md:flex-row gap-16 mt-8'>
@@ -146,11 +140,10 @@ export const FutChampionPage = () => {
 							{availableColors.map(color => (
 								<button
 									key={color}
-									className={`w-8 h-8 rounded-full flex justify-center items-center ${
-										selectedColor === color
+									className={`w-8 h-8 rounded-full flex justify-center items-center ${selectedColor === color
 											? 'border border-slate-800'
 											: ''
-									}`}
+										}`}
 									onClick={() => setSelectedColor(color)}
 								>
 									<span

@@ -109,7 +109,7 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="bg-gray-350 text-gray-900 text-xs text-center py-2">
+        <div className="bg-gray-350 text-white text-xs text-center py-2">
           <p>Copyright © {new Date().getFullYear()} - All rights reserved by eltiocoins</p>
         </div>
       </footer>

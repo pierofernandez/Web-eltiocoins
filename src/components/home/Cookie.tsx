@@ -1,42 +1,35 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export const Cookie = () => {
-    const [showModal, setShowModal] = useState(true);
+  const [mostrar, setMostrar] = useState(false);
 
-    const handleAccept = () => {
-        console.log("Cookies aceptadas");
-        setShowModal(false);
-    };
+  useEffect(() => {
+    const yaMostrado = sessionStorage.getItem("ofertaMostrada");
 
-    const handleClose = () => {
-        setShowModal(false);
-    };
+    if (!yaMostrado) {
+      setMostrar(true);
+      sessionStorage.setItem("ofertaMostrada", "true");
+    }
+  }, []);
 
-    if (!showModal) return null;
+  if (!mostrar) return null;
 
-    return (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50 p-4 lg:items-start lg:justify-center">
-            <div className="bg-white shadow-lg border border-gray-300 rounded-lg p-4 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-3xl lg:w-3/4 mx-auto lg:mt-10">
-                <p className="text-sm text-gray-700 text-center">
-                    Utilizamos cookies para garantizar que obtenga la mejor experiencia en nuestro sitio web.
-                    <Link to='/privacypolicy' className='text-red-700 text-sm ml-1'>Leer más</Link>
-                </p>
-                <div className="flex flex-col sm:flex-row justify-center sm:justify-end space-y-2 sm:space-y-0 sm:space-x-4 mt-3">
-                    <button
-                        className="px-4 py-2 bg-[#70F468] text-black rounded hover:bg-[#5BD054] transition duration-300 ease-in-out w-full sm:w-auto"
-                        onClick={handleAccept}
-                    >
-                        Accept
-                    </button>
-                    <button
-                        className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition duration-300 ease-in-out w-full sm:w-auto"
-                        onClick={handleClose}
-                    >
-                        Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="relative">
+        <img
+          src="/img/oferta.png" // Asegúrate de que la imagen esté en public/img/
+          alt="Oferta"
+          className="max-w-[90vw] max-h-[90vh] rounded shadow-lg"
+        />
+        <button
+          onClick={() => setMostrar(false)}
+          className="absolute top-2 right-2 bg-white text-black rounded-full px-3 py-1 text-sm shadow hover:bg-gray-200"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  );
 };
+

@@ -13,12 +13,12 @@ export const navbarLinks = [
     },
     {
         id: 3,
-        title: 'FutChampions',
+        title: 'Boosting Fut Champions',
         href: '/futchampions',
     },
     {
         id: 4,
-        title: 'DivisiónRivals',
+        title: 'Boosting División Rivals',
         href: '/divisionrivals',
     },
     

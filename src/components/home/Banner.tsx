@@ -1,42 +1,80 @@
 import { Link } from "react-router-dom";
-import SplitText2 from "../animations/AnimationBanner2";
-import SplitText from "../animations/AnimationBanner";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Aos from "aos";
 import 'aos/dist/aos.css';
 
 export const Banner = () => {
+	const [currentImage, setCurrentImage] = useState(0);
+	
+	// Imágenes responsive: móvil y desktop
+	const mobileImages = ['/img/HOME1_nt.png', '/img/HOME2_nt.png'];
+	const desktopImages = ['/img/HOME1.png', '/img/HOME2.png'];
+
 	useEffect(() => {
-		Aos.init({duration: 1000});
+		Aos.init({ duration: 1000 });
 	}, []);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setCurrentImage((prev) => (prev + 1) % mobileImages.length);
+		}, 5000); // Cambia imagen cada 5 segundos
+
+		return () => clearInterval(interval);
+	}, [mobileImages.length]);
+
 	return (
-		<div className='relative bg-gray-900 text-white'>
-			{/* IMAGEN DE FONDO */}
-			<div
-				className='absolute inset-0 bg-cover bg-center opacity-70 h-full'
-				style={{ backgroundImage: 'url(/img/caratula.jpg)' }}
-			/>
+		<div className='relative text-white overflow-hidden min-h-[500px] lg:min-h-[550px]'>
+			{/* IMAGENES DE FONDO - MOBILE */}
+			{mobileImages.map((image, index) => (
+				<div
+					key={`mobile-${index}`}
+					className={`absolute inset-0 bg-cover bg-center h-full transition-opacity duration-1000 ease-in-out lg:hidden ${
+						index === currentImage ? 'opacity-100' : 'opacity-0'
+					}`}
+					style={{ backgroundImage: `url(${image})` }}
+				/>
+			))}
+
+			{/* IMAGENES DE FONDO - DESKTOP */}
+			{desktopImages.map((image, index) => (
+				<div
+					key={`desktop-${index}`}
+					className={`absolute inset-0 bg-cover h-full transition-opacity duration-1000 ease-in-out hidden lg:block ${
+						index === currentImage ? 'opacity-100' : 'opacity-0'
+					}`}
+					style={{ 
+						backgroundImage: `url(${image})`,
+						backgroundPosition: 'center 100%'
+					}}
+				/>
+			))}
 
 			{/* OVERLAY */}
-			<div className='absolute inset-0 bg-black opacity-50' />
+			<div className='absolute inset-0 bg-opacity-30' />
 
-			{/* CONTENIDO */}
-			<div className='relative z-10 flex flex-col items-center justify-center py-20 px-4 text-center lg:py-40 lg:px-8'>
-				<h1 className='text-4xl font-bold mb-4 lg:text-6xl'>
-					<SplitText/>
-				</h1>
-
-				<p className='text-lg mb-8 lg:text-2xl'>
-					<SplitText2/>
-				</p>
-
+			{/* BOTÓN COMPRAR AHORA - RESPONSIVE */}
+			<div className='absolute inset-0 flex items-center justify-center lg:items-end lg:justify-start lg:bottom-20 lg:left-28 lg:inset-auto z-10'>
 				<Link
 					to='/monedas'
-					data-aos='zoom-out-left'
-					className='bg-[#70F468] hover:bg-[#5BD054] text-black font-semibold py-4 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out'
+					className='bg-[#00FA65] hover:bg-[#4efa79] text-black font-semibold py-3 px-6 lg:py-4 lg:px-12 rounded-lg shadow-lg transition duration-300 ease-in-out text-sm lg:text-base'
 				>
 					Comprar ahora
 				</Link>
+			</div>
+
+			{/* INDICADORES */}
+			<div className='absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2'>
+				{mobileImages.map((_, index) => (
+					<button
+						key={index}
+						onClick={() => setCurrentImage(index)}
+						className={`w-3 h-3 rounded-full transition-all duration-300 ${
+							index === currentImage 
+								? 'bg-white scale-110' 
+								: 'bg-white bg-opacity-50 hover:bg-opacity-75'
+						}`}
+					/>
+				))}
 			</div>
 		</div>
 	);

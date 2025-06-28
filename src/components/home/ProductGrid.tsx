@@ -4,38 +4,87 @@ import { CardProduct } from "../products/CardProduct";
 import Aos from "aos";
 import 'aos/dist/aos.css';
 
-
 interface Props {
-    title: string;
     products: PreparedProducts[];
 }
 
-export const ProductGrid = ({ title, products }: Props) => {
+export const ProductGrid = ({ products }: Props) => {
 
     useEffect(() => {
-        Aos.init({ duration: 1000 });
+        Aos.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true
+        });
     }, []);
-    return (
-        <div data-aos="fade-right"
-            data-aos-offset="100"
-            data-aos-easing="ease-in-sine" className='my-32'>
-            <h2 className='text-3xl font-semibold text-center mb-8 md:text-4xl lg:text-5xl'>
-                {title}
-            </h2>
 
-            <div className='grid grid-cols-1 gap-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-4'>
-                {products.map(product => (
-                    <CardProduct
-                        key={product.id}
-                        name={product.name}
-                        price={product.price}
-                        colors={product.colors}
-                        img={product.images[0]}
-                        slug={product.slug}
-                        variants={product.variants}
-                    />
-                ))}
-            </div>
-        </div>
+    // Dividir productos en dos secciones
+    const newProducts = products.slice(0, 4);
+    const featuredProducts = products.slice(4, 8);
+
+    return (
+        <>
+            {/* New Products Section */}
+            <section className="py-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 to-black opacity-30"></div>
+                
+                <div className="relative max-w-7xl mx-auto">
+                    <div 
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
+                        data-aos="fade-up"
+                        data-aos-delay="200"
+                    >
+                        {newProducts.map((product, index) => (
+                            <div
+                                key={product.id}
+                                data-aos="fade-up"
+                                data-aos-delay={300 + index * 100}
+                            >
+                                <CardProduct
+                                    name={product.name}
+                                    price={product.price}
+                                    colors={product.colors}
+                                    img={product.images[0]}
+                                    slug={product.slug}
+                                    variants={product.variants}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Featured Products Section */}
+            <section className="py-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 to-black opacity-30"></div>
+                
+                <div className="relative max-w-7xl mx-auto">
+                    <div 
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
+                        data-aos="fade-up"
+                        data-aos-delay="500"
+                    >
+                        {featuredProducts.map((product, index) => (
+                            <div
+                                key={product.id}
+                                data-aos="fade-up"
+                                data-aos-delay={600 + index * 100}
+                            >
+                                <CardProduct
+                                    name={product.name}
+                                    price={product.price}
+                                    colors={product.colors}
+                                    img={product.images[0]}
+                                    slug={product.slug}
+                                    variants={product.variants}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        </>
     );
 };

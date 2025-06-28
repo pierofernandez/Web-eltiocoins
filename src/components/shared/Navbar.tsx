@@ -2,9 +2,9 @@ import { Link, NavLink } from 'react-router-dom';
 import { navbarLinks } from '../../constants/links';
 import {
 	HiOutlineSearch,
-	HiOutlineShoppingBag,
-	HiOutlineUser,
 } from 'react-icons/hi';
+import { GiShoppingCart } from 'react-icons/gi';
+import { PiUserLight } from 'react-icons/pi';
 import { FaBarsStaggered } from 'react-icons/fa6';
 import { Logo } from './Logo';
 import { useGlobalStore } from '../../store/global.store';
@@ -31,68 +31,82 @@ export const Navbar = () => {
 
 	return (
 		<div>
+			<Banner />
 
-			<Banner/>
-			
-			<header className='bg-[#70F468] text-black py-4 flex items-center justify-between px-5  lg:px-12'>
-				<Logo />
+			{/* Header principal */}
+			<header className='bg-zinc-900 text-white px-5 lg:px-12 pt-4 pb-2 border-b border-zinc-700 flex flex-col items-center'>
+				<div className='w-full flex justify-between items-center mb-3'>
+					<Logo/>
 
-				<nav className='space-x-5 hidden md:flex'>
-					{navbarLinks.map(link => (
-						<NavLink
-							key={link.id}
-							to={link.href}
-							className={({ isActive }) =>
-								`${isActive ? 'text-black hover:underline' : ''
-								} transition-all duration-300 font-medium hover:text-[#323232] hover:underline `
-							}
+					{/* Buscador centrado con ícono funcional */}
+					<div className="flex-1 flex justify-center">
+						<div
+							onClick={() => openSheet('search')}
+							className="flex items-center bg-zinc-800 border border-zinc-600 rounded-md px-3 py-2 w-full max-w-2xl cursor-text hover:ring-2 hover:ring-green-400 transition"
 						>
-							{link.title}
-						</NavLink>
-					))}
-				</nav>
+							<input
+								type="text"
+								placeholder="Buscar..."
+								onFocus={() => openSheet('search')}
+								className="bg-transparent w-full text-white placeholder-gray-400 focus:outline-none"
+							/>
+							<HiOutlineSearch size={20} className="text-gray-400 ml-2" />
+						</div>
+					</div>
 
-				<div className='flex gap-5 items-center'>
-					<button onClick={() => openSheet('search')}>
-						<HiOutlineSearch size={25} />
-					</button>
-
-					{isLoading ? (
-						<LuLoaderCircle className='animate-spin' size={60} />
-					) : session ? (
-						<div className='relative'>
-							{/* User Nav */}
+					<div className='flex items-center gap-5 ml-4'>
+						{isLoading ? (
+							<LuLoaderCircle className='animate-spin' size={22} />
+						) : session ? (
 							<Link
 								to='/account'
-								className='border-2 border-black w-9 h-9 rounded-full grid place-items-center text-lg font-bold'
+								className='w-9 h-9 rounded-full bg-zinc-800 text-white grid place-items-center font-semibold border border-zinc-600 hover:border-green-400 transition'
 							>
 								{customer && customer.full_name[0]}
 							</Link>
-						</div>
-					) : (
-						<Link to='/login'>
-							<HiOutlineUser size={25} />
-						</Link>
-					)}
+						) : (
+							<Link to='/login'>
+								<PiUserLight size={40} className="hover:text-green-400 transition" />
+							</Link>
+						)}
 
-					<button
-						className='relative'
-						onClick={() => openSheet('cart')}
-					>
-						<span className='absolute -bottom-2 -right-2 w-5 h-5 grid place-items-center bg-black text-white text-xs rounded-full'>
-							{totalItemsInCart}
-						</span>
-						<HiOutlineShoppingBag size={25} />
-					</button>
+						<button
+							className='relative'
+							onClick={() => openSheet('cart')}
+						>
+							<span className='absolute -bottom-2 -right-2 w-5 h-5 bg-green-400 text-black text-xs rounded-full grid place-items-center font-bold'>
+								{totalItemsInCart}
+							</span>
+							<GiShoppingCart size={40} className="hover:text-green-400 transition" />
+						</button>
+
+						<button
+							className='md:hidden ml-2'
+							onClick={() => setActiveNavMobile(true)}
+						>
+							<FaBarsStaggered size={22} className="hover:text-green-400 transition" />
+						</button>
+					</div>
 				</div>
-
-				<button
-					className='md:hidden'
-					onClick={() => setActiveNavMobile(true)}
-				>
-					<FaBarsStaggered size={25} />
-				</button>
 			</header>
+
+			{/* Menú de navegación independiente con otro fondo */}
+			<nav className='hidden lg:flex bg-zinc-800 px-5 lg:px-12 py-2 gap-5 text-sm font-semibold justify-center border-b border-zinc-700'>
+				{navbarLinks.map(link => (
+					<NavLink
+						key={link.id}
+						to={link.href}
+						className={({ isActive }) =>
+							`${isActive
+								? 'text-green-400 border-b-2 border-green-400 pb-1'
+								: 'text-white hover:text-green-400'
+							} transition-all duration-200`
+						}
+					>
+						{link.title}
+					</NavLink>
+				))}
+			</nav>
 		</div>
 	);
 };

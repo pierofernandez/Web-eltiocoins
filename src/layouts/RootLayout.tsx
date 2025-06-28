@@ -17,7 +17,7 @@ export const RootLayout = () => {
 		<div className='h-screen  flex flex-col font-montserrat'>
 			<Navbar />
 
-			{pathname === '/' && <Banner />}
+			{(pathname === '/' || pathname.includes('futchampion') || pathname.includes('monedas') || pathname.includes('divisionrival'))  && <Banner />}
 
 			<main className='container my-8 flex-1 '>
 				<Outlet />
