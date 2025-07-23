@@ -26,3 +26,9 @@ export * from './CheckoutPendingPage';
 
 export * from './dashboard/DashboardProductsPage';
 export * from './dashboard/DashboardNewProductPage';
+export * from './dashboard/DashboardProductSlugPage';
+
+// Ordenes
+
+export * from './dashboard/DashboardOrdersPage';
+export * from './dashboard/DashboardOrderPage';

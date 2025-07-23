@@ -47,16 +47,16 @@ export const createOrder = async (order: OrderInput) => {
 
 	// 3. Guardar la dirección del envío
 	const { data: addressData, error: addressError } = await supabase
-    .from('addresses')
-    .insert({
-        city: order.address.city ,
-        state: order.address.state,
-        postal_code: order.address.postalCode,
-        country: order.address.country,
-        customer_id: customerId,
-    })
-    .select()
-    .single();
+		.from('addresses')
+		.insert({
+			city: order.address.city,
+			state: order.address.state,
+			postal_code: order.address.postalCode,
+			country: order.address.country,
+			customer_id: customerId,
+		})
+		.select()
+		.single();
 
 	if (addressError) {
 		console.log(addressError);
@@ -219,7 +219,79 @@ export const getOrderById = async (orderId: number) => {
 		orderItems: order.order_items.map(item => ({
 			quantity: item.quantity,
 			price: item.price,
-            productName: item.variants?.products?.name,
+			productName: item.variants?.products?.name,
+			productImage: item.variants?.products?.images[0],
+		})),
+	};
+};
+
+//Admin
+
+export const getAllOrders = async () => {
+	const { data, error } = await supabase
+		.from('orders')
+		.select(
+			'id, total_amount, status, created_at, customers(full_name, email)'
+		)
+		.order('created_at', { ascending: false });
+
+	if (error) {
+		console.log(error);
+		throw new Error(error.message);
+	}
+
+	return data;
+};
+
+export const updateOrderStatus = async ({
+	id,
+	status,
+}: {
+	id: number;
+	status: string;
+}) => {
+	const { error } = await supabase
+		.from('orders')
+		.update({ status })
+		.eq('id', id);
+
+	if (error) {
+		console.log(error);
+		throw new Error(error.message);
+	}
+};
+
+export const getOrderByIdAdmin = async (id: number) => {
+	const { data: order, error } = await supabase
+		.from('orders')
+		.select(
+			'*, addresses(*), customers(full_name, email), order_items(quantity, price, variants(color_name, products(name, images)))'
+		)
+		.eq('id', id)
+		.single();
+
+	if (error) {
+		console.log(error);
+		throw new Error(error.message);
+	}
+	return {
+		customer: {
+			email: order?.customers?.email,
+			full_name: order.customers?.full_name,
+		},
+		totalAmount: order.total_amount,
+		status: order.status,
+		create_at: order.created_at,
+		address: {
+			city: order.addresses?.city,
+			state: order.addresses?.state,
+			postalCode: order.addresses?.postalcode,
+			country: order.addresses?.country,
+		},
+		orderItems: order.order_items.map(item => ({
+			quantity: item.quantity,
+			price: item.price,
+			productName: item.variants?.products?.name,
 			productImage: item.variants?.products?.images[0],
 		})),
 	};

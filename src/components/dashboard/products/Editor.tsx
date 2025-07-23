@@ -8,6 +8,7 @@ import { FieldErrors, UseFormSetValue } from 'react-hook-form';
 import { ProductFormValues } from '../../../lib/validators';
 import StarterKit from '@tiptap/starter-kit';
 import { ReactNode } from 'react';
+import { useEffect } from 'react';
 
 interface Props {
 	setValue: UseFormSetValue<ProductFormValues>;
@@ -116,6 +117,13 @@ export const Editor = ({
 			},
 		},
 	});
+
+
+	useEffect(() => {
+		if(initialContent && editor) {
+			editor.commands.setContent(initialContent);
+		}
+	}, [initialContent, editor]);
 
 	return (
 		<div className='space-y-3'>

@@ -61,7 +61,7 @@ export const dashboardLinks = [
     {
         id: 2,
         title: 'Ordenes',
-        href: '/dashboard/productos',
+        href: '/dashboard/ordenes',
         icon: <FaCartShopping size={25} />,
     },
 ]

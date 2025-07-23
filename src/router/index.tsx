@@ -17,7 +17,9 @@ import { CheckoutPendingPage } from "../pages/CheckoutPendingPage";
 import { ProtectedRoute } from "../components/shared/ProtectedRoute";
 import { DashboardProductsPage } from "../pages/dashboard/DashboardProductsPage";
 import { DashboardNewProductPage } from "../pages/dashboard/DashboardNewProductPage";
-
+import { DashboardProductSlugPage } from "../pages/dashboard/DashboardProductSlugPage";
+import { DashboardOrdersPage } from "../pages/dashboard/DashboardOrdersPage";
+import { DashboardOrderPage } from "../pages/dashboard/DashboardOrderPage";
 
 export const router = createBrowserRouter([
     {
@@ -150,6 +152,18 @@ export const router = createBrowserRouter([
                 path: 'productos/new',
                 element: <DashboardNewProductPage />           
             },
+            {
+                path: 'productos/editar/:slug',
+                element: <DashboardProductSlugPage />           
+            },
+            {
+                path: 'ordenes',
+                element: <DashboardOrdersPage />
+            },
+            {
+                path: 'ordenes/:id',
+                element: <DashboardOrderPage />
+            }
         ]
     }
     

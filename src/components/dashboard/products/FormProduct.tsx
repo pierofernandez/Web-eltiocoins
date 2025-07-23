@@ -5,7 +5,7 @@ import {
     productSchema,
 } from '../../../lib/validators';
 import { IoIosArrowBack } from 'react-icons/io';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SectionFormProduct } from './SectionFormProduct';
 import { InputForm } from './InputForm';
 import { FeaturesInput } from './FeaturesInput';
@@ -14,6 +14,13 @@ import { generateSlug } from '../../../helpers';
 import { VariantsInput } from './VariantsInput';
 import { UploaderImages } from './UploaderImages';
 import { Editor } from './Editor';
+import {
+    useCreateProduct,
+    useProduct,
+    useUpdateProduct,
+} from '../../../hooks';
+import { Loader } from '../../shared/Loader';
+
 
 interface Props {
     titleForm: string;
@@ -21,20 +28,76 @@ interface Props {
 
 export const FormProduct = ({ titleForm }: Props) => {
     const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        setValue,
-        watch,
-        control,
-    } = useForm<ProductFormValues>({
-        resolver: zodResolver(productSchema),
-    });
+		register,
+		handleSubmit,
+		formState: { errors },
+		setValue,
+		watch,
+		control,
+	} = useForm<ProductFormValues>({
+		resolver: zodResolver(productSchema),
+	});
 
-    const navigate = useNavigate();
+    const { slug } = useParams<{ slug: string }>();
+
+    const { product, isLoading } = useProduct(slug || '');
+	const { mutate: createProduct, isPending } = useCreateProduct();
+	const { mutate: updateProduct, isPending: isUpdatePending } =
+		useUpdateProduct(product?.id || '');
+
+	const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (product && !isLoading) {
+            setValue('name', product.name);
+            setValue('slug', product.slug);
+            setValue('category', product.category);
+            setValue('platform', product.platform);
+            setValue(
+                'features',
+                product.features.map((f: string) => ({ value: f }))
+            );
+            setValue('description', product.description);
+            setValue('images', product.images);
+            setValue(
+                'variants',
+                product.variants.map(v => ({
+                    id: v.id,
+                    stock: v.stock,
+                    price: v.price,
+                    color: v.color,
+                    colorName: v.color_name,
+                }))
+            );
+        }
+    }, [product, isLoading, setValue]);
 
     const onSubmit = handleSubmit(data => {
-        console.log(data);
+        const features = data.features.map(feature => feature.value);
+        if (slug) {
+            updateProduct({
+                name: data.name,
+                category: data.category,
+                platform: data.platform,
+                slug: data.slug,
+                variants: data.variants,
+                images: data.images,
+                description: data.description,
+                features,
+            });
+        } else {
+            createProduct({
+                name: data.name,
+                category: data.category,
+                platform: data.platform,
+                slug: data.slug,
+                variants: data.variants,
+                images: data.images,
+                description: data.description,
+                features,
+            });
+        }
     });
 
     const watchName = watch('name');
@@ -46,9 +109,11 @@ export const FormProduct = ({ titleForm }: Props) => {
         setValue('slug', generatedSlug, { shouldValidate: true });
     }, [watchName, setValue]);
 
+    if (isPending || isUpdatePending || isLoading) return <Loader />;
+
     return (
-        <div className='flex flex-col gap-6 relative text-black'>
-            <div className='flex justify-between items-center'>
+        <div className='flex flex-col gap-6 relative '>
+            <div className='text-black flex justify-between items-center'>
                 <div className='flex items-center gap-3'>
                     <button
                         className='bg-white p-1.5 rounded-md shadow-sm border border-slate-200 transition-all group hover:scale-105'
@@ -139,7 +204,7 @@ export const FormProduct = ({ titleForm }: Props) => {
                     titleSection='Descripción del producto'
                     className='col-span-full'
                 >
-                    <Editor setValue={setValue} errors={errors} />
+                    <Editor setValue={setValue} errors={errors} initialContent={product?.description} />
                 </SectionFormProduct>
 
                 <div className='flex gap-3 absolute top-0 right-0'>
