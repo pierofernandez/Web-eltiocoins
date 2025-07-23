@@ -16,3 +16,13 @@ export * from './NotFount';
 export * from './ForgotPasswordPage';
 export * from './UpdatePasswordPage';
 export * from './PasoAPasoPage';
+export * from './JuegaYGanaPage';
+export * from './CheckoutSuccessPage';
+export * from './CheckoutFailurePage';
+export * from './CheckoutPendingPage';
+
+
+//Dashboards 
+
+export * from './dashboard/DashboardProductsPage';
+export * from './dashboard/DashboardNewProductPage';

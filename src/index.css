@@ -15,3 +15,22 @@ body {
     @apply bg-[#151616] text-white;
   }
 
+.btn-primary {
+	@apply bg-black text-white py-2 px-3 text-sm font-medium rounded-md;
+}
+
+.btn-secondary-outline {
+	@apply border border-slate-400 text-slate-600 py-2 px-3 text-sm font-medium rounded-md;
+}
+
+/* Para Chrome, Safari, Edge y Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Para firefox */
+input[type=number]{
+	-moz-appearance: textfield;
+}

@@ -91,6 +91,19 @@ export const LoginPage = () => {
 							Regístrate
 						</Link>
 					</p>
+					
+					{/* Información sobre el juego exclusivo */}
+					<div className='mt-6 p-4 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-lg border border-yellow-400/30 max-w-md text-center'>
+						<div className='text-2xl mb-2'>🎮</div>
+						<h3 className='text-white font-semibold mb-2'>¡Juego Exclusivo!</h3>
+						<p className='text-sm text-gray-300 mb-3'>
+							Una vez que inicies sesión, podrás acceder a nuestro juego "Michi vs Eltiocoins" y ganar descuentos en tus compras.
+						</p>
+						<div className='flex items-center justify-center gap-2 text-xs text-yellow-400'>
+							<span>🔒</span>
+							<span>Solo para usuarios registrados</span>
+						</div>
+					</div>
 				</>
 			)}
 		</div>

@@ -56,12 +56,20 @@ export const prepareProducts = (products: Product[]) => {
 //funcion para formatear fecha a fonrmato 3 de enero de 2025
 
 export const formatDateLong = (date: string) : string => {
-
 	const dateObject = new Date(date);
-
 	return dateObject.toLocaleDateString('es-ES', {
 		year: 'numeric',
 		month: 'long',
+		day: 'numeric',
+	});
+};
+
+//funcion para formatear la fecha a formato dd/mm/yyyy
+export const formatDate = (date: string) : string => {
+	const dateObject = new Date(date);
+	return dateObject.toLocaleDateString('es-ES', {
+		year: 'numeric',
+		month: '2-digit',
 		day: 'numeric',
 	});
 };
@@ -79,3 +87,11 @@ export const getStatus = (status: string): string => {
 	}
 
 }
+
+//funcion para generar un slug a partir de un prodcuto
+export const generateSlug = (name: string): string => {
+	return name
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/(^-|-$)/g, '');
+};

@@ -1,0 +1,178 @@
+/* Estilos para corregir problemas de opacidad en PayPal */
+
+/* Contenedor principal de PayPal */
+.paypal-button-container {
+  background: transparent !important;
+  opacity: 1 !important;
+}
+
+/* Formularios de tarjeta de crédito */
+.paypal-card-form,
+.paypal-card-form * {
+  background: rgba(255, 255, 255, 0.98) !important;
+  color: #333 !important;
+  opacity: 1 !important;
+}
+
+/* Overlays y modales de PayPal */
+.paypal-overlay,
+.paypal-modal,
+.paypal-overlay *,
+.paypal-modal * {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(10px) !important;
+  opacity: 1 !important;
+}
+
+/* Campos de entrada de PayPal */
+.paypal-input,
+.paypal-text-input,
+input[data-paypal-input],
+input[data-paypal-card-input] {
+  background: white !important;
+  color: #333 !important;
+  border: 1px solid #ddd !important;
+  opacity: 1 !important;
+}
+
+/* Botones de PayPal */
+.paypal-button,
+button[data-paypal-button] {
+  background: #0070ba !important;
+  color: white !important;
+  opacity: 1 !important;
+}
+
+/* Contenedores de PayPal */
+.paypal-container,
+div[data-paypal-container] {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-radius: 8px !important;
+  padding: 20px !important;
+  opacity: 1 !important;
+}
+
+/* Textos de PayPal */
+.paypal-text,
+span[data-paypal-text],
+p[data-paypal-text] {
+  color: #333 !important;
+  opacity: 1 !important;
+}
+
+/* Overlay general de PayPal */
+iframe[src*="paypal"],
+iframe[src*="paypal"] * {
+  background: rgba(255, 255, 255, 0.95) !important;
+  opacity: 1 !important;
+}
+
+/* Forzar estilos claros en elementos de PayPal */
+[data-paypal-button],
+[data-paypal-card],
+[data-paypal-form],
+[data-paypal-modal] {
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #333 !important;
+  opacity: 1 !important;
+}
+
+/* Estilos específicos para formularios de tarjeta */
+.paypal-card-form-container,
+.paypal-card-form-wrapper {
+  background: white !important;
+  color: #333 !important;
+  opacity: 1 !important;
+  border-radius: 8px !important;
+  padding: 20px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Labels y textos en formularios */
+.paypal-label,
+label[data-paypal-label] {
+  color: #333 !important;
+  font-weight: 500 !important;
+  opacity: 1 !important;
+}
+
+/* Mensajes de error y validación */
+.paypal-error,
+.paypal-validation-error {
+  color: #d32f2f !important;
+  background: rgba(211, 47, 47, 0.1) !important;
+  opacity: 1 !important;
+}
+
+/* Estilos para el modal de PayPal */
+.paypal-modal-overlay {
+  background: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+.paypal-modal-content {
+  background: white !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+  opacity: 1 !important;
+}
+
+/* Estilos para botones de acción */
+.paypal-action-button,
+button[data-paypal-action] {
+  background: #0070ba !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  opacity: 1 !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.paypal-action-button:hover,
+button[data-paypal-action]:hover {
+  background: #005ea6 !important;
+}
+
+/* Estilos para campos de formulario específicos */
+.paypal-card-number,
+.paypal-expiry,
+.paypal-cvv,
+.paypal-name {
+  background: white !important;
+  color: #333 !important;
+  border: 2px solid #e0e0e0 !important;
+  border-radius: 6px !important;
+  padding: 12px !important;
+  font-size: 16px !important;
+  opacity: 1 !important;
+  transition: border-color 0.2s ease !important;
+}
+
+.paypal-card-number:focus,
+.paypal-expiry:focus,
+.paypal-cvv:focus,
+.paypal-name:focus {
+  border-color: #0070ba !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(0, 112, 186, 0.1) !important;
+}
+
+/* Estilos para el contenedor de nuestro checkout */
+.paypal-checkout-container {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-radius: 12px !important;
+  padding: 24px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Forzar visibilidad en todos los elementos de PayPal */
+*[class*="paypal"],
+*[data-paypal],
+iframe[src*="paypal"] {
+  opacity: 1 !important;
+  visibility: visible !important;
+} 

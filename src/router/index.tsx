@@ -1,15 +1,23 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RootLayout } from "../layouts/RootLayout";
-import { HomePage, DivisionRivalsPage, FutChampionsPage, MonedasPage, MonedaPage, LoginPage, RegisterPage, OrdersUserPage, ThankyouPage, OrderUserPage, ComplaintsBook, PasoAPasoPage } from "../pages";
+import { HomePage, DivisionRivalsPage, FutChampionsPage, MonedasPage, MonedaPage, LoginPage, RegisterPage, OrdersUserPage, ThankyouPage, OrderUserPage, ComplaintsBook, PasoAPasoPage, JuegaYGanaPage } from "../pages";
 import { FutChampionPage } from "../pages/FutChampionPage";
 import { DivisionRivalPage } from "../pages/DivisionRivalPage";
 import { ClientLayout } from "../layouts/ClientLayout";
+import { DashboardLayout } from "../layouts/DashboardLayout";
 import { PrivacyPolicy } from "../pages/PrivacyPolicy";
 import { Refundpolicy } from "../pages/Refundpolicy";
 import { NotFound } from "../pages/NotFount";
 import { ForgotPasswordPage } from "../pages/ForgotPasswordPage";
 import { UpdatePasswordPage } from "../pages/UpdatePasswordPage";
 import { CheckoutPage } from "../pages/CheckoutPage";
+import { CheckoutSuccessPage } from "../pages/CheckoutSuccessPage";
+import { CheckoutFailurePage } from "../pages/CheckoutFailurePage";
+import { CheckoutPendingPage } from "../pages/CheckoutPendingPage";
+import { ProtectedRoute } from "../components/shared/ProtectedRoute";
+import { DashboardProductsPage } from "../pages/dashboard/DashboardProductsPage";
+import { DashboardNewProductPage } from "../pages/dashboard/DashboardNewProductPage";
+
 
 export const router = createBrowserRouter([
     {
@@ -47,6 +55,10 @@ export const router = createBrowserRouter([
             {
                 path: 'paso-a-paso',
                 element: <PasoAPasoPage />
+            },
+            {
+                path: 'juega-y-gana',
+                element: <ProtectedRoute><JuegaYGanaPage /></ProtectedRoute>
             },
             
             {
@@ -110,5 +122,35 @@ export const router = createBrowserRouter([
         path: '/checkout/:id/thank-you',
         element: <ThankyouPage />
     },
+    {
+        path: '/checkout/success',
+        element: <CheckoutSuccessPage />
+    },
+    {
+        path: '/checkout/failure',
+        element: <CheckoutFailurePage />
+    },
+    {
+        path: '/checkout/pending',
+        element: <CheckoutPendingPage />
+    },
+    {
+        path: '/dashboard',
+        element: <DashboardLayout/>,
+        children: [
+            {
+                index: true,
+                element: <Navigate to='dashboard/productos' /> 
+            },
+            {
+                path: 'productos',
+                element: <DashboardProductsPage />           
+            },
+            {
+                path: 'productos/new',
+                element: <DashboardNewProductPage />           
+            },
+        ]
+    }
     
 ]);
