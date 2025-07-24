@@ -20,6 +20,7 @@ import {
     useUpdateProduct,
 } from '../../../hooks';
 import { Loader } from '../../shared/Loader';
+import { JSONContent } from '@tiptap/react';
 
 
 interface Props {
@@ -58,7 +59,7 @@ export const FormProduct = ({ titleForm }: Props) => {
                 'features',
                 product.features.map((f: string) => ({ value: f }))
             );
-            setValue('description', product.description);
+            setValue('description', product.description as JSONContent);
             setValue('images', product.images);
             setValue(
                 'variants',
@@ -204,7 +205,7 @@ export const FormProduct = ({ titleForm }: Props) => {
                     titleSection='Descripción del producto'
                     className='col-span-full'
                 >
-                    <Editor setValue={setValue} errors={errors} initialContent={product?.description} />
+                    <Editor setValue={setValue} errors={errors} initialContent={product?.description as JSONContent} />
                 </SectionFormProduct>
 
                 <div className='flex gap-3 absolute top-0 right-0'>

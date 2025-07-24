@@ -9,51 +9,51 @@ export const getProducts = async (page: number) => {
 	const from = (page - 1) * itemsPerPage;
 	const to = from + itemsPerPage - 1;
 
-    const { data: products, error, count} = await supabase
-        .from('products')
-        .select('*, variants(*)', {count: 'exact'})
-        .order('created_at', { ascending: false} )
+	const { data: products, error, count } = await supabase
+		.from('products')
+		.select('*, variants(*)', { count: 'exact' })
+		.order('created_at', { ascending: false })
 		.range(from, to);
-    
-    if (error){
-        console.log(error.message);
-        throw new Error(error.message);
-    }
 
-   return {products, count};
-}   
+	if (error) {
+		console.log(error.message);
+		throw new Error(error.message);
+	}
+
+	return { products, count };
+}
 
 export const getFilteredProducts = async ({
-    page = 1,
+	page = 1,
 	platforms = [],
 }: {
 	page: number;
 	platforms: string[];
 }) => {
-    const itemsPerPage = 50;
-    const from = (page - 1) * itemsPerPage;
-    const to = from + itemsPerPage - 1; 
+	const itemsPerPage = 50;
+	const from = (page - 1) * itemsPerPage;
+	const to = from + itemsPerPage - 1;
 
 
-    let query = supabase
-    .from('products')
-    .select('*, variants(*)', {count: 'exact'})
-    .order('created_at', { ascending: false})
-    .range(from, to);
+	let query = supabase
+		.from('products')
+		.select('*, variants(*)', { count: 'exact' })
+		.order('created_at', { ascending: false })
+		.range(from, to);
 
 
-    if (platforms.length > 0){
-        query = query.in('platform', platforms);
-    }
+	if (platforms.length > 0) {
+		query = query.in('platform', platforms);
+	}
 
-    const {data, error, count} = await query;
+	const { data, error, count } = await query;
 
-    if (error){
-        console.log(error.message);
-        throw new Error(error.message);
-    }
+	if (error) {
+		console.log(error.message);
+		throw new Error(error.message);
+	}
 
-    return { data, count };
+	return { data, count };
 };
 
 export const getRecentProducts = async () => {
@@ -147,11 +147,10 @@ export const createProduct = async (productInput: ProductInput) => {
 
 				if (error) throw new Error(error.message);
 
-				const imageUrl = `${
-					supabase.storage
+				const imageUrl = `${supabase.storage
 						.from('product-images')
 						.getPublicUrl(data.path).data.publicUrl
-				}`;
+					}`;
 
 				return imageUrl;
 			})
@@ -273,7 +272,8 @@ export const updateProduct = async (
 	// 3. Manejo de imágenes (SUBIR NUEVAS y ELIMINAR ANTIGUAS SI ES NECESARIO)
 	const folderName = productId;
 
-	const validImages = productInput.images.filter(image => image);
+	const validImages = productInput.images.filter(image => image) as
+		[File | string];
 
 	// 3.1 Identificar las imágenes que han sido eliminadas
 	const imagesToDelete = existingImages.filter(
