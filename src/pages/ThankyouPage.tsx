@@ -8,12 +8,10 @@ import { useEffect } from 'react';
 
 export const ThankyouPage = () => {
 	const { id } = useParams<{ id: string }>();
-
 	const { data, isLoading, isError } = useOrder(Number(id));
-
 	const { isLoading: isLoadingSession } = useUser();
-
 	const navigate = useNavigate();
+
 
 	useEffect(() => {
 		supabase.auth.onAuthStateChange(async (event, session) => {
@@ -24,135 +22,104 @@ export const ThankyouPage = () => {
 	}, [navigate]);
 
 	if (isError) return <div>Error al cargar la orden</div>;
-
 	if (isLoading || !data || isLoadingSession) return <Loader />;
 
 	return (
-		<div className='flex flex-col h-screen'>
-			<header className='text-black flex items-center justify-center flex-col px-10 py-12'>
-				<Link
-					to='/'
-					className='text-4xl font-bold self-center tracking-tighter transition-all md:text-5xl'
-				>
-					<img src="/public/img/logotiocoins.png" alt="logotiocoins" className='max-w-20' />
-
+		<div className='flex flex-col min-h-screen bg-[#0e0f11] text-white'>
+			<header className='flex items-center justify-center flex-col px-10 py-8 bg-gradient-to-r from-purple-700 to-pink-600 shadow-lg'>
+				<Link to='/' className='text-4xl font-bold tracking-tight md:text-5xl'>
+					<img
+						src="/img/logotiocoins.webp"
+						alt="logotiocoins"
+						className='max-w-24 drop-shadow-lg'
+					/>
 				</Link>
 			</header>
 
-			<main className='container flex-1 flex flex-col items-center gap-10'>
-				<div className='flex gap-3 items-center'>
-					<CiCircleCheck size={40} />
-
-					<p className='text-4xl'>
+			<main className='container mx-auto flex-1 flex flex-col items-center gap-10 px-5 py-10'>
+				<div className='flex gap-3 items-center bg-[#1a1c1f] px-6 py-4 rounded-lg shadow-lg'>
+					<CiCircleCheck size={40} className='text-green-400' />
+					<p className='text-3xl font-bold tracking-tight'>
 						¡Gracias, {data.customer.full_name}!
 					</p>
 				</div>
 
-				<div className='border border-slate-200 w-full md:w-[600px] p-5 rounded-md space-y-3'>
-					<h3 className='font-medium'>Tu pedido está confirmado</h3>
-
-					<p className='text-sm'>
-						Gracias por realizar tu compra en eltiocoins. Para
-						realizar la transferencia te compartimos los siguientes
-						datos:
+				<div className='w-full md:w-[600px] bg-[#18191c] border border-[#2d2f33] p-6 rounded-lg space-y-4 shadow-md'>
+					<h3 className='text-lg font-semibold text-green-400'>Tu pedido está confirmado</h3>
+					<p className='text-sm text-gray-300'>
+						Gracias por realizar tu compra en <strong>El Tio Coins</strong>. Para realizar la transferencia, usa los siguientes datos:
 					</p>
 
-
-
-					<div className='text-sm'>
+					<div className='text-sm text-gray-300 space-y-1'>
 						<p><strong>Método de pago:</strong> PayPal</p>
-						<p><strong>Fecha de creación: </strong> {data.create_at}</p>
-						<p><strong>Correo electrónico de PayPal:</strong> {data.customer.email}</p>
-						<p><strong>Estado del pago:</strong> Confirmado </p>
+						<p><strong>Fecha de creación:</strong> {data.create_at}</p>
+						<p><strong>Email PayPal:</strong> {data.customer.email}</p>
+						<p><strong>Estado del pago:</strong> Confirmado</p>
 					</div>
 
-
-					<p className='text-sm'>
-						Una vez realizada la transferencia, comparte tu
-						comprobante al WhatsApp o eltiocoins@gmail.com para procesarla
-						y hacerte la entrega de tu pedido.
+					<p className='text-sm text-gray-300'>
+						Una vez realizada la transferencia, envía tu comprobante por WhatsApp o a <strong>eltiocoins@gmail.com</strong>.
 					</p>
 				</div>
 
-				<div className='border border-slate-200 w-full p-5 rounded-md space-y-3 md:w-[600px]'>
-					<h3 className='font-medium'>Detalles del pedido</h3>
+				<div className='w-full md:w-[600px] bg-[#18191c] border border-[#2d2f33] p-6 rounded-lg space-y-4 shadow-md'>
+					<h3 className='text-lg font-semibold text-blue-400'>Detalles del pedido</h3>
 
-					<div className='flex flex-col gap-5'>
-						<ul className='space-y-3'>
-							{data.orderItems.map((item, index) => (
-								<li
-									key={index}
-									className='flex justify-between items-center gap-3'
-								>
-									<div className='flex'>
-										<img
-											src={item.productImage}
-											alt={item.productName}
-											className='w-16 h-16 object-contain'
-										/>
+					<ul className='space-y-4'>
+						{data.orderItems.map((item, index) => (
+							<li key={index} className='flex items-center gap-4'>
+								<img
+									src={item.productImage}
+									alt={item.productName}
+									className='w-16 h-16 object-contain border border-gray-600 rounded'
+								/>
+								<div className='flex-1'>
+									<div className='flex justify-between text-sm'>
+										<span className='font-medium text-white'>{item.productName}</span>
+										<span className='text-gray-400'>{formatPrice(item.price)}</span>
 									</div>
+								</div>
+							</li>
+						))}
+					</ul>
 
-									<div className='flex-1 space-y-2'>
-										<div className='flex justify-between'>
-											<p className='font-semibold'>
-												{item.productName}
-											</p>
-											<p className='text-sm font-medium text-gray-600 mt-1'>
-												{formatPrice(item.price)}
-											</p>
-										</div>
-
-									</div>
-								</li>
-							))}
-						</ul>
-
-						<div className='flex justify-between'>
-							<span className='font-semibold'>Total:</span>
-							<span className='font-semibold'>
-								{formatPrice(data.totalAmount)}
-							</span>
-						</div>
+					<div className='flex justify-between text-sm border-t border-[#2d2f33] pt-4'>
+						<span className='font-semibold text-white'>Total:</span>
+						<span className='font-semibold text-white'>
+							{formatPrice(data.totalAmount)}
+						</span>
 					</div>
 
-					<div className='grid grid-cols-2 gap-5'>
-						<div className='flex flex-col text-sm'>
-							<p className='font-semibold'>
-								Información de contacto:
-							</p>
+					<div className='grid grid-cols-2 gap-4 text-sm text-gray-300 pt-4'>
+						<div>
+							<p className='font-semibold text-white'>Contacto:</p>
 							<p>{data.customer.email}</p>
 						</div>
-
-						<div className='flex flex-col text-sm'>
-							<p className='font-semibold'>Métodos de pago:</p>
-							<p>
-								Deposito bancario - {formatPrice(data.totalAmount)}
-							</p>
+						<div>
+							<p className='font-semibold text-white'>Método de pago:</p>
+							<p>Depósito bancario - {formatPrice(data.totalAmount)}</p>
 						</div>
-
-						<div className='flex flex-col text-sm'>
-							<p className='font-semibold'>País y Residencia:</p>
-							<p>{data.address.city}</p>
-							<p>{data.address.state}</p>
+						<div>
+							<p className='font-semibold text-white'>Residencia:</p>
+							<p>{data.address.city}, {data.address.state}</p>
 							<p>{data.address.postalCode}</p>
 							<p>{data.address.country}</p>
 						</div>
-
-
 					</div>
 				</div>
 
-				<div className='flex flex-col justify-between items-center w-full mb-5 gap-3 sm:flex-row md:w-[600px] md:gap-0'>
-					<p className='text-sm'>
-						¿Necesitas ayuda? Ponte en contacto con nosotros
+				<div className='flex flex-col sm:flex-row justify-between items-center w-full md:w-[600px] mt-6 gap-4'>
+					<p className='text-sm text-gray-400'>
+						¿Necesitas ayuda? Contáctanos por soporte.
 					</p>
 
 					<Link
 						to='/monedas'
-						className='text-black bg-[#5BD054] py-4 text-sm rounded-md px-5 tracking-tight font-semibold'
+						className='bg-gradient-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 text-black px-6 py-3 rounded-md text-sm font-bold transition-all'
 					>
 						Seguir comprando
 					</Link>
+
 				</div>
 			</main>
 		</div>

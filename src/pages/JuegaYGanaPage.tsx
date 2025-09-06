@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion,  } from 'framer-motion';
 import { useUser, useCustomer } from '../hooks';
+import logotiocoins from '../../public/img/logotiocoins.webp';
 
 interface Prize {
     id: number;
@@ -14,7 +15,7 @@ interface Prize {
 }
 
 const prizes: Prize[] = [
-    { id: 1, name: 'EA FC 26 GRATIS', type: 'game', value: 'Juego Completo', color: '#FFD700', probability: 0.5, icon: '🎮' },
+    { id: 1, name: 'EA FC 26 GRATIS', type: 'game', value: 'Juego Completo', color: '#FFD700', probability: 50, icon: '🎮' },
     { id: 2, name: '100,000 Monedas', type: 'coins', value: '100K', color: '#FF6B35', probability: 5, icon: '🪙' },
     { id: 3, name: '50,000 Monedas', type: 'coins', value: '50K', color: '#FF8C42', probability: 10, icon: '🪙' },
     { id: 4, name: '25,000 Monedas', type: 'coins', value: '25K', color: '#FFA500', probability: 15, icon: '🪙' },
@@ -82,11 +83,9 @@ const checkWin = (board: (string | null)[][], player: string): boolean => {
     return false;
 };
 
-// IA simple para el juego
+// IA con dificultad fácil
 const makeAIMove = (board: (string | null)[][]): [number, number] => {
     const emptyCells: [number, number][] = [];
-    
-    // Encontrar todas las celdas vacías
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
             if (!board[i][j]) {
@@ -94,35 +93,62 @@ const makeAIMove = (board: (string | null)[][]): [number, number] => {
             }
         }
     }
-    
-    // Si no hay celdas vacías, retornar una posición inválida
     if (emptyCells.length === 0) {
         return [-1, -1];
     }
-    
-    // Estrategia simple: bloquear al jugador si puede ganar, sino hacer movimiento aleatorio
-    // Verificar si el jugador puede ganar en el siguiente movimiento
-    for (const [row, col] of emptyCells) {
-        const testBoard = board.map(row => [...row]);
-        testBoard[row][col] = 'X';
-        if (checkWin(testBoard, 'X')) {
-            return [row, col]; // Bloquear al jugador
+    // 30% de probabilidad de jugar inteligente, 70% aleatorio
+    if (Math.random() < 0.3) {
+        // Inteligente: bloquear o ganar
+        for (const [row, col] of emptyCells) {
+            const testBoard = board.map(row => [...row]);
+            testBoard[row][col] = 'X';
+            if (checkWin(testBoard, 'X')) {
+                return [row, col]; // Bloquear
+            }
+        }
+        for (const [row, col] of emptyCells) {
+            const testBoard = board.map(row => [...row]);
+            testBoard[row][col] = 'O';
+            if (checkWin(testBoard, 'O')) {
+                return [row, col]; // Ganar
+            }
         }
     }
-    
-    // Verificar si la IA puede ganar
-    for (const [row, col] of emptyCells) {
-        const testBoard = board.map(row => [...row]);
-        testBoard[row][col] = 'O';
-        if (checkWin(testBoard, 'O')) {
-            return [row, col]; // Ganar si es posible
-        }
-    }
-    
-    // Si no hay movimientos estratégicos, elegir aleatoriamente
+    // Aleatorio
     const randomIndex = Math.floor(Math.random() * emptyCells.length);
     return emptyCells[randomIndex];
 };
+
+// Añadir helpers para control de partidas por 24h
+const STORAGE_KEY = 'juegaYGana_limit';
+
+function getLimitData(userId: string) {
+    const data = localStorage.getItem(`${STORAGE_KEY}_${userId}`);
+    if (!data) return { count: 0, start: null };
+    try {
+        return JSON.parse(data);
+    } catch {
+        return { count: 0, start: null };
+    }
+}
+
+function setLimitData(userId: string, count: number, start: number | undefined) {
+    if (typeof start === 'number') {
+        localStorage.setItem(`${STORAGE_KEY}_${userId}`, JSON.stringify({ count, start }));
+    } else {
+        localStorage.setItem(`${STORAGE_KEY}_${userId}`, JSON.stringify({ count, start: undefined }));
+    }
+}
+
+function getTimeLeft(start: number) {
+    const now = Date.now();
+    const diff = 24 * 60 * 60 * 1000 - (now - start);
+    if (diff <= 0) return null;
+    const hours = Math.floor(diff / (60 * 60 * 1000));
+    const minutes = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
+    const seconds = Math.floor((diff % (60 * 1000)) / 1000);
+    return { hours, minutes, seconds };
+}
 
 export const JuegaYGanaPage = () => {
     const { session } = useUser();
@@ -134,15 +160,83 @@ export const JuegaYGanaPage = () => {
     const [gameOver, setGameOver] = useState(false);
     const [winner, setWinner] = useState<string | null>(null);
     const [wonPrize, setWonPrize] = useState<Prize | null>(null);
-    const [showResult, setShowResult] = useState(false);
+    const [, setShowResult] = useState(false);
     const [gamesLeft, setGamesLeft] = useState(3);
     const [discountCode, setDiscountCode] = useState<string>('');
     const [isPlaying, setIsPlaying] = useState(false);
     const [isAITurn, setIsAITurn] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [limitCount, setLimitCount] = useState(0);
+    const [limitStart, setLimitStart] = useState<number|null>(null);
+    const [limitTimeLeft, setLimitTimeLeft] = useState<{hours:number,minutes:number,seconds:number}|null>(null);
+
+    useEffect(() => {
+        if (gameOver && winner) {
+            setShowModal(true);
+            document.body.style.overflow = 'hidden';
+        } else {
+            setShowModal(false);
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [gameOver, winner]);
+
+    // Controlar límite de partidas por usuario
+    useEffect(() => {
+        if (!userId) return;
+        const { count, start } = getLimitData(userId);
+        setLimitCount(count);
+        setLimitStart(start);
+        if (start && count >= 3) {
+            const left = getTimeLeft(start);
+            setLimitTimeLeft(left);
+            if (!left) {
+                setLimitCount(0);
+                setLimitStart(null);
+                setLimitTimeLeft(null);
+                setLimitData(userId, 0, undefined);
+            }
+        } else {
+            setLimitTimeLeft(null);
+        }
+    }, [userId, showModal, isPlaying]);
+
+    // Actualizar temporizador cada segundo si está bloqueado
+    useEffect(() => {
+        if (!limitStart || limitCount < 3) return;
+        const interval = setInterval(() => {
+            const left = getTimeLeft(limitStart);
+            setLimitTimeLeft(left);
+            if (!left) {
+                setLimitCount(0);
+                setLimitStart(null);
+                setLimitTimeLeft(null);
+                if (userId) setLimitData(userId, 0, undefined);
+            }
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [limitStart, limitCount, userId]);
 
     const initializeGame = () => {
+        if (!userId) return;
+        if (limitCount >= 3 && limitStart && getTimeLeft(Number(limitStart))) return;
         if (gamesLeft <= 0 || isPlaying) return;
         
+        // Actualizar localStorage
+        let newCount = limitCount;
+        let newStart = limitStart;
+        if (!limitStart || !getTimeLeft(Number(limitStart))) {
+            newCount = 1;
+            newStart = Date.now();
+        } else {
+            newCount = limitCount + 1;
+            newStart = limitStart;
+        }
+        setLimitData(userId, newCount, newStart);
+        setLimitCount(newCount);
+        setLimitStart(newStart);
         setIsPlaying(true);
         setGameOver(false);
         setWinner(null);
@@ -249,13 +343,7 @@ export const JuegaYGanaPage = () => {
         setIsAITurn(false);
     };
 
-    const copyToClipboard = async () => {
-        try {
-            await navigator.clipboard.writeText(discountCode);
-        } catch (err) {
-            console.error('Error al copiar al portapapeles:', err);
-        }
-    };
+    
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 relative overflow-hidden">
@@ -321,7 +409,7 @@ export const JuegaYGanaPage = () => {
                         </span>
                         <br />
                         <span className="text-white drop-shadow-2xl">
-                            VS IA
+                            VS eltiocoins
                         </span>
                     </motion.h1>
                     
@@ -331,7 +419,7 @@ export const JuegaYGanaPage = () => {
                         transition={{ duration: 0.8, delay: 0.4 }}
                         className="text-xl text-gray-300 max-w-2xl mx-auto"
                     >
-                        ¡Vence a la IA y gana monedas, boosting o incluso EA FC 26 gratis!
+                        ¡Vence al tiocoins y gana monedas, boosting o incluso EA FC 26 gratis!
                     </motion.p>
                     
                     <motion.div
@@ -417,7 +505,9 @@ export const JuegaYGanaPage = () => {
                                                     : 'border-white/30 bg-white/10 hover:border-yellow-400 hover:bg-yellow-400/20 cursor-pointer'
                                             }`}
                                         >
-                                            {cell}
+                                            {(rowIndex === 1 && colIndex === 1 && !cell) ? (
+                                                <img src={logotiocoins} alt="Logo Tio Coins" className="w-12 h-12 md:w-20 md:h-20 object-contain opacity-80" />
+                                            ) : cell}
                                         </motion.button>
                                     ))
                                 )}
@@ -436,84 +526,62 @@ export const JuegaYGanaPage = () => {
                                     whileTap={{ scale: 0.95 }}
                                     onClick={initializeGame}
                                     className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold text-lg rounded-xl shadow-2xl hover:from-yellow-500 hover:to-orange-600 transition-all duration-300"
+                                    disabled={Boolean(limitCount >= 3 && limitStart && getTimeLeft(Number(limitStart)))}
                                 >
                                     🎮 JUGAR VS IA
                                 </motion.button>
+                                {limitCount >= 3 && limitStart && limitTimeLeft && (
+                                    <div className="mt-4 text-red-400 font-semibold text-center">
+                                        Has alcanzado el límite de 3 partidas. Espera {limitTimeLeft.hours}h {limitTimeLeft.minutes}m {limitTimeLeft.seconds}s para volver a jugar.
+                                    </div>
+                                )}
                             </motion.div>
                         )}
 
                         {/* Resultado del juego */}
-                        {gameOver && winner && (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20"
-                            >
-                                <div className="text-center">
-                                    <div className="text-4xl mb-2">
-                                        {winner === 'X' ? '🎉' : winner === 'O' ? '😔' : '🤝'}
+                        {showModal && (
+                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="bg-black/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-2xl max-w-md w-full relative"
+                                >
+                                    <button
+                                        onClick={() => { setShowModal(false); setGameOver(false); }}
+                                        className="absolute top-3 right-3 text-white text-2xl hover:text-red-400 focus:outline-none"
+                                        aria-label="Cerrar"
+                                    >
+                                        ×
+                                    </button>
+                                    <div className="text-center">
+                                        <div className="text-4xl mb-2">
+                                            {winner === 'X' ? '🎉' : winner === 'O' ? '😔' : '🤝'}
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-white mb-2">
+                                            {winner === 'X' ? '¡GANASTE!' : winner === 'O' ? 'Perdiste' : 'Empate'}
+                                        </h3>
+                                        <p className="text-gray-300">
+                                            {winner === 'X' ? '¡Felicidades! Has vencido a la IA' : 
+                                             winner === 'O' ? 'La IA te ha vencido' : 'Nadie ganó esta ronda'}
+                                        </p>
+                                        {winner === 'X' && wonPrize && (
+                                            <div className="mt-4">
+                                                <div className="text-4xl mb-2">{wonPrize.icon}</div>
+                                                <div className="text-xl font-bold text-yellow-300 mb-2">{wonPrize.name}</div>
+                                                {discountCode && (
+                                                    <div className="bg-gradient-to-r from-purple-600 to-blue-600 p-2 rounded-lg inline-block mt-2">
+                                                        <span className="text-white font-semibold">Código: </span>
+                                                        <span className="text-yellow-400 font-mono">{discountCode}</span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
-                                    <h3 className="text-2xl font-bold text-white mb-2">
-                                        {winner === 'X' ? '¡GANASTE!' : winner === 'O' ? 'Perdiste' : 'Empate'}
-                                    </h3>
-                                    <p className="text-gray-300">
-                                        {winner === 'X' ? '¡Felicidades! Has vencido a la IA' : 
-                                         winner === 'O' ? 'La IA te ha vencido' : 'Nadie ganó esta ronda'}
-                                    </p>
-                                </div>
-                            </motion.div>
+                                </motion.div>
+                            </div>
                         )}
                     </div>
                 </div>
-
-                {/* Resultado con Código de Descuento */}
-                <AnimatePresence>
-                    {showResult && wonPrize && (
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            className="text-center mb-8"
-                        >
-                            <div className="inline-block p-8 bg-black/40 backdrop-blur-sm rounded-2xl border border-white/20 max-w-md">
-                                <div className="text-6xl mb-4">🎉</div>
-                                <h3 className="text-3xl font-bold text-white mb-2">¡GANASTE!</h3>
-                                <div className="text-4xl mb-4">{wonPrize.icon}</div>
-                                <h4 className="text-2xl font-bold text-white mb-2">{wonPrize.name}</h4>
-                                <p className="text-xl text-gray-300 mb-4">¡Felicidades! Has ganado</p>
-                                
-                                {/* Código de descuento */}
-                                <div className="bg-gradient-to-r from-purple-600 to-blue-600 p-4 rounded-lg mb-4">
-                                    <p className="text-white font-semibold mb-2">Tu código de descuento:</p>
-                                    <div className="flex items-center justify-center gap-2">
-                                        <code className="bg-black/30 px-4 py-2 rounded text-yellow-400 font-mono text-lg font-bold">
-                                            {discountCode}
-                                        </code>
-                                        <button
-                                            onClick={copyToClipboard}
-                                            className="px-3 py-2 bg-white/20 hover:bg-white/30 rounded transition-colors duration-200"
-                                            title="Copiar código"
-                                        >
-                                            📋
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {wonPrize.type === 'game' && (
-                                    <div className="mt-4 p-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg">
-                                        <p className="text-white font-bold">🎉 ¡EA FC 26 GRATIS! 🎉</p>
-                                        <p className="text-sm mt-1">Usa el código para activar tu juego</p>
-                                    </div>
-                                )}
-
-                                <div className="mt-4 text-sm text-gray-400">
-                                    <p>• El código es válido por 24 horas</p>
-                                    <p>• Úsalo en el checkout para aplicar el descuento</p>
-                                </div>
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
 
                 {/* Premios disponibles */}
                 <motion.div
@@ -545,10 +613,10 @@ export const JuegaYGanaPage = () => {
                     className="text-center mt-12 text-gray-400"
                 >
                     <p className="text-sm">
-                        * Solo ganas premios si vences a la IA.
+                        * Solo ganas premios si vences a eltiocoins.
                     </p>
                     <p className="text-sm mt-2">
-                        * La probabilidad de ganar EA FC 26 es del 0.5%.
+                        * La probabilidad de ganar EA FC 26 es del 50%.
                     </p>
                     <p className="text-sm mt-2">
                         * Los códigos son válidos por 24 horas desde su generación.

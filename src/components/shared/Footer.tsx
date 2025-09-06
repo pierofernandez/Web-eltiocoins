@@ -39,7 +39,7 @@ export const Footer = () => {
             to='/'
             className={'text-2xl font-bold tracking-tighter transition-all flex-1'}
           >
-            <img src="/img/logotiocoins.png" alt="logotiocoins" className='max-w-20' />
+            <img src="/img/logotiocoins.webp" alt="logotiocoins" className='max-w-20' />
           </Link>
 
           <div className='flex flex-col gap-4 flex-1'>

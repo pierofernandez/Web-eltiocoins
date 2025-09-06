@@ -68,7 +68,7 @@ export const CheckoutPage = () => {
 								className="relative"
 							>
 								<img 
-									src="/img/logotiocoins.png" 
+									src="/img/logotiocoins.webp" 
 									alt="Tio Coins" 
 									className="w-12 h-12 lg:w-16 lg:h-16 object-contain"
 								/>

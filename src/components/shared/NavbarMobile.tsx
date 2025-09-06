@@ -24,7 +24,7 @@ export const NavbarMobile = () => {
 					className=' place-items-center transition-all'
 					onClick={() => setActiveNavMobile(false)}
 				>
-					<img src="/img/logotiocoins.png" alt="logotiocoins" className='max-w-20 justify-center' />
+					<img src="/img/logotiocoins.webp" alt="logotiocoins" className='max-w-20 justify-center' />
 
 				</Link>
 

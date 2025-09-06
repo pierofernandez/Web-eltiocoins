@@ -7,8 +7,8 @@ export const Banner = () => {
 	const [currentImage, setCurrentImage] = useState(0);
 	
 	// Imágenes responsive: móvil y desktop
-	const mobileImages = ['/img/HOME1_nt.png', '/img/HOME2_nt.png'];
-	const desktopImages = ['/img/HOME1.png', '/img/HOME2.png'];
+	const mobileImages = ['/img/mobile11.webp', '/img/mobile22.webp', '/img/mobile33.webp'];
+	const desktopImages = ['/img/home3.webp', '/img/home1.webp', '/img/home2.webp'];
 
 	useEffect(() => {
 		Aos.init({ duration: 1000 });
@@ -53,7 +53,7 @@ export const Banner = () => {
 			<div className='absolute inset-0 bg-opacity-30' />
 
 			{/* BOTÓN COMPRAR AHORA - RESPONSIVE */}
-			<div className='absolute inset-0 flex items-center justify-center lg:items-end lg:justify-start lg:bottom-20 lg:left-28 lg:inset-auto z-10'>
+			<div className='hidden absolute inset-0 items-center justify-center lg:items-end lg:justify-start lg:bottom-20 lg:left-28 lg:inset-auto z-10'>
 				<Link
 					to='/monedas'
 					className='bg-[#00FA65] hover:bg-[#4efa79] text-black font-semibold py-3 px-6 lg:py-4 lg:px-12 rounded-lg shadow-lg transition duration-300 ease-in-out text-sm lg:text-base'

@@ -17,7 +17,7 @@ export const WhatsApp: React.FC = () => {
         style={styles.button}
       >
         <img
-          src="/img/WhatsApp.svg.png" 
+          src="/img/WhatsApp.svg.webp" 
           alt="WhatsApp"
           style={styles.icon}
         />

@@ -81,7 +81,7 @@ export const Brands = () => {
 
     const services = [
         {
-            image: "/img/modos-de-juego/monedas-logo.png",
+            image: "/img/modos-de-juego/monedas-logo.webp",
             title: "Monedas Seguras",
             description: "Entrega instantánea y 100% segura",
             link: "/monedas",
@@ -89,7 +89,7 @@ export const Brands = () => {
             delay: "100"
         },
         {
-            image: "/img/modos-de-juego/futchampions-logo.png",
+            image: "/img/modos-de-juego/futchampions-logo.webp",
             title: "Fut Champions",
             description: "Jugadores verificados y profesionales",
             link: "/futchampions",
@@ -97,7 +97,7 @@ export const Brands = () => {
             delay: "200"
         },
         {
-            image: "/img/modos-de-juego/divisionrivals-logo.png",
+            image: "/img/modos-de-juego/divisionrivals-logo.webp",
             title: "Division Rivals",
             description: "Te llevamos hasta Élite Division",
             link: "/divisionrivals",
@@ -105,7 +105,7 @@ export const Brands = () => {
             delay: "300"
         },
         {
-            image: "/img/modos-de-juego/couching-logo.png",
+            image: "/img/modos-de-juego/couching-logo.webp",
             title: "Coaching Premium",
             description: "Valoramos tu progreso personal",
             link: "/coaching",
@@ -113,7 +113,7 @@ export const Brands = () => {
             delay: "400"
         },
         {
-            image: "/img/modos-de-juego/cuentas-logo.png",
+            image: "/img/modos-de-juego/cuentas-logo.webp",
             title: "Cuentas Boosteadas",
             description: "Tú eliges el jugador ideal",
             link: "/cuentas",
