@@ -1,11 +1,32 @@
+import { useState } from 'react';
 import { formatPrice } from '../../helpers';
 import { useCartStore } from '../../store/cart.store';
+import { useDiscountStore } from '../../store/discount.store';
 import { motion } from 'framer-motion';
-import { FaGamepad, FaCoins, FaShieldAlt } from 'react-icons/fa';
+import { FaGamepad, FaCoins, FaShieldAlt, FaTag } from 'react-icons/fa';
 
 export const ItemsCheckout = () => {
 	const cartItems = useCartStore(state => state.items);
 	const totalAmount = useCartStore(state => state.totalAmount);
+
+	// Estado local para el código de descuento
+	const [discountCode, setDiscountCode] = useState('');
+	const [error, setError] = useState('');
+	const { discount, setDiscount } = useDiscountStore();
+
+	// Validación de código de descuento
+	const handleApplyDiscount = () => {
+		if (discountCode.trim().toUpperCase() === 'TIO10') {
+			const discountAmount = totalAmount * 0.1; // 10% de descuento
+			setDiscount(discountAmount);
+			setError('');
+		} else {
+			setDiscount(0);
+			setError('Código inválido o expirado');
+		}
+	};
+
+	const finalTotal = totalAmount - discount;
 
 	return (
 		<div className="space-y-6">
@@ -64,6 +85,32 @@ export const ItemsCheckout = () => {
 			{/* Separador */}
 			<div className="border-t border-white/20 my-6"></div>
 
+			{/* Apartado para código de descuento */}
+			<div className="bg-black/20 rounded-xl p-4 border border-white/10">
+				<div className="flex items-center gap-2">
+					<FaTag className="text-green-400" />
+					<input
+						type="text"
+						value={discountCode}
+						onChange={(e) => setDiscountCode(e.target.value)}
+						placeholder="Código de descuento"
+						className="flex-1 bg-transparent border-b border-white/20 focus:border-green-400 outline-none text-white placeholder-gray-400 p-2"
+					/>
+					<button
+						onClick={handleApplyDiscount}
+						className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+					>
+						Aplicar
+					</button>
+				</div>
+				{error && <p className="text-red-400 text-sm mt-2">{error}</p>}
+				{discount > 0 && (
+					<p className="text-green-400 text-sm mt-2">
+						¡Descuento aplicado! -{formatPrice(discount)}
+					</p>
+				)}
+			</div>
+
 			{/* Resumen de totales */}
 			<motion.div
 				initial={{ opacity: 0, y: 20 }}
@@ -78,6 +125,14 @@ export const ItemsCheckout = () => {
 						<span className="text-white font-semibold">{formatPrice(totalAmount)}</span>
 					</div>
 
+					{/* Descuento */}
+					{discount > 0 && (
+						<div className="flex justify-between items-center">
+							<span className="text-gray-300 text-sm">Descuento:</span>
+							<span className="text-green-400 font-semibold">-{formatPrice(discount)}</span>
+						</div>
+					)}
+
 					{/* Envío */}
 					<div className="flex justify-between items-center">
 						<span className="text-gray-300 text-sm">Envío:</span>
@@ -91,13 +146,13 @@ export const ItemsCheckout = () => {
 					<div className="flex justify-between items-center">
 						<span className="text-white font-bold text-lg">Total:</span>
 						<span className="text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-							{formatPrice(totalAmount)}
+							{formatPrice(finalTotal)}
 						</span>
 					</div>
 				</div>
 			</motion.div>
 
-			{/* Información adicional */}
+			{/* Info adicional */}
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
@@ -115,7 +170,6 @@ export const ItemsCheckout = () => {
 				</div>
 			</motion.div>
 
-			{/* Información de entrega */}
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}

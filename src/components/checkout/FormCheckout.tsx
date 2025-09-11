@@ -4,6 +4,7 @@ import { InputAddress } from './InputAddress';
 import { AddressFormValues, addressSchema } from '../../lib/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCartStore } from '../../store/cart.store';
+import { useDiscountStore } from '../../store/discount.store';
 import { ImSpinner2 } from 'react-icons/im';
 import { useCreateOrder } from '../../hooks';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
@@ -31,6 +32,8 @@ export const FormCheckout = () => {
   const cleanCart = useCartStore(state => state.cleanCart);
   const cartItems = useCartStore(state => state.items);
   const totalAmount = useCartStore(state => state.totalAmount);
+  const { discount } = useDiscountStore();
+  const finalAmount = totalAmount - discount;
   const navigate = useNavigate();
 
   // Aplicar estilos adicionales cuando se monta el componente
@@ -225,13 +228,29 @@ export const FormCheckout = () => {
             </div>
             
             <div className='bg-black/20 rounded-lg p-4 mb-4'>
-              <div className='flex justify-between items-center mb-2'>
-                <span className='text-gray-300'>Total a pagar:</span>
-                <span className='text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent'>
-                  ${totalAmount.toFixed(2)} USD
-                </span>
+              <div className='space-y-2'>
+                <div className='flex justify-between items-center'>
+                  <span className='text-gray-300'>Subtotal:</span>
+                  <span className='text-white font-bold'>
+                    ${totalAmount.toFixed(2)} USD
+                  </span>
+                </div>
+                {discount > 0 && (
+                  <div className='flex justify-between items-center'>
+                    <span className='text-gray-300'>Descuento:</span>
+                    <span className='text-green-400 font-bold'>
+                      -${discount.toFixed(2)} USD
+                    </span>
+                  </div>
+                )}
+                <div className='flex justify-between items-center pt-2 border-t border-white/10'>
+                  <span className='text-gray-300'>Total a pagar:</span>
+                  <span className='text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent'>
+                    ${finalAmount.toFixed(2)} USD
+                  </span>
+                </div>
               </div>
-              <p className='text-xs text-gray-400'>Incluye envío gratuito</p>
+              <p className='text-xs text-gray-400 mt-2'>Incluye envío gratuito</p>
             </div>
           </div>
 
@@ -299,7 +318,7 @@ export const FormCheckout = () => {
                       purchase_units: [
                         {
                           amount: {
-                            value: totalAmount.toFixed(2),
+                            value: finalAmount.toFixed(2),
                             currency_code: "USD",
                           },
                           description: `Compra en Tio Coins - ${cartItems.length} producto${cartItems.length !== 1 ? 's' : ''}`,

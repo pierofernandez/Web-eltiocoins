@@ -1,29 +1,29 @@
 import { useState } from 'react';
-import { CardProduct } from '../components/products/CardProduct';
 import { ContainerFilter } from '../components/products/ContainerFilter';
 import { prepareProducts } from '../helpers';
 import { useFilteredProducts } from '../hooks';
 import { Pagination } from '../components/shared/Pagination';
 import InformationCoins from '../components/home/InformationCoins';
 import Reviews from '../components/home/Reviews';
+import { CardProductCompact } from '../components/products/CardProductCompact';
 
 export const MonedasPage = () => {
 	const [page, setPage] = useState(1);
 	const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
 
-	const { 
-		data: products = [], 
-		isLoading, 
-		totalProducts 
+	const {
+		data: products = [],
+		isLoading,
+		totalProducts
 	} = useFilteredProducts({
 		page,
 		platforms: selectedPlatforms,
 	});
 
-    // Filtramos solo los productos con name "Monedas" y los ordenamos por precio de menor a mayor
+	// Filtramos solo los productos con name "Monedas" y los ordenamos por precio de menor a mayor
 	const preparedProducts = prepareProducts(products)
-    .filter(product => product.category === "monedas")
-    .sort((a, b) => a.price - b.price); // Ordenar por precio ascendente
+		.filter(product => product.category === "monedas")
+		.sort((a, b) => a.price - b.price);
 
 	return (
 		<>
@@ -37,58 +37,71 @@ export const MonedasPage = () => {
 						</div>
 						<h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
 							<span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
-							 MONEDAS
+								MONEDAS
 							</span>
 							<br />
 							<span className="text-white drop-shadow-lg">
-							 FIFA
+								FIFA
 							</span>
 						</h1>
-						<div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 mx-auto rounded-full"></div>
+						<div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 mx-auto "></div>
 					</div>
 				</div>
 			</section>
 
-			<div className='grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'>
-				{/* FILTROS */}
-				<ContainerFilter
-					setSelectedPlatforms={setSelectedPlatforms}
-					selectedPlatforms={selectedPlatforms}
-				/>
-
-				{
-					isLoading ? (
-						<div className='col-span-2 flex items-center justify-center h-[500px]'>
-							<p className='text-2xl'>Cargando...</p>
-						</div>
-					) : (
-						<div className='col-span-2 lg:col-span-2 xl:col-span-4 flex flex-col gap-12'>
-							<div className='grid grid-cols-2 gap-3 gap-y-10 xl:grid-cols-4'>
-								{preparedProducts.map(product => (
-									<CardProduct
-										key={product.id}
-										name={product.name}
-										price={product.price}
-										colors={product.colors}
-										img={product.images[0]}
-										slug={product.slug}
-										variants={product.variants}
-									/>
-								))}
-							</div>
-
-							<Pagination
-								totalItems={totalProducts} 
-								page={page}
-								setPage={setPage}
+			{/* Contenedor único: filtros + productos + paginación */}
+			<div className="px-4 sm:px-6 lg:px-8 mb-8">
+				<div className="max-w-7xl mx-auto">
+					<div className="bg-slate-400 rounded-xl shadow-md overflow-hidden">
+						
+						{/* Filtros */}
+						<div className="">
+							<ContainerFilter
+								setSelectedPlatforms={setSelectedPlatforms}
+								selectedPlatforms={selectedPlatforms}
 							/>
 						</div>
-					)
-				}
-			</div>
-			<InformationCoins/>
 
-			<Reviews/>
+						{/* Productos */}
+						{isLoading ? (
+							<div className="flex items-center justify-center h-[400px]">
+								<div className="animate-spin h-12 w-12 border-t-2 border-b-2 border-yellow-500"></div>
+							</div>
+						) : (
+							<div>
+								{preparedProducts.map((product, idx) => (
+									<div key={product.id}>
+										<CardProductCompact
+											img={product.images[0]}
+											name={product.name}
+											price={product.price}
+											slug={product.slug}
+											variants={product.variants}
+										/>
+										{/* Separador entre productos */}
+										{idx !== preparedProducts.length - 1 && (
+											<hr className="border-gray-800" />
+										)}
+									</div>
+								))}
+
+								
+							</div>
+						)}
+					</div>
+					{/* Paginación */}
+								<div className="p-4 border-t border-gray-200">
+									<Pagination
+										totalItems={totalProducts}
+										page={page}
+										setPage={setPage}
+									/>
+								</div>
+				</div>
+			</div>
+
+			<InformationCoins />
+			<Reviews />
 		</>
 	);
 };
