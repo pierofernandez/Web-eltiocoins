@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaCreditCard, FaArrowLeft, FaArrowRight, FaPaypal, FaLock, FaShieldAlt } from 'react-icons/fa';
 import './PayPalStyles.css';
+import { formatPrice } from '../../helpers';
+import { useCurrencyStore } from '../../store/currency.store';
 
 export const FormCheckout = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -35,12 +37,16 @@ export const FormCheckout = () => {
   const { discount } = useDiscountStore();
   const finalAmount = totalAmount - discount;
   const navigate = useNavigate();
+  const { currency, rates, baseCurrency } = useCurrencyStore();
 
-  // Aplicar estilos adicionales cuando se monta el componente
+  const paypalSupportedCurrencies = ['USD', 'EUR', 'MXN'] as const;
+  const paypalCurrency = (paypalSupportedCurrencies as readonly string[]).includes(currency) ? currency : 'USD';
+  const rateTarget = rates[paypalCurrency] ?? 1;
+  const rateBase = rates[baseCurrency] ?? 1;
+  const finalAmountForPayPal = Number((finalAmount * (rateTarget / rateBase)).toFixed(2));
+
   useEffect(() => {
-    // Agregar clase al body para estilos globales de PayPal
     document.body.classList.add('paypal-checkout-active');
-    
     return () => {
       document.body.classList.remove('paypal-checkout-active');
     };
@@ -90,7 +96,7 @@ export const FormCheckout = () => {
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          className="w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center"
+          className="w-16 h-16 bg-gradient-to-r from-[#00FF87] to-gray-700 rounded-full flex items-center justify-center"
         >
           <ImSpinner2 className='text-white text-2xl' />
         </motion.div>
@@ -104,27 +110,27 @@ export const FormCheckout = () => {
 
   return (
     <div>
-      {/* Indicador de pasos moderno */}
-      <div className="flex items-center mb-8 bg-black/20 rounded-xl p-2">
+      {/* Indicador de pasos */}
+      <div className="flex items-center mb-8 bg-[#1E1E1E]/80 rounded-xl p-2">
         <motion.div
           className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg transition-all duration-300 ${
             currentStep === 1 
-              ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg' 
+              ? 'bg-gradient-to-r from-[#00FF87] to-gray-800 text-black shadow-lg' 
               : 'text-gray-400'
           }`}
         >
           <FaMapMarkerAlt className="text-sm" />
-          <span className="font-medium">Datos de Entrega</span>
+          <span className="font-medium">Datos de Cliente</span>
         </motion.div>
         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
-          currentStep === 2 ? 'bg-green-500 text-white' : 'bg-gray-600 text-gray-400'
+          currentStep === 2 ? 'bg-[#00FF87] text-black' : 'bg-gray-600 text-gray-400'
         }`}>
           2
         </div>
         <motion.div
           className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg transition-all duration-300 ${
             currentStep === 2 
-              ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg' 
+              ? 'bg-gradient-to-r from-[#00FF87] to-gray-800 text-black shadow-lg' 
               : 'text-gray-400'
           }`}
         >
@@ -140,13 +146,13 @@ export const FormCheckout = () => {
           className='flex flex-col gap-6' 
           onSubmit={onSubmitDeliveryData}
         >
-          <div className='bg-black/20 rounded-xl p-6 border border-white/10'>
+          <div className='bg-[#121212]/90 rounded-xl p-6 border border-[#00FF87]/20'>
             <div className='flex items-center gap-3 mb-4'>
-              <div className='w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center'>
-                <FaMapMarkerAlt className='text-blue-400' />
+              <div className='w-10 h-10 bg-[#00FF87]/20 rounded-full flex items-center justify-center'>
+                <FaMapMarkerAlt className='text-[#00FF87]' />
               </div>
               <div>
-                <h3 className='text-xl font-bold text-white'>Información de Entrega</h3>
+                <h3 className='text-xl font-bold text-white'>Información del Cliente</h3>
                 <p className='text-gray-400 text-sm'>Completa tus datos para recibir tu pedido</p>
               </div>
             </div>
@@ -157,7 +163,7 @@ export const FormCheckout = () => {
                 errors={errors}
                 name='state'
                 placeholder='Estado / Provincia'
-                className='bg-black/30 border border-white/20 text-white placeholder-gray-400 p-3 rounded-lg focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300'
+                className='bg-[#1E1E1E] border border-[#00FF87]/20 text-white placeholder-gray-500 p-3 rounded-lg focus:border-[#00FF87] focus:ring-2 focus:ring-[#00FF87]/30 transition-all duration-300'
               />
 
               <InputAddress
@@ -165,7 +171,7 @@ export const FormCheckout = () => {
                 errors={errors}
                 name='city'
                 placeholder='Ciudad'
-                className='bg-black/30 border border-white/20 text-white placeholder-gray-400 p-3 rounded-lg focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300'
+                className='bg-[#1E1E1E] border border-[#00FF87]/20 text-white placeholder-gray-500 p-3 rounded-lg focus:border-[#00FF87] focus:ring-2 focus:ring-[#00FF87]/30 transition-all duration-300'
               />
             </div>
 
@@ -175,11 +181,11 @@ export const FormCheckout = () => {
                 errors={errors}
                 name='postalcode'
                 placeholder='Código Postal (Opcional)'
-                className='bg-black/30 border border-white/20 text-white placeholder-gray-400 p-3 rounded-lg focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300'
+                className='bg-[#1E1E1E] border border-[#00FF87]/20 text-white placeholder-gray-500 p-3 rounded-lg focus:border-[#00FF87] focus:ring-2 focus:ring-[#00FF87]/30 transition-all duration-300'
               />
 
               <select
-                className='bg-black/30 border border-white/20 text-white p-3 rounded-lg focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300'
+                className='bg-[#1E1E1E] border border-[#00FF87]/20 text-white p-3 rounded-lg focus:border-[#00FF87] focus:ring-2 focus:ring-[#00FF87]/30 transition-all duration-300'
                 {...register('country')}
               >
                 <option value='' className='text-black'>Seleccionar país</option>
@@ -203,7 +209,7 @@ export const FormCheckout = () => {
             whileTap={{ scale: 0.98 }}
             type="submit"
             disabled={!isFormValid}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 px-8 rounded-xl font-bold text-lg shadow-2xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+            className="bg-gradient-to-r from-[#00FF87] to-gray-700 text-black py-4 px-8 rounded-xl font-bold text-lg shadow-xl hover:from-[#00e676] hover:to-gray-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
           >
             <span>Continuar al Pago</span>
             <FaArrowRight />
@@ -216,10 +222,10 @@ export const FormCheckout = () => {
           className='flex flex-col gap-6'
         >
           {/* Resumen de la compra */}
-          <div className='bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-xl p-6 border border-purple-400/20'>
+          <div className='bg-gradient-to-r from-[#1E1E1E] to-gray-800 rounded-xl p-6 border border-[#00FF87]/20'>
             <div className='flex items-center gap-3 mb-4'>
-              <div className='w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center'>
-                <FaCreditCard className='text-purple-400' />
+              <div className='w-10 h-10 bg-[#00FF87]/20 rounded-full flex items-center justify-center'>
+                <FaCreditCard className='text-[#00FF87]' />
               </div>
               <div>
                 <h3 className='text-xl font-bold text-white'>Resumen de Compra</h3>
@@ -227,38 +233,38 @@ export const FormCheckout = () => {
               </div>
             </div>
             
-            <div className='bg-black/20 rounded-lg p-4 mb-4'>
+            <div className='bg-[#121212] rounded-lg p-4 mb-4 border border-[#00FF87]/10'>
               <div className='space-y-2'>
                 <div className='flex justify-between items-center'>
-                  <span className='text-gray-300'>Subtotal:</span>
+                  <span className='text-gray-400'>Subtotal:</span>
                   <span className='text-white font-bold'>
-                    ${totalAmount.toFixed(2)} USD
+                    {formatPrice(totalAmount, currency, rates, baseCurrency)}
                   </span>
                 </div>
                 {discount > 0 && (
                   <div className='flex justify-between items-center'>
-                    <span className='text-gray-300'>Descuento:</span>
-                    <span className='text-green-400 font-bold'>
-                      -${discount.toFixed(2)} USD
+                    <span className='text-gray-400'>Descuento:</span>
+                    <span className='text-[#00FF87] font-bold'>
+                      -{formatPrice(discount, currency, rates, baseCurrency)}
                     </span>
                   </div>
                 )}
-                <div className='flex justify-between items-center pt-2 border-t border-white/10'>
-                  <span className='text-gray-300'>Total a pagar:</span>
-                  <span className='text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent'>
-                    ${finalAmount.toFixed(2)} USD
+                <div className='flex justify-between items-center pt-2 border-t border-[#00FF87]/10'>
+                  <span className='text-gray-400'>Total a pagar:</span>
+                  <span className='text-2xl font-bold bg-gradient-to-r from-[#00FF87] to-emerald-400 bg-clip-text text-transparent'>
+                    {formatPrice(finalAmount, currency, rates, baseCurrency)}
                   </span>
                 </div>
               </div>
-              <p className='text-xs text-gray-400 mt-2'>Incluye envío gratuito</p>
+              <p className='text-xs text-gray-500 mt-2'>Incluye envío gratuito</p>
             </div>
           </div>
 
           {/* Método de pago */}
-          <div className='bg-black/20 rounded-xl p-6 border border-white/10'>
+          <div className='bg-[#121212]/90 rounded-xl p-6 border border-[#00FF87]/20'>
             <div className='flex items-center gap-3 mb-6'>
-              <div className='w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center'>
-                <FaPaypal className='text-green-400' />
+              <div className='w-10 h-10 bg-[#00FF87]/20 rounded-full flex items-center justify-center'>
+                <FaPaypal className='text-[#00FF87]' />
               </div>
               <div>
                 <h3 className='text-xl font-bold text-white'>Método de Pago</h3>
@@ -266,16 +272,16 @@ export const FormCheckout = () => {
               </div>
             </div>
 
-            {/* Información de seguridad */}
-            <div className='flex items-center gap-4 mb-6 p-4 bg-green-500/10 rounded-lg border border-green-400/20'>
-              <FaShieldAlt className='text-green-400 text-xl' />
+            {/* Seguridad */}
+            <div className='flex items-center gap-4 mb-6 p-4 bg-[#00FF87]/10 rounded-lg border border-[#00FF87]/20'>
+              <FaShieldAlt className='text-[#00FF87] text-xl' />
               <div className='text-sm'>
-                <p className='text-green-400 font-semibold'>Pago 100% Seguro</p>
+                <p className='text-[#00FF87] font-semibold'>Pago 100% Seguro</p>
                 <p className='text-gray-400'>Tus datos están protegidos con encriptación SSL</p>
               </div>
             </div>
 
-            {/* Error de pago */}
+            {/* Error */}
             {paymentError && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
@@ -286,16 +292,18 @@ export const FormCheckout = () => {
               </motion.div>
             )}
 
-            {/* Botones de PayPal con contenedor especial */}
+            {/* PayPal */}
             <div className='paypal-checkout-container'>
               <PayPalScriptProvider 
+                key={`pp-${paypalCurrency}`}
                 options={{ 
                   clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID || '',
-                  currency: "USD",
+                  currency: paypalCurrency,
                   intent: "capture"
                 }}
               >
                 <PayPalButtons
+                  forceReRender={[finalAmountForPayPal, paypalCurrency]}
                   disabled={isPending || isProcessing}
                   style={{
                     layout: "vertical",
@@ -318,8 +326,8 @@ export const FormCheckout = () => {
                       purchase_units: [
                         {
                           amount: {
-                            value: finalAmount.toFixed(2),
-                            currency_code: "USD",
+                            value: finalAmountForPayPal.toFixed(2),
+                            currency_code: paypalCurrency,
                           },
                           description: `Compra en Tio Coins - ${cartItems.length} producto${cartItems.length !== 1 ? 's' : ''}`,
                         },
@@ -362,7 +370,7 @@ export const FormCheckout = () => {
               </PayPalScriptProvider>
             </div>
 
-            {/* Información adicional */}
+            {/* Footer */}
             <div className='mt-4 flex items-center gap-2 text-xs text-gray-400'>
               <FaLock className='text-gray-500' />
               <span>Procesado por PayPal - Transacción segura</span>
@@ -373,7 +381,7 @@ export const FormCheckout = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setCurrentStep(1)}
-            className="bg-gradient-to-r from-gray-600 to-gray-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-gray-700 hover:to-gray-800 transition-all duration-300 flex items-center justify-center gap-3"
+            className="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-3 px-6 rounded-xl font-semibold hover:from-gray-800 hover:to-black transition-all duration-300 flex items-center justify-center gap-3"
           >
             <FaArrowLeft />
             <span>Volver a Datos</span>

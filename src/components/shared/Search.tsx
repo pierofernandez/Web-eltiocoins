@@ -6,10 +6,12 @@ import { formatPrice } from '../../helpers';
 import { searchProducts } from '../../actions';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../interfaces';
+import { useCurrencyStore } from '../../store/currency.store';
 
 export const Search = () => {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [searchResults, setSearchResults] = useState<Product[]>([]);
+	const { currency, rates, baseCurrency } = useCurrencyStore();
 
 	const closeSheet = useGlobalStore(state => state.closeSheet);
 
@@ -74,7 +76,7 @@ export const Search = () => {
 										</p>
 
 										<p className='text-sm font-medium text-gray-400'>
-											{formatPrice(product.variants[0].price)}
+											{formatPrice(product.variants[0].price, currency, rates, baseCurrency)}
 										</p>
 									</div>
 								</button>

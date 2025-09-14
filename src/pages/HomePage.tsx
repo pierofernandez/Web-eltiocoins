@@ -3,7 +3,6 @@ import { Cookie } from '../components/home/Cookie';
 import { FeatureGrid } from '../components/home/FeatureGrid';
 import Instagram from '../components/home/Instagram';
 import { ProductGrid } from '../components/home/ProductGrid';
-import StatsTemplate from '../components/home/StatsTemplate';
 import WhatsApp from '../components/home/WhatsApp';
 import { Questions } from '../components/shared/Questions';
 import { ProductGridSkeleton } from '../components/skeletons/ProductGridSkeleton';
@@ -22,7 +21,6 @@ export const HomePage = () => {
         <div >
             <Cookie />
             <FeatureGrid />
-            <StatsTemplate />
 
             {/* Título para Productos Recientes */}
             <section className="py-8 px-4 sm:px-6 lg:px-8 relative">

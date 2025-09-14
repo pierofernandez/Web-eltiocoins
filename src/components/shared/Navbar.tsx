@@ -13,6 +13,8 @@ import { useCustomer, useUser } from '../../hooks';
 import { LuLoaderCircle } from 'react-icons/lu';
 import { Banner } from './Banner';
 
+import { CurrencySelector } from './CurrencySelector';
+
 export const Navbar = () => {
 	const openSheet = useGlobalStore(state => state.openSheet);
 
@@ -34,7 +36,7 @@ export const Navbar = () => {
 			<Banner />
 
 			{/* Header principal */}
-			<header className='bg-zinc-900 text-white px-5 lg:px-12 pt-4 pb-2 border-b border-zinc-700 flex flex-col items-center'>
+			<header className='bg-zinc-900 text-white px-4 sm:px-5 lg:px-12 pt-3 sm:pt-4 pb-2 border-b border-zinc-700 flex flex-col items-center'>
 				<div className='w-full flex justify-between items-center mb-3'>
 					<Logo/>
 
@@ -54,17 +56,17 @@ export const Navbar = () => {
 						</div>
 					</div>
 
-					<div className='flex items-center gap-5 ml-4'>
+					<div className='flex items-center gap-2 sm:gap-4 ml-2 sm:ml-4'>
 						{/* Icono de búsqueda solo en móviles */}
 						<button
 							className='sm:hidden'
 							onClick={() => openSheet('search')}
 						>
-							<HiOutlineSearch size={30} className="hover:text-green-400 transition" />
+							<HiOutlineSearch size={22} className="hover:text-green-400 transition" />
 						</button>
 
 						{isLoading ? (
-							<LuLoaderCircle className='animate-spin' size={30} />
+							<LuLoaderCircle className='animate-spin' size={24} />
 						) : session ? (
 							<Link
 								to='/account'
@@ -74,25 +76,30 @@ export const Navbar = () => {
 							</Link>
 						) : (
 							<Link to='/login'>
-								<PiUserLight size={30} className="hover:text-green-400 transition" />
+								<PiUserLight size={22} className="hover:text-green-400 transition" />
 							</Link>
 						)}
+
+						{/* Selector de moneda compacto en mobile */}
+						<div className='max-w-[120px] sm:max-w-none'>
+							<CurrencySelector />
+						</div>
 
 						<button
 							className='relative'
 							onClick={() => openSheet('cart')}
 						>
-							<span className='absolute -bottom-2 -right-2 w-5 h-5 bg-green-400 text-black text-xs rounded-full grid place-items-center font-bold'>
+							<span className='absolute -bottom-2 -right-2 w-5 h-5 bg-green-400 text-black text-[10px] rounded-full grid place-items-center font-bold'>
 								{totalItemsInCart}
 							</span>
-							<GiShoppingCart size={30} className="hover:text-green-400 transition" />
+							<GiShoppingCart size={22} className="hover:text-green-400 transition" />
 						</button>
 
 						<button
-							className='md:hidden ml-2'
+							className='lg:hidden ml-1 sm:ml-2'
 							onClick={() => setActiveNavMobile(true)}
 						>
-							<FaBarsStaggered size={30} className="hover:text-green-400 transition" />
+							<FaBarsStaggered size={22} className="hover:text-green-400 transition" />
 						</button>
 					</div>
 				</div>

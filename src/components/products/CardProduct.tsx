@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { formatPrice } from '../../helpers';
 import { Tag } from '../shared/Tag';
 import { useCartStore } from '../../store/cart.store';
+import { useCurrencyStore } from '../../store/currency.store';
 import toast from 'react-hot-toast';
 import { VariantProduct } from '../interfaces';
 
@@ -24,6 +25,7 @@ export const CardProduct = ({
 	variants,
 }: Props) => {
 	const addItem = useCartStore(state => state.addItem);
+	const { currency, rates, baseCurrency } = useCurrencyStore();
 
 	const handleAddClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -52,11 +54,13 @@ export const CardProduct = ({
 
 	const stock = variants[0]?.stock || 0;
 
+
+
 	return (
 		<div className='group relative bg-gradient-to-br from-zinc-900/90 to-zinc-800/90 backdrop-blur-sm border border-zinc-700/50 rounded-xl sm:rounded-2xl p-3 sm:p-4 transition-all duration-500 hover:border-cyan-500/50 hover:shadow-xl sm:hover:shadow-2xl hover:shadow-cyan-500/20 hover:scale-105'>
 			{/* Gaming Glow Effect */}
 			<div className='absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-xl sm:rounded-2xl blur-lg sm:blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500'></div>
-			
+
 			{/* Corner Accent */}
 			<div className='absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-xl sm:rounded-bl-2xl'></div>
 
@@ -78,7 +82,7 @@ export const CardProduct = ({
 						alt={name}
 						className='object-contain h-full w-full p-3 sm:p-4 transition-transform duration-500 group-hover:scale-110'
 					/>
-					
+
 					{/* Hover overlay */}
 					<div className='absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500'></div>
 				</div>
@@ -105,11 +109,11 @@ export const CardProduct = ({
 				<div className='flex items-center justify-between mb-3 sm:mb-4'>
 					<div className='flex items-center gap-1 sm:gap-2'>
 						<span className='text-lg sm:text-xl lg:text-2xl font-black text-transparent bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text'>
-							{formatPrice(price)}
+							{formatPrice(price, currency, rates, baseCurrency)}
 						</span>
 						<div className='w-1.5 h-1.5 sm:w-2 sm:h-2 bg-cyan-400 rounded-full animate-pulse'></div>
 					</div>
-					
+
 					{/* Stock indicator */}
 					{stock > 0 && (
 						<div className='flex items-center gap-1 text-xs text-green-400'>

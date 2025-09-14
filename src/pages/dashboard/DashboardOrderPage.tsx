@@ -3,11 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useOrderAdmin } from '../../hooks';
 import { Loader } from '../../components/shared/Loader';
 import { formatPrice } from '../../helpers';
+import { useCurrencyStore } from '../../store/currency.store';
 
 const tableHeaders = ['Producto', 'Cantidad', 'Total'];
 
 export const DashboardOrderPage = () => {
 	const navigate = useNavigate();
+	const { currency, rates, baseCurrency } = useCurrencyStore();
 
 	const { id } = useParams<{ id: string }>();
 
@@ -59,7 +61,7 @@ export const DashboardOrderPage = () => {
 									<div className='space-y-2'>
 										<h3>{item.productName}</h3>
 										<p className='text-sm'>
-											{formatPrice(item.price)}
+											{formatPrice(item.price, currency, rates, baseCurrency)}
 										</p>
 									</div>
 								</td>
@@ -67,7 +69,7 @@ export const DashboardOrderPage = () => {
 									{item.quantity}
 								</td>
 								<td className='p-4 font-medium tracking-tighter text-center'>
-									{formatPrice(item.price * item.quantity)}
+									{formatPrice(item.price * item.quantity, currency, rates, baseCurrency)}
 								</td>
 							</tr>
 						))}
@@ -77,15 +79,15 @@ export const DashboardOrderPage = () => {
 				<div className='flex flex-col gap-3 text-slate-600 text-sm self-end w-1/2'>
 					<div className='flex justify-between'>
 						<p>Subtotal</p>
-						<p>{formatPrice(order.totalAmount)}</p>
+						<p>{formatPrice(order.totalAmount, currency, rates, baseCurrency)}</p>
 					</div>
 					<div className='flex justify-between'>
 						<p>Envío (Standard)</p>
-						<p>{formatPrice(0)}</p>
+						<p>{formatPrice(0, currency, rates, baseCurrency)}</p>
 					</div>
 					<div className='flex justify-between text-black font-semibold'>
 						<p>Total</p>
-						<p>{formatPrice(order.totalAmount)}</p>
+						<p>{formatPrice(order.totalAmount, currency, rates, baseCurrency)}</p>
 					</div>
 				</div>
 

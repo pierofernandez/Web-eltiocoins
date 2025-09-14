@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatDateLong, formatPrice } from '../../../helpers';
 import { OrderWithCustomer } from '../../interfaces';
 import { useChangeStatusOrder } from '../../../hooks';
+import { useCurrencyStore } from '../../../store/currency.store';
 
 const tableHeaders = ['Cliente', 'Fecha', 'Estado', 'Total'];
 
@@ -18,6 +19,7 @@ interface Props {
 
 export const TableOrdersAdmin = ({ orders }: Props) => {
 	const navigate = useNavigate();
+	const { currency, rates, baseCurrency } = useCurrencyStore();
 
 	const { mutate } = useChangeStatusOrder();
 
@@ -73,7 +75,7 @@ export const TableOrdersAdmin = ({ orders }: Props) => {
 								</select>
 							</td>
 							<td className='p-4 font-medium tracking-tighter'>
-								{formatPrice(order.total_amount)}
+								{formatPrice(order.total_amount, currency, rates, baseCurrency)}
 							</td>
 						</tr>
 					))}

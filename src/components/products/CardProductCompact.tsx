@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useCartStore } from '../../store/cart.store';
+import { useCurrencyStore } from '../../store/currency.store';
+import { formatPrice } from '../../helpers';
 import toast from 'react-hot-toast';
 import { VariantProduct } from '../interfaces';
 
@@ -13,6 +15,7 @@ interface Props {
 
 export const CardProductCompact = ({ img, name, price, slug, variants }: Props) => {
   const addItem = useCartStore(state => state.addItem);
+  const { currency, rates, baseCurrency } = useCurrencyStore();
 
   const handleAddClick = () => {
     const firstVariant = variants[0];
@@ -33,11 +36,11 @@ export const CardProductCompact = ({ img, name, price, slug, variants }: Props) 
   };
 
   return (
-    <div className="bg-slate-950 backdrop-blur-sm  transition-all duration-200 shadow-sm hover:shadow-md">
-      <div className="flex items-center p-4 gap-4">
+    <div className="bg-zinc-950 backdrop-blur-sm transition-all duration-200 shadow-sm hover:shadow-md">
+      <div className="flex items-center p-3 sm:p-4 gap-3 sm:gap-4">
         {/* Imagen pequeña - Izquierda con navegación */}
         <Link to={`/monedas/${slug}`} className="flex-shrink-0">
-          <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden bg-gray-100">
             <img
               src={img}
               alt={name}
@@ -48,19 +51,19 @@ export const CardProductCompact = ({ img, name, price, slug, variants }: Props) 
 
         {/* Descripción */}
         <div className="flex-1 min-w-0">
-          <h3 className="text-base font-semibold text-gray-900 truncate">{name}</h3>
-          <p className="text-sm text-gray-600 mt-1">Complete Time: 1-3Hour</p>
+          <h3 className="text-sm sm:text-base font-semibold text-white truncate">{name}</h3>
+          <p className="text-[10px] sm:text-sm text-gray-400 mt-1">Tiempo completo: 1-3 horas</p>
           <div className="flex items-center gap-2 mt-1">
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-800">
-              Newcomer + 5K
+            <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded text-[7px] sm:text-xs font-medium bg-orange-100 text-orange-800">
+              Recién llegado + 5K
             </span>
           </div>
         </div>
 
         {/* Precio */}
         <div className="flex-shrink-0 text-right">
-          <div className="text-lg font-bold text-gray-900">
-            {price.toFixed(2)} <span className="text-sm font-normal text-gray-600">PEN</span>
+          <div className="text-sm sm:text-lg font-bold text-white">
+            {formatPrice(price, currency, rates, baseCurrency)}
           </div>
         </div>
 
@@ -68,9 +71,9 @@ export const CardProductCompact = ({ img, name, price, slug, variants }: Props) 
         <div className="flex-shrink-0">
           <button
             onClick={handleAddClick}
-            className="px-6 py-2 bg-orange-500 hover:bg-orange-600 rounded-full text-white font-medium transition-colors duration-200 text-sm"
+            className="px-3 sm:px-6 py-1.5 sm:py-2 bg-green-400 hover:bg-green-600 rounded-full text-black font-medium transition-colors duration-200 text-xs sm:text-sm"
           >
-            Buy
+            Comprar
           </button>
         </div>
       </div>

@@ -5,11 +5,13 @@ import { CiCircleCheck } from 'react-icons/ci';
 import { formatPrice } from '../helpers';
 import { supabase } from '../supabase/client';
 import { useEffect } from 'react';
+import { useCurrencyStore } from '../store/currency.store';
 
 export const ThankyouPage = () => {
 	const { id } = useParams<{ id: string }>();
 	const { data, isLoading, isError } = useOrder(Number(id));
 	const { isLoading: isLoadingSession } = useUser();
+	const { currency, rates, baseCurrency } = useCurrencyStore();
 	const navigate = useNavigate();
 
 
@@ -76,7 +78,7 @@ export const ThankyouPage = () => {
 								<div className='flex-1'>
 									<div className='flex justify-between text-sm'>
 										<span className='font-medium text-white'>{item.productName}</span>
-										<span className='text-gray-400'>{formatPrice(item.price)}</span>
+										<span className='text-gray-400'>{formatPrice(item.price, currency, rates, baseCurrency)}</span>
 									</div>
 								</div>
 							</li>
@@ -86,7 +88,7 @@ export const ThankyouPage = () => {
 					<div className='flex justify-between text-sm border-t border-[#2d2f33] pt-4'>
 						<span className='font-semibold text-white'>Total:</span>
 						<span className='font-semibold text-white'>
-							{formatPrice(data.totalAmount)}
+							{formatPrice(data.totalAmount, currency, rates, baseCurrency)}
 						</span>
 					</div>
 
@@ -97,7 +99,7 @@ export const ThankyouPage = () => {
 						</div>
 						<div>
 							<p className='font-semibold text-white'>Método de pago:</p>
-							<p>Depósito bancario - {formatPrice(data.totalAmount)}</p>
+							<p>Depósito bancario - {formatPrice(data.totalAmount, currency, rates, baseCurrency)}</p>
 						</div>
 						<div>
 							<p className='font-semibold text-white'>Residencia:</p>

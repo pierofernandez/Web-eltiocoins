@@ -7,6 +7,7 @@ import { Loader } from '../../shared/Loader';
 import { formatPrice, formatDate } from '../../../helpers';
 import { Pagination } from '../../shared/Pagination';
 import { CellTableProduct } from './CellTableProduct';
+import { useCurrencyStore } from '../../../store/currency.store';
 
 const tableHeaders = [
     '',
@@ -26,6 +27,7 @@ export const TableProduct = () => {
         [key: string]: number;
     }>({});
     const [page, setPage] = useState(1);
+    const { currency, rates, baseCurrency } = useCurrencyStore();
 
     const { products, isLoading, totalProducts } = useProducts({
         page,
@@ -123,7 +125,7 @@ export const TableProduct = () => {
                                         </select>
                                     </td>
                                     <CellTableProduct
-                                        content={formatPrice(selectedVariant?.price)}
+                                        content={formatPrice(selectedVariant?.price || 0, currency, rates, baseCurrency)}
                                     />
 
                                     <CellTableProduct

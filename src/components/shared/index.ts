@@ -15,3 +15,4 @@ export * from './Separator';
 export * from './Sheet';
 export * from './Stats';
 export * from './Tag'; 
+export * from './CurrencySelector';

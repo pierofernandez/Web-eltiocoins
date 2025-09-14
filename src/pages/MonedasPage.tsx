@@ -27,32 +27,10 @@ export const MonedasPage = () => {
 
 	return (
 		<>
-			{/* Título Gaming Moderno */}
-			<section className="py-12 px-4 sm:px-6 lg:px-8 relative">
-				<div className="max-w-7xl mx-auto">
-					<div className="text-center mb-8">
-						<div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full mb-6">
-							<div className="w-2 h-2 bg-yellow-300 rounded-full animate-pulse"></div>
-							<span className="text-white text-sm font-medium tracking-wider uppercase">Gaming</span>
-						</div>
-						<h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
-							<span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
-								MONEDAS
-							</span>
-							<br />
-							<span className="text-white drop-shadow-lg">
-								FIFA
-							</span>
-						</h1>
-						<div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 mx-auto "></div>
-					</div>
-				</div>
-			</section>
-
 			{/* Contenedor único: filtros + productos + paginación */}
 			<div className="px-4 sm:px-6 lg:px-8 mb-8">
 				<div className="max-w-7xl mx-auto">
-					<div className="bg-slate-400 rounded-xl shadow-md overflow-hidden">
+					<div className=" rounded-xl shadow-md overflow-hidden">
 						
 						{/* Filtros */}
 						<div className="">
@@ -80,7 +58,7 @@ export const MonedasPage = () => {
 										/>
 										{/* Separador entre productos */}
 										{idx !== preparedProducts.length - 1 && (
-											<hr className="border-gray-800" />
+											<hr className="border-neutral-800 " />
 										)}
 									</div>
 								))}
@@ -90,7 +68,7 @@ export const MonedasPage = () => {
 						)}
 					</div>
 					{/* Paginación */}
-								<div className="p-4 border-t border-gray-200">
+								<div className="p-4">
 									<Pagination
 										totalItems={totalProducts}
 										page={page}

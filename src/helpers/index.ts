@@ -1,13 +1,34 @@
 import { Color, Product, VariantProduct } from "../components/interfaces";
 
-// Función para formatear el precio a dólares
-export const formatPrice = (price: number) => {
-	return new Intl.NumberFormat('en-US', {
+
+// Función para formatear y convertir el precio entre monedas
+// price está en baseCurrency (moneda en la que guardas tus precios)
+export const formatPrice = (
+	price: number,
+	currency: string = 'USD',
+	rates: Record<string, number> = { USD: 1 },
+	baseCurrency: string = 'USD'
+) => {
+	// Si la moneda es la misma que la base, no hay conversión
+	// Si la API devuelve rates con base USD: precio_destino = precio_base × rate[destino]
+	const convertedPrice = currency === baseCurrency ? price : price * (rates[currency] || 1);
+
+	const currencyConfig = {
+		USD: { locale: 'en-US', currency: 'USD', symbol: '$' },
+		EUR: { locale: 'de-DE', currency: 'EUR', symbol: '€' },
+		PEN: { locale: 'es-PE', currency: 'PEN', symbol: 'S/' },
+		MXN: { locale: 'es-MX', currency: 'MXN', symbol: '$' },
+		CLP: { locale: 'es-CL', currency: 'CLP', symbol: '$' },
+	} as const;
+
+	const config = currencyConfig[(currency as keyof typeof currencyConfig) ?? 'USD'] || currencyConfig.USD;
+
+	return new Intl.NumberFormat(config.locale, {
 		style: 'currency',
-		currency: 'USD',
+		currency: config.currency,
 		minimumFractionDigits: 2,
 		maximumFractionDigits: 2,
-	}).format(price);
+	}).format(convertedPrice);
 };
 
 // Función para preparar los productos 
@@ -109,3 +130,19 @@ export const extractFilePath = (url: string) => {
 
 	return parts[1];
 };
+
+//funcion para traer las tasas de cambio desde exchangerate.host
+
+const fetchRates = async (base: string = 'USD') => {
+  // Usar una API gratuita que no requiere clave de acceso
+  const res = await fetch(`https://api.fxratesapi.com/latest?base=${base}`);
+  if (!res.ok) throw new Error("Error al traer tasas de cambio");
+  const data = await res.json();
+  return data.rates as Record<string, number>;
+};
+export default fetchRates;
+
+
+//hook para convertir precios usando las tasas de cambio y la moneda seleccionada
+
+
