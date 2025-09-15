@@ -3,7 +3,7 @@ import { FaInstagram, FaTiktok, FaWhatsapp, FaBoxOpen, FaCartShopping } from "re
 export const navbarLinks = [
     {
         id: 1,
-        title: 'inicio',
+        title: 'Inicio',
         href: '/',
     },
     {

@@ -18,7 +18,7 @@ export interface CartState {
   clearDiscount: () => void;
 }
 
-const storeApi: StateCreator<CartState> = (set, get) => ({
+const storeApi: StateCreator<CartState> = (set) => ({
   items: [],
   totalItemsInCart: 0,
   subtotal: 0,

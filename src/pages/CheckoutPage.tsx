@@ -62,7 +62,16 @@ export const CheckoutPage = () => {
         ) : (
           <motion.div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {/* FORM */}
-            <motion.div className="bg-black/50 backdrop-blur-md rounded-2xl p-4 sm:p-6 lg:p-8 border border-lime-400/30">
+            <motion.div className="bg-black/50 backdrop-blur-md rounded-2xl p-4 sm:p-6 lg:p-8 border border-lime-400/30 space-y-4">
+              {/* AVISO IMPORTANTE */}
+              <div className="bg-yellow-400/10 border border-yellow-400/40 rounded-lg p-3 sm:p-4">
+                <p className="text-yellow-300 font-semibold text-sm sm:text-base text-center">
+                  ⚠️ Importante: Activa la opción de compras por internet / compras en el extranjero 
+                  en tu tarjeta o billetera antes de realizar el pago.
+                </p>
+              </div>
+
+              {/* FORMULARIO */}
               <FormCheckout />
             </motion.div>
 

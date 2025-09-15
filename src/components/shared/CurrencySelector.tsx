@@ -6,6 +6,7 @@ const CURRENCIES = [
   { code: 'EUR', name: 'Euro', flagSrc: '/img/banderas/spain-flag.webp' },
   { code: 'PEN', name: 'Sol', flagSrc: '/img/banderas/peru-flag.webp' },
   { code: 'MXN', name: 'Peso', flagSrc: '/img/banderas/mexico-flag.webp' },
+  { code: 'CLP', name: 'Peso', flagSrc: '/img/banderas/chile-flag.webp' },
 ];
 
 export const CurrencySelector = () => {

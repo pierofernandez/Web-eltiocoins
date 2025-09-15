@@ -6,6 +6,7 @@ import { formatPrice } from '../helpers';
 import { supabase } from '../supabase/client';
 import { useEffect } from 'react';
 import { useCurrencyStore } from '../store/currency.store';
+import { FaWhatsapp, FaInstagram } from 'react-icons/fa';
 
 export const ThankyouPage = () => {
 	const { id } = useParams<{ id: string }>();
@@ -13,7 +14,6 @@ export const ThankyouPage = () => {
 	const { isLoading: isLoadingSession } = useUser();
 	const { currency, rates, baseCurrency } = useCurrencyStore();
 	const navigate = useNavigate();
-
 
 	useEffect(() => {
 		supabase.auth.onAuthStateChange(async (event, session) => {
@@ -60,8 +60,28 @@ export const ThankyouPage = () => {
 					</div>
 
 					<p className='text-sm text-gray-300'>
-						Una vez realizada la transferencia, envía tu comprobante por WhatsApp o a <strong>eltiocoins@gmail.com</strong>.
+						Una vez realizada la transferencia, envía tu comprobante por WhatsApp o Instagram, o al correo <strong>eltiocoins@gmail.com</strong>.
 					</p>
+
+					{/* BOTONES DE CONTACTO */}
+					<div className="flex flex-col sm:flex-row gap-4 pt-4">
+						<a
+							href="https://wa.me/51977548397"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-black font-bold px-4 py-2 rounded-lg transition-all"
+						>
+							<FaWhatsapp size={20} /> WhatsApp
+						</a>
+						<a
+							href="https://instagram.com/eltiocoins"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="flex items-center justify-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-bold px-4 py-2 rounded-lg transition-all"
+						>
+							<FaInstagram size={20} /> Instagram
+						</a>
+					</div>
 				</div>
 
 				<div className='w-full md:w-[600px] bg-[#18191c] border border-[#2d2f33] p-6 rounded-lg space-y-4 shadow-md'>
@@ -121,7 +141,6 @@ export const ThankyouPage = () => {
 					>
 						Seguir comprando
 					</Link>
-
 				</div>
 			</main>
 		</div>

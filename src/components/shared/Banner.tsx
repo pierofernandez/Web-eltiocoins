@@ -1,29 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export const Banner = () => {
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
-    // Fecha objetivo: 30 de junio de 2025 a las 23:59:59
-    const targetDate = new Date('2025-06-30T23:59:59');
-    
+    // Fecha objetivo: 10 días desde ahora
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 10);
+
     const calculateTimeLeft = () => {
       const now = new Date();
       const difference = targetDate.getTime() - now.getTime();
-      
-      if (difference > 0) {
-        setTimeLeft(difference);
-      } else {
-        setTimeLeft(0);
-      }
+      setTimeLeft(difference > 0 ? difference : 0);
     };
 
-    // Calcular tiempo inicial
     calculateTimeLeft();
-    
-    // Actualizar cada segundo
     const interval = setInterval(calculateTimeLeft, 1000);
-    
     return () => clearInterval(interval);
   }, []);
 
@@ -33,80 +25,86 @@ export const Banner = () => {
   const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
   return (
-    <div className="relative isolate overflow-hidden bg-gradient-to-r from-purple-900 via-pink-900 to-red-900">
-      {/* Animated Background Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.1),transparent_50%)]"></div>
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(168,85,247,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(168,85,247,0.1)_1px,transparent_1px)] bg-[size:20px_20px] xs:bg-[size:25px_25px] sm:bg-[size:30px_30px] lg:bg-[size:50px_50px] animate-pulse"></div>
-      
-      {/* Content */}
-      <div className="relative flex flex-col items-center justify-center px-2 py-1.5 xs:px-3 xs:py-2 sm:px-4 sm:py-3 lg:px-6 lg:py-2.5 lg:flex-row">
-        {/* Discount Badge - Primera fila en móviles */}
-        <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 mb-1.5 xs:mb-2 lg:mb-0">
-          <div className="inline-flex items-center gap-1 xs:gap-1.5 sm:gap-2 px-1.5 xs:px-2 sm:px-3 py-0.5 xs:py-1 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full">
-            <div className="w-1 h-1 xs:w-1.5 xs:h-1.5 sm:w-2 sm:h-2 bg-white rounded-full animate-pulse"></div>
-            <span className="text-white text-[10px] xs:text-xs font-bold tracking-wider uppercase">Oferta Especial</span>
+    <div className="relative isolate overflow-hidden bg-gradient-to-r from-[#1d0036] via-[#400060] to-[#0d0024] border-y-4 border-[#ff00e0]">
+      {/* Fondo neon geométrico */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,0,224,0.12),transparent_60%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(0,204,255,0.12),transparent_60%)]"></div>
+
+      {/* Contenedor principal */}
+      <div className="relative flex flex-col sm:flex-row items-center justify-center px-3 py-3 gap-3">
+        {/* Primera línea (oferta + cupón en desktop, oferta + timer en mobile) */}
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          {/* Badge Oferta */}
+          <div className="flex items-center gap-2 bg-gradient-to-r from-[#ff00e0] to-[#00d4ff] px-3 py-1 rounded-full shadow-lg shadow-[#ff00e080] flex-shrink-0">
+            <span className="text-white font-bold text-xs sm:text-sm uppercase tracking-wide">
+              Oferta Especial
+            </span>
+            <span className="bg-white text-[#1d0036] px-2 py-0.5 rounded-full font-extrabold text-xs sm:text-sm">
+              20% OFF
+            </span>
           </div>
-          
-          <div className="flex items-center gap-0.5 xs:gap-1 sm:gap-2">
-            <span className="text-white text-[10px] xs:text-xs sm:text-sm lg:text-base font-medium">
-              20% de descuento
+
+          {/* Cupón solo visible en sm+ */}
+          <div className="hidden sm:flex items-center gap-1 flex-shrink-0">
+            <span className="text-white font-medium text-xs sm:text-base">Código:</span>
+            <span className="text-[#00d4ff] font-extrabold tracking-wide text-sm sm:text-lg">
+              COR22
             </span>
-            <span className="text-yellow-300 text-[10px] xs:text-xs sm:text-sm lg:text-base font-bold">
-              ROCIOVALENTINA
-            </span>
+          </div>
+
+          {/* Timer inline solo en mobile */}
+          <div className="flex sm:hidden items-center gap-2 bg-[#1d0036]/70 px-3 py-1 rounded-lg border border-[#00d4ff]/40">
+            <span className="text-white/70 text-xs">Expira:</span>
+            <span className="text-[#ff00e0] font-bold">{days}D</span>
+            <span className="text-[#00d4ff] font-bold">{hours.toString().padStart(2, "0")}H</span>
+            <span className="text-[#ff9c00] font-bold">{minutes.toString().padStart(2, "0")}M</span>
+            <span className="text-white font-bold animate-pulse">{seconds.toString().padStart(2, "0")}S</span>
           </div>
         </div>
 
-        {/* Countdown Timer - Segunda fila en móviles */}
-        <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-3">
-          <div className="hidden sm:flex items-center gap-1 text-white text-xs sm:text-sm">
-            <span className="font-medium">Expira en:</span>
+        {/* Timer completo (debajo en mobile, inline en sm+) */}
+        <div className="hidden sm:flex items-center gap-2 flex-shrink-0 bg-[#1d0036]/70 px-3 py-2 rounded-lg border border-[#00d4ff]/40 shadow-md">
+          <span className="text-white/70 text-xs sm:text-sm">Expira en:</span>
+
+          {/* Days */}
+          <div className="flex items-baseline gap-1">
+            <span className="text-[#ff00e0] font-mono font-extrabold text-lg sm:text-2xl drop-shadow-md">
+              {days}
+            </span>
+            <span className="text-white/60 text-xs">D</span>
           </div>
-          
-          <div className="flex items-center gap-0.5 xs:gap-1 sm:gap-2">
-            {/* Days - Visible en todos los dispositivos */}
-            <div className="bg-black/20 backdrop-blur-sm border border-white/20 rounded-sm xs:rounded-md sm:rounded-lg px-1 xs:px-1.5 sm:px-2 py-0.5 xs:py-1 min-w-[28px] xs:min-w-[32px] sm:min-w-[40px] text-center">
-              <div className="flex items-center justify-center gap-0.5">
-                <span className="text-white font-mono text-[10px] xs:text-xs sm:text-sm lg:text-lg font-bold">{days}</span>
-                <span className="text-white/70 text-[8px] xs:text-xs">D</span>
-              </div>
-            </div>
-            
-            <span className="text-white/50 text-xs xs:text-sm sm:text-lg">:</span>
-            
-            {/* Hours */}
-            <div className="bg-black/20 backdrop-blur-sm border border-white/20 rounded-sm xs:rounded-md sm:rounded-lg px-1 xs:px-1.5 sm:px-2 py-0.5 xs:py-1 min-w-[28px] xs:min-w-[32px] sm:min-w-[40px] text-center">
-              <div className="flex items-center justify-center gap-0.5">
-                <span className="text-white font-mono text-[10px] xs:text-xs sm:text-sm lg:text-lg font-bold">{hours.toString().padStart(2, '0')}</span>
-                <span className="text-white/70 text-[8px] xs:text-xs">H</span>
-              </div>
-            </div>
-            
-            <span className="text-white/50 text-xs xs:text-sm sm:text-lg">:</span>
-            
-            {/* Minutes */}
-            <div className="bg-black/20 backdrop-blur-sm border border-white/20 rounded-sm xs:rounded-md sm:rounded-lg px-1 xs:px-1.5 sm:px-2 py-0.5 xs:py-1 min-w-[28px] xs:min-w-[32px] sm:min-w-[40px] text-center">
-              <div className="flex items-center justify-center gap-0.5">
-                <span className="text-white font-mono text-[10px] xs:text-xs sm:text-sm lg:text-lg font-bold">{minutes.toString().padStart(2, '0')}</span>
-                <span className="text-white/70 text-[8px] xs:text-xs">M</span>
-              </div>
-            </div>
-            
-            <span className="text-white/50 text-xs xs:text-sm sm:text-lg">:</span>
-            
-            {/* Seconds */}
-            <div className="bg-black/20 backdrop-blur-sm border border-white/20 rounded-sm xs:rounded-md sm:rounded-lg px-1 xs:px-1.5 sm:px-2 py-0.5 xs:py-1 min-w-[28px] xs:min-w-[32px] sm:min-w-[40px] text-center animate-pulse">
-              <div className="flex items-center justify-center gap-0.5">
-                <span className="text-white font-mono text-[10px] xs:text-xs sm:text-sm lg:text-lg font-bold">{seconds.toString().padStart(2, '0')}</span>
-                <span className="text-white/70 text-[8px] xs:text-xs">S</span>
-              </div>
-            </div>
+          <span className="text-[#00d4ff] font-bold">:</span>
+
+          {/* Hours */}
+          <div className="flex items-baseline gap-1">
+            <span className="text-[#00d4ff] font-mono font-extrabold text-lg sm:text-2xl drop-shadow-md">
+              {hours.toString().padStart(2, "0")}
+            </span>
+            <span className="text-white/60 text-xs">H</span>
+          </div>
+          <span className="text-[#00d4ff] font-bold">:</span>
+
+          {/* Minutes */}
+          <div className="flex items-baseline gap-1">
+            <span className="text-[#ff9c00] font-mono font-extrabold text-lg sm:text-2xl drop-shadow-md">
+              {minutes.toString().padStart(2, "0")}
+            </span>
+            <span className="text-white/60 text-xs">M</span>
+          </div>
+          <span className="text-[#00d4ff] font-bold">:</span>
+
+          {/* Seconds */}
+          <div className="flex items-baseline gap-1 animate-pulse">
+            <span className="text-white font-mono font-extrabold text-lg sm:text-2xl drop-shadow-md">
+              {seconds.toString().padStart(2, "0")}
+            </span>
+            <span className="text-white/60 text-xs">S</span>
           </div>
         </div>
       </div>
 
-      {/* Bottom Glow Line */}
-      <div className="absolute bottom-0 left-0 right-0 h-0.5 xs:h-0.5 sm:h-1 bg-gradient-to-r from-green-400 via-yellow-400 to-red-400"></div>
+      {/* Glow inferior */}
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ff00e0] via-[#00d4ff] to-[#ff9c00] blur-sm"></div>
     </div>
   );
 };

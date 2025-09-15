@@ -55,7 +55,7 @@ export const CardProductCompact = ({ img, name, price, slug, variants }: Props) 
           <p className="text-[10px] sm:text-sm text-gray-400 mt-1">Tiempo completo: 1-3 horas</p>
           <div className="flex items-center gap-2 mt-1">
             <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded text-[7px] sm:text-xs font-medium bg-orange-100 text-orange-800">
-              Recién llegado + 5K
+              + incluye monedas de regalo
             </span>
           </div>
         </div>
