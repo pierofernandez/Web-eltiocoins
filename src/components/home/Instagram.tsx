@@ -19,7 +19,7 @@ export const Instagram: React.FC = () => {
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
     position: 'fixed',
-    bottom: '90px', // Ajusta la posición para que esté encima del botón de WhatsApp
+    bottom: '150px', // Subido más para no chocar con NavigationButton
     right: '20px',
     zIndex: 1000,
   },

@@ -30,7 +30,7 @@ export const WhatsApp: React.FC = () => {
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
     position: 'fixed', // Tipo específico para 'position'
-    bottom: '20px',
+    bottom: '80px', // Subido para no chocar con NavigationButton
     right: '20px',
     zIndex: 1000, // Asegura que esté por encima de otros elementos
   },

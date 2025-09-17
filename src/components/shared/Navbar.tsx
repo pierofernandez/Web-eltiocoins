@@ -34,7 +34,6 @@ export const Navbar = () => {
 	return (
 		<div>
 			<Banner />
-
 			{/* Header principal */}
 			<header className='bg-zinc-900 text-white px-4 sm:px-5 lg:px-12 pt-3 sm:pt-4 pb-2 border-b border-zinc-700 flex flex-col items-center'>
 				<div className='w-full flex justify-between items-center mb-3'>

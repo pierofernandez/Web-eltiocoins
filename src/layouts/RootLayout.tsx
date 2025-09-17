@@ -8,6 +8,7 @@ import { useGlobalStore } from '../store/global.store';
 import { NavbarMobile } from '../components/shared/NavbarMobile';
 import { Navbar } from '../components/shared/Navbar';
 import { useCurrencyStore } from '../store/currency.store';
+import { NavigationButton } from '../components/home/NavigationButton';
 
 export const RootLayout = () => {
 	const { pathname } = useLocation();
@@ -25,11 +26,13 @@ export const RootLayout = () => {
 		<div className='h-screen  flex flex-col font-montserrat'>
 			<Navbar />
 
-			{(pathname === '/' )  && <Banner />}
+			{(pathname === '/') && <Banner />}
 
 			<main className='container my-8 flex-1 '>
 				<Outlet />
 			</main>
+
+			<NavigationButton />
 
 			{pathname === '/' && <Newsletter />}
 

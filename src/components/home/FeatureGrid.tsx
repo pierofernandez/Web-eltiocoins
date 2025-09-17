@@ -4,7 +4,7 @@ import { useState } from "react";
 export const FeatureGrid = () => {
   const [isCardVisible, setIsCardVisible] = useState(false);
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8">
+    <section className=" px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Instagram Posts Section */}
         <div className="mt-8 relative">
