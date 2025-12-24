@@ -12,7 +12,7 @@ export const ForgotPasswordPage = () => {
 		e.preventDefault();
 
 		const { error } = await supabase.auth.resetPasswordForEmail(email, {
-			redirectTo: 'http://localhost:5173/update-password', // cambia esto si estás en producción
+			redirectTo: 'https://eltiocoins.com/update-password', // cambia esto si estás en producción
 		});
 
 		if (error) {

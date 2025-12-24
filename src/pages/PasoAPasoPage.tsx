@@ -40,7 +40,7 @@ export const PasoAPasoPage = () => {
 		{
 			id: 1,
 			icon: FaCreditCard,
-			title: 'Realiza el Pago',
+			title: 'Selecciona tu producto "monedas, boosting y futchampions" y Realiza el Pago',
 			description: 'Paga de forma segura con PayPal, tarjeta de crédito o débito.',
 			color: 'from-green-500 to-emerald-500',
 			bgColor: 'bg-green-500/10',
@@ -57,7 +57,7 @@ export const PasoAPasoPage = () => {
 			bgColor: 'bg-purple-500/10',
 			borderColor: 'border-purple-500/20',
 			videoPlaceholder: 'img/paso3.mp4',
-			stepDetails: 'Para monedas, las recibirás directamente en tu cuenta FIFA. Para servicios, comenzamos inmediatamente. Recibe confirmación por email.'
+			stepDetails: 'Para confirmar cualquier producto comprado, mandaras captura del comprobante ya sea por whatsApp o Instagram para evitar fraude de su compra.'
 		}
 	];
 
@@ -66,7 +66,7 @@ export const PasoAPasoPage = () => {
 	return (
 		<>
 			{/* Título Gaming Moderno */}
-			<section className="py-12 px-4 sm:px-6 lg:px-8 relative">
+			<section className="py-2 px-4 sm:px-6 lg:px-8 relative">
 				<div className="max-w-7xl mx-auto">
 					<div className="text-center mb-8">
 						<div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full mb-6">
@@ -88,16 +88,21 @@ export const PasoAPasoPage = () => {
 			</section>
 
 			{/* Contenedor Principal */}
-			<section className="py-16 px-4 sm:px-6 lg:px-8">
+			<section className="py-2 px-4 sm:px-6 lg:px-8">
 				<div className="max-w-7xl mx-auto">
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
 
 						{/* Lado Izquierdo: Título + Cards */}
-						<div className="space-y-6" data-aos="fade-right" data-aos-delay="100">
+						<div className="py-2 " data-aos="fade-right" data-aos-delay="100">
 							{/* Título siempre visible */}
-							<h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
+							<h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
 								Pasos para Comprar
 							</h2>
+
+							{/* Texto solo visible en mobile */}
+							<p className="text-sm text-gray-300 block md:hidden">
+								Seleccione el siguiente paso en la parte inferior
+							</p>
 
 							{/* Cards ocultas en mobile */}
 							<div className="hidden md:block space-y-6">
@@ -116,20 +121,20 @@ export const PasoAPasoPage = () => {
 											{/* Background Glow Effect */}
 											<div
 												className={`absolute inset-0 bg-gradient-to-r ${step.color} opacity-0 ${isSelected
-														? 'opacity-30'
-														: isCompleted
-															? 'opacity-15'
-															: 'group-hover:opacity-10'
+													? 'opacity-30'
+													: isCompleted
+														? 'opacity-15'
+														: 'group-hover:opacity-10'
 													} blur-xl transition-all duration-500 rounded-2xl`}
 											></div>
 
 											{/* Card */}
 											<div
 												className={`relative ${step.bgColor} ${step.borderColor} border backdrop-blur-sm rounded-2xl p-6 transition-all duration-500 ${isSelected
-														? 'border-opacity-80 shadow-2xl shadow-black/40 scale-105'
-														: isCompleted
-															? 'border-opacity-60 shadow-lg shadow-black/20'
-															: 'group-hover:border-opacity-40 group-hover:shadow-xl group-hover:shadow-black/20'
+													? 'border-opacity-80 shadow-2xl shadow-black/40 scale-105'
+													: isCompleted
+														? 'border-opacity-60 shadow-lg shadow-black/20'
+														: 'group-hover:border-opacity-40 group-hover:shadow-xl group-hover:shadow-black/20'
 													} overflow-hidden`}
 											>
 												{/* Contenido */}

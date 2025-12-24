@@ -15,7 +15,22 @@ export const DashboardOrderPage = () => {
 
 	const { data: order, isLoading } = useOrderAdmin(Number(id));
 
-	if (isLoading || !order) return <Loader />;
+	if (isLoading) return <Loader />;
+
+	if (!order) {
+		return (
+			<div className='flex flex-col items-center justify-center h-[50vh] gap-4'>
+				<h1 className='text-2xl font-bold'>Pedido no encontrado</h1>
+				<button
+					className='border rounded-full py-2 border-slate-200 px-5 flex items-center justify-center gap-2 text-xs font-medium uppercase tracking-widest hover:bg-stone-100 transition-all'
+					onClick={() => navigate(-1)}
+				>
+					<IoChevronBack size={16} />
+					Volver
+				</button>
+			</div>
+		);
+	}
 
 	return (
 		<div className='text-black'>

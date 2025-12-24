@@ -6,8 +6,8 @@ export const Banner = () => {
 	const [currentImage, setCurrentImage] = useState(0);
 
 	// Imágenes responsive: móvil y desktop
-	const mobileImages = ['/img/sliders/slider1mobile.webp', '/img/sliders/slider2mobile.webp', '/img/sliders/slider3mobile.webp'];
-	const desktopImages = ['/img/sliders/slider1.webp', '/img/sliders/slider2.webp', '/img/sliders/slider3.webp'];
+	const mobileImages = ['/img/sliders/slider1mobile.webp', '/img/sliders/slider2mobile.webp'];
+	const desktopImages = ['/img/sliders/slider1pc.webp', '/img/sliders/slider2pc.webp'];
 
 	useEffect(() => {
 		Aos.init({ duration: 1000 });
@@ -22,7 +22,7 @@ export const Banner = () => {
 	}, [mobileImages.length]);
 
 	return (
-		<div className='relative text-white overflow-hidden min-h-[340px] md:min-h-[650px] lg:min-h-[550px] bg-gradient-to-b from-black/70  '>
+		<div className='relative text-white overflow-hidden min-h-[400px] md:min-h-[750px] lg:min-h-[550px] bg-gradient-to-b from-black/70  '>
 			{/* IMAGENES DE FONDO - MOBILE/TABLET */}
 			{mobileImages.map((image, index) => (
 				<div

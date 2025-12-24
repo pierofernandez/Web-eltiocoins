@@ -22,7 +22,7 @@ VITE_SUPABASE_ANON_KEY=tu_supabase_anon_key_aqui
 
 # Server Configuration
 PORT=3001
-BASE_URL=http://localhost:3001
+BASE_URL=https://localhost:3001
 ```
 
 ### 2. Obtener Credenciales de MercadoPago
@@ -73,10 +73,10 @@ npm run dev:full
 
 ### 3. Verificar que el Servidor Funciona
 
-El servidor estará disponible en `http://localhost:3001`
+El servidor estará disponible en `https://localhost:3001`
 
 Puedes verificar que funciona visitando:
-- Health check: `http://localhost:3001/api/health`
+- Health check: `https://localhost:3001/api/health`
 
 ### 4. Estructura del Servidor
 
@@ -180,7 +180,7 @@ Para testing, usa estas cuentas de MercadoPago:
    - Usa credenciales de TEST para desarrollo
 
 3. **Verifica la conexión:**
-   - El frontend debe poder acceder a `http://localhost:3001`
+   - El frontend debe poder acceder a `https://localhost:3001`
    - Revisa la consola del navegador para errores de CORS
 
 4. **Verifica los logs del servidor:**

@@ -184,7 +184,7 @@ export const FormProduct = ({ titleForm }: Props) => {
 
                 <SectionFormProduct
                     titleSection='Variantes del Producto'
-                    className='lg:col-span-2 h-fit'
+                    className='lg:col-span-2 h-fit text-black'
                 >
                     <VariantsInput
                         control={control}
