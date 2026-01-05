@@ -32,4 +32,5 @@ export * from './dashboard/DashboardProductSlugPage';
 
 export * from './dashboard/DashboardOrdersPage';
 export * from './dashboard/DashboardOrderPage';
+export * from './dashboard/DashboardBannersPage';
 

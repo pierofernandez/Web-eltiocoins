@@ -20,6 +20,7 @@ import { DashboardNewProductPage } from "../pages/dashboard/DashboardNewProductP
 import { DashboardProductSlugPage } from "../pages/dashboard/DashboardProductSlugPage";
 import { DashboardOrdersPage } from "../pages/dashboard/DashboardOrdersPage";
 import { DashboardOrderPage } from "../pages/dashboard/DashboardOrderPage";
+import { DashboardBannersPage } from "../pages/dashboard/DashboardBannersPage";
 
 export const router = createBrowserRouter([
     {
@@ -62,7 +63,7 @@ export const router = createBrowserRouter([
                 path: 'juega-y-gana',
                 element: <ProtectedRoute><JuegaYGanaPage /></ProtectedRoute>
             },
-            
+
             {
                 path: 'login',
                 element: <LoginPage />
@@ -73,11 +74,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'forgot-password',
-                element: <ForgotPasswordPage/>
+                element: <ForgotPasswordPage />
             },
             {
                 path: 'update-password',
-                element: <UpdatePasswordPage/>
+                element: <UpdatePasswordPage />
             },
             {
                 path: 'privacypolicy',
@@ -101,15 +102,15 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: '',
-                        element: <Navigate to= '/account/pedidos'/>
+                        element: <Navigate to='/account/pedidos' />
                     },
                     {
                         path: 'pedidos',
-                        element: <OrdersUserPage/>
+                        element: <OrdersUserPage />
                     },
                     {
                         path: 'pedidos/:id',
-                        element: <OrderUserPage/>
+                        element: <OrderUserPage />
                     }
                 ]
             },
@@ -138,23 +139,23 @@ export const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <DashboardLayout/>,
+        element: <DashboardLayout />,
         children: [
             {
                 index: true,
-                element: <Navigate to='dashboard/productos' /> 
+                element: <Navigate to='dashboard/productos' />
             },
             {
                 path: 'productos',
-                element: <DashboardProductsPage />           
+                element: <DashboardProductsPage />
             },
             {
                 path: 'productos/new',
-                element: <DashboardNewProductPage />           
+                element: <DashboardNewProductPage />
             },
             {
                 path: 'productos/editar/:slug',
-                element: <DashboardProductSlugPage />           
+                element: <DashboardProductSlugPage />
             },
             {
                 path: 'ordenes',
@@ -163,8 +164,12 @@ export const router = createBrowserRouter([
             {
                 path: 'ordenes/:id',
                 element: <DashboardOrderPage />
+            },
+            {
+                path: 'banners',
+                element: <DashboardBannersPage />
             }
         ]
     }
-    
+
 ]);
