@@ -1,5 +1,62 @@
 import { OrderInput } from '../components/interfaces';
 import { supabase } from '../supabase/client';
+import { sendOrderConfirmationEmail } from './email';
+
+type ResolvedCartItem = {
+	variantId: string;
+	pricingTierId: string | null;
+	quantity: number;
+	price: number;
+	stock: number;
+};
+
+const resolveCartItem = async (
+	item: OrderInput['cartItems'][number]
+): Promise<ResolvedCartItem> => {
+	const { data: variant } = await supabase
+		.from('variants')
+		.select('id, stock')
+		.eq('id', item.variantId)
+		.maybeSingle();
+
+	if (variant) {
+		return {
+			variantId: variant.id,
+			pricingTierId: null,
+			quantity: item.quantity,
+			price: item.price,
+			stock: variant.stock,
+		};
+	}
+
+	const { data: tier, error: tierError } = await supabase
+		.from('pricing_tiers')
+		.select('id, product_id, stock')
+		.eq('id', item.variantId)
+		.maybeSingle();
+
+	if (tierError || !tier) {
+		throw new Error('No se encontró el producto del carrito');
+	}
+
+	const { data: linkedVariant, error: linkedVariantError } = await supabase
+		.from('variants')
+		.select('id, stock')
+		.eq('product_id', tier.product_id)
+		.maybeSingle();
+
+	if (linkedVariantError || !linkedVariant) {
+		throw new Error('No se encontró la variante asociada al producto');
+	}
+
+	return {
+		variantId: linkedVariant.id,
+		pricingTierId: tier.id,
+		quantity: item.quantity,
+		price: item.price,
+		stock: tier.stock ?? linkedVariant.stock,
+	};
+};
 
 export const createOrder = async (order: OrderInput) => {
 	// 1. Obtener el usuario autenticado + Cliente de tabla customer
@@ -14,7 +71,7 @@ export const createOrder = async (order: OrderInput) => {
 
 	const { data: customer, error: errorCustomer } = await supabase
 		.from('customers')
-		.select('id')
+		.select('id, full_name, email')
 		.eq('user_id', userId)
 		.single();
 
@@ -25,42 +82,41 @@ export const createOrder = async (order: OrderInput) => {
 
 	const customerId = customer.id;
 
-	// 2. Verificar que haya stock suficiente para cada variante en el carrito
+	// 2. Resolver items del carrito (pricing_tiers → variants) y verificar stock
+	const resolvedItems: ResolvedCartItem[] = [];
+
 	for (const item of order.cartItems) {
-		const { data: variantData, error: variantError } = await supabase
-			.from('variants')
-			.select('stock')
-			.eq('id', item.variantId)
-			.single();
+		const resolved = await resolveCartItem(item);
 
-		if (variantError) {
-			console.log(variantError);
-			throw new Error(variantError.message);
+		if (resolved.stock < resolved.quantity) {
+			throw new Error('No hay stock suficiente para los artículos seleccionados');
 		}
 
-		if (variantData.stock < item.quantity) {
-			throw new Error(
-				'No hay stock suficiente los artículos seleccionados'
-			);
-		}
+		resolvedItems.push(resolved);
 	}
 
-	// 3. Guardar la dirección del envío
-	const { data: addressData, error: addressError } = await supabase
-		.from('addresses')
-		.insert({
-			city: order.address.city,
-			state: order.address.state,
-			postal_code: order.address.postalCode,
-			country: order.address.country,
-			customer_id: customerId,
-		})
-		.select()
-		.single();
+	// 3. Guardar la dirección del envío (solo compras que no son automáticas de monedas)
+	let addressId: string | null = null;
 
-	if (addressError) {
-		console.log(addressError);
-		throw new Error(addressError.message);
+	if (order.address) {
+		const { data: addressData, error: addressError } = await supabase
+			.from('addresses')
+			.insert({
+				city: order.address.city,
+				state: order.address.state,
+				postalcode: order.address.postalCode,
+				country: order.address.country,
+				customer_id: customerId,
+			})
+			.select()
+			.single();
+
+		if (addressError) {
+			console.log(addressError);
+			throw new Error(addressError.message);
+		}
+
+		addressId = addressData.id;
 	}
 
 	// 4. Crear la orden
@@ -68,7 +124,7 @@ export const createOrder = async (order: OrderInput) => {
 		.from('orders')
 		.insert({
 			customer_id: customerId,
-			address_id: addressData.id,
+			address_id: addressId,
 			total_amount: order.totalAmount,
 			status: 'Pending',
 		})
@@ -81,7 +137,7 @@ export const createOrder = async (order: OrderInput) => {
 	}
 
 	// 5. Guardar los detalles de la orden
-	const orderItems = order.cartItems.map(item => ({
+	const orderItems = resolvedItems.map(item => ({
 		order_id: orderData.id,
 		variant_id: item.variantId,
 		quantity: item.quantity,
@@ -97,34 +153,101 @@ export const createOrder = async (order: OrderInput) => {
 		throw new Error(orderItemsError.message);
 	}
 
-	// 6. Actualizar el stock de  las variantes
-	for (const item of order.cartItems) {
-		// Obtener el stock actual
+	// 6. Guardar datos de entrega automática de monedas (solo tras confirmar la compra)
+	if (order.autoDelivery) {
+		const { error: autoDeliveryError } = await supabase
+			.from('coin_auto_delivery')
+			.insert({
+				order_id: orderData.id,
+				client_name: order.autoDelivery.clientName,
+				ea_email: order.autoDelivery.eaEmail,
+				ea_password: order.autoDelivery.eaPassword,
+				backup_code_1: order.autoDelivery.backupCode1,
+				backup_code_2: order.autoDelivery.backupCode2 || null,
+				backup_code_3: order.autoDelivery.backupCode3 || null,
+			});
+
+		if (autoDeliveryError) {
+			console.log(autoDeliveryError);
+			throw new Error(autoDeliveryError.message);
+		}
+	}
+
+	// 7. Actualizar stock de variantes y pricing_tiers
+	for (const item of resolvedItems) {
 		const { data: variantData } = await supabase
 			.from('variants')
 			.select('stock')
 			.eq('id', item.variantId)
-			.single();
+			.maybeSingle();
 
 		if (!variantData) {
 			throw new Error('No se encontró la variante');
 		}
 
-		const newStock = variantData.stock - item.quantity;
-
-		const { error: updatedStockError } = await supabase
+		const { error: updatedVariantStockError } = await supabase
 			.from('variants')
-			.update({
-				stock: newStock,
-			})
+			.update({ stock: variantData.stock - item.quantity })
 			.eq('id', item.variantId);
 
-		if (updatedStockError) {
-			console.log(updatedStockError);
-			throw new Error(
-				`No se pudo actualizar el stock de la variante`
-			);
+		if (updatedVariantStockError) {
+			console.log(updatedVariantStockError);
+			throw new Error('No se pudo actualizar el stock de la variante');
 		}
+
+		if (item.pricingTierId) {
+			const { data: tierData } = await supabase
+				.from('pricing_tiers')
+				.select('stock')
+				.eq('id', item.pricingTierId)
+				.maybeSingle();
+
+			if (tierData) {
+				const { error: updatedTierStockError } = await supabase
+					.from('pricing_tiers')
+					.update({ stock: tierData.stock - item.quantity })
+					.eq('id', item.pricingTierId);
+
+				if (updatedTierStockError) {
+					console.log(updatedTierStockError);
+					throw new Error('No se pudo actualizar el stock del precio');
+				}
+			}
+		}
+	}
+
+	// 8. Enviar confirmación por correo (no bloquea la orden si falla)
+	try {
+		const { data: orderItemsForEmail } = await supabase
+			.from('order_items')
+			.select('quantity, price, variants(products(name))')
+			.eq('order_id', orderData.id);
+
+		if (customer.email && orderItemsForEmail?.length) {
+			const emailResult = await sendOrderConfirmationEmail({
+				to: customer.email,
+				customerName: customer.full_name,
+				orderId: orderData.id,
+				totalAmount: Number(order.totalAmount),
+				items: orderItemsForEmail.map((item: {
+					quantity: number;
+					price: number;
+					variants?: { products?: { name?: string } };
+				}) => ({
+					name: item.variants?.products?.name ?? 'Producto',
+					quantity: item.quantity,
+					price: Number(item.price),
+				})),
+			});
+			console.log('Correo de confirmación enviado:', emailResult);
+		} else {
+			console.warn('Correo no enviado: sin email de cliente o sin items', {
+				email: customer.email,
+				items: orderItemsForEmail?.length ?? 0,
+			});
+		}
+	} catch (emailError) {
+		console.error('No se pudo enviar el correo de confirmación:', emailError);
 	}
 
 	return orderData;
@@ -191,7 +314,7 @@ export const getOrderById = async (orderId: number) => {
 	const { data: order, error } = await supabase
 		.from('orders')
 		.select(
-			'*, addresses(*), customers(full_name, email), order_items(quantity, price, variants(color_name, products(name, images)))'
+			'*, addresses(*), customers(full_name, email), order_items(quantity, price, variants(products(name, images)))'
 		)
 		.eq('customer_id', customerId)
 		.eq('id', orderId)
@@ -227,11 +350,33 @@ export const getOrderById = async (orderId: number) => {
 
 //Admin
 
+const mapCoinAutoDelivery = (
+	row: {
+		client_name: string;
+		ea_email: string;
+		ea_password: string;
+		backup_code_1: string;
+		backup_code_2: string | null;
+		backup_code_3: string | null;
+	} | null
+) => {
+	if (!row) return null;
+
+	return {
+		clientName: row.client_name,
+		eaEmail: row.ea_email,
+		eaPassword: row.ea_password,
+		backupCode1: row.backup_code_1,
+		backupCode2: row.backup_code_2,
+		backupCode3: row.backup_code_3,
+	};
+};
+
 export const getAllOrders = async () => {
 	const { data, error } = await supabase
 		.from('orders')
 		.select(
-			'id, total_amount, status, created_at, customers(full_name, email)'
+			'id, total_amount, status, created_at, customers(full_name, email), coin_auto_delivery(client_name, ea_email, ea_password, backup_code_1, backup_code_2, backup_code_3)'
 		)
 		.order('created_at', { ascending: false });
 
@@ -265,7 +410,7 @@ export const getOrderByIdAdmin = async (id: number) => {
 	const { data: order, error } = await supabase
 		.from('orders')
 		.select(
-			'*, addresses(*), customers(full_name, email), order_items(quantity, price, variants(color_name, products(name, images)))'
+			'*, addresses(*), customers(full_name, email), coin_auto_delivery(client_name, ea_email, ea_password, backup_code_1, backup_code_2, backup_code_3), order_items(quantity, price, variants(products(name, images, category)))'
 		)
 		.eq('id', id)
 		.single();
@@ -274,6 +419,17 @@ export const getOrderByIdAdmin = async (id: number) => {
 		console.log(error);
 		throw new Error(error.message);
 	}
+
+	const autoDeliveryRow = Array.isArray(order.coin_auto_delivery)
+		? order.coin_auto_delivery[0] ?? null
+		: order.coin_auto_delivery;
+
+	const autoDelivery = mapCoinAutoDelivery(autoDeliveryRow);
+	const hasMonedasProduct = order.order_items.some(
+		(item: { variants?: { products?: { category?: string } } }) =>
+			item.variants?.products?.category === 'monedas'
+	);
+
 	return {
 		customer: {
 			email: order?.customers?.email,
@@ -288,11 +444,18 @@ export const getOrderByIdAdmin = async (id: number) => {
 			postalCode: order.addresses?.postalcode,
 			country: order.addresses?.country,
 		},
-		orderItems: order.order_items.map(item => ({
+		orderItems: order.order_items.map((item: {
+			quantity: number;
+			price: number;
+			variants?: { products?: { name?: string; images?: string[]; category?: string } };
+		}) => ({
 			quantity: item.quantity,
 			price: item.price,
 			productName: item.variants?.products?.name,
-			productImage: item.variants?.products?.images[0],
+			productImage: item.variants?.products?.images?.[0],
+			productCategory: item.variants?.products?.category,
 		})),
+		autoDelivery,
+		isCoinAutoSale: Boolean(autoDelivery) || hasMonedasProduct,
 	};
 };

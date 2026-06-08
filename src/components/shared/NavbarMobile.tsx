@@ -23,8 +23,7 @@ export const NavbarMobile = () => {
           className='transition-all'
           onClick={() => setActiveNavMobile(false)}
         >
-          <img
-            src='/img/logotiocoins.webp'
+          <img loading="lazy" src='/img/logotiocoins.webp'
             alt='logotiocoins'
             className='max-w-20 mx-auto'
           />

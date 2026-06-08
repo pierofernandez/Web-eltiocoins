@@ -11,9 +11,17 @@ interface Props {
   price: number;
   slug: string;
   variants: VariantProduct[];
+  basePath?: string;
 }
 
-export const CardProductCompact = ({ img, name, price, slug, variants }: Props) => {
+export const CardProductCompact = ({
+  img,
+  name,
+  price,
+  slug,
+  variants,
+  basePath = '/monedas',
+}: Props) => {
   const addItem = useCartStore(state => state.addItem);
   const { currency, rates, baseCurrency } = useCurrencyStore();
 
@@ -39,10 +47,9 @@ export const CardProductCompact = ({ img, name, price, slug, variants }: Props) 
     <div className="bg-zinc-950 backdrop-blur-sm transition-all duration-200 shadow-sm hover:shadow-md">
       <div className="flex items-center p-3 sm:p-4 gap-3 sm:gap-4">
         {/* Imagen pequeña - Izquierda con navegación */}
-        <Link to={`/monedas/${slug}`} className="flex-shrink-0">
+        <Link to={`${basePath}/${slug}`} className="flex-shrink-0">
           <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden bg-gray-100">
-            <img
-              src={img}
+            <img loading="lazy" src={img}
               alt={name}
               className="w-full h-full object-cover"
             />
@@ -52,10 +59,10 @@ export const CardProductCompact = ({ img, name, price, slug, variants }: Props) 
         {/* Descripción */}
         <div className="flex-1 min-w-0">
           <h3 className="text-sm sm:text-base font-semibold text-white truncate">{name}</h3>
-          <p className="text-[10px] sm:text-sm text-gray-400 mt-1">Tiempo completo: 1-3 horas</p>
+          <p className="text-[10px] sm:text-sm text-gray-400 mt-1">Tiempo estimado: 24hrs</p>
           <div className="flex items-center gap-2 mt-1">
             <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded text-[7px] sm:text-xs font-medium bg-orange-100 text-orange-800">
-              + incluye monedas de regalo
+              entrega rapida asegurada
             </span>
           </div>
         </div>

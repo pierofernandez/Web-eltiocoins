@@ -12,7 +12,6 @@ interface Props {
 	name: string;
 	price: number;
 	slug: string;
-	colors: { name: string; color: string }[];
 	variants: VariantProduct[];
 }
 
@@ -21,7 +20,6 @@ export const CardProduct = ({
 	name,
 	price,
 	slug,
-	colors,
 	variants,
 }: Props) => {
 	const addItem = useCartStore(state => state.addItem);
@@ -38,7 +36,7 @@ export const CardProduct = ({
 				productId: slug,
 				name,
 				image: img,
-				color: colors[0]?.name || 'Default',
+				color: '',
 				price: firstVariant.price,
 				quantity: 1,
 			});
@@ -77,8 +75,7 @@ export const CardProduct = ({
 				<div className='relative h-[200px] sm:h-[240px] lg:h-[280px] w-full bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-lg sm:rounded-xl overflow-hidden'>
 					{/* Image with overlay */}
 					<div className='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent'></div>
-					<img
-						src={img}
+					<img loading="lazy" src={img}
 						alt={name}
 						className='object-contain h-full w-full p-3 sm:p-4 transition-transform duration-500 group-hover:scale-110'
 					/>

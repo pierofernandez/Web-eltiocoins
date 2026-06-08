@@ -7,7 +7,7 @@ export const DashboardProductsPage = () => {
         <div className="h-full flex flex-col gap-2">
             <Link
                 to='/dashboard/productos/new'
-                className="bg-black text-white flex items-center self-end py-[6px] px-2 rounded-md text-sm gap-1 font-semibold"
+                className="flex items-center gap-1 self-end rounded-md bg-black px-2 py-[6px] text-sm font-semibold text-white dark:bg-cyan-600 dark:hover:bg-cyan-500"
             >
                 <IoAddCircleOutline className=" inline-block"/>
                 Nuevo Producto 

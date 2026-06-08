@@ -24,7 +24,7 @@ export const Pagination = ({ totalItems, page, setPage }: Props)  => {
 
 	return (
 		<div className='flex justify-between items-center'>
-			<p className='text-xs font-medium'>
+			<p className='text-xs font-medium dark:text-stone-300'>
 				Mostrando{' '}
 				<span className='font-bold'>
 					{startItem} - {endItem}

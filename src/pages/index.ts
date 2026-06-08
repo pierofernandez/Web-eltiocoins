@@ -3,6 +3,8 @@ export * from './MonedasPage';
 export * from './FutChampionsPage';
 export * from './DivisionRivalsPage';
 export * from './MonedaPage';
+export * from './ObjetivosPage';
+export * from './ObjetivoPage';
 export * from './LoginPage';
 export * from './RegisterPage';
 export * from './OrdersUsersPage';

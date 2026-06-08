@@ -41,27 +41,37 @@ export const NavigationButton = () => {
       label: "Fut Champs",
       to: "/futchampions",
       icon: (
-        <svg xmlns="https://www.w3.org/2000/svg"
-          fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-          stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round"
-            d="M17.5 6.5l-5.5-3-5.5 3m11 0v5.25
-               a8.25 8.25 0 01-16.5 0V6.5m16.5 0l-5.5 3m-5.5-3
-               l5.5 3" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 19 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="h-6 w-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M4.5 18.75h15M6 18.75V9.75l3 3.75 3-5.25 3 5.25 3-3.75v9"
+          />
         </svg>
       ),
     },
     {
-      label: "Rivals",
-      to: "/divisionrivals",
+      label: "Objetivos",
+      to: "/objetivos",
       icon: (
-        <svg xmlns="https://www.w3.org/2000/svg"
-          fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-          stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round"
-            d="M6.75 12l3.75 8.25L14.25 12
-               M6.75 12l3.75-8.25L14.25 12
-               M6.75 12h7.5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="h-6 w-6"
+        >
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="12" cy="12" r="5" />
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
         </svg>
       ),
     },
@@ -70,7 +80,10 @@ export const NavigationButton = () => {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-black text-white flex justify-around items-center py-2 z-50 lg:hidden">
       {navItems.map((item) => {
-        const active = location.pathname === item.to;
+        const active =
+          item.to === '/'
+            ? location.pathname === '/'
+            : location.pathname.startsWith(item.to);
         return (
           <Link
             key={item.to}

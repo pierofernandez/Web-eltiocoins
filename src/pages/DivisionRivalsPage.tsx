@@ -1,85 +1,91 @@
+'use client';
+
+
+
+import { BoostPriceCalculator } from '@/components/BoostPriceCalculator';
+
+import { useCartStore } from '@/store/cart.store';
+
+import { CartItemWithPricing } from '@/components/interfaces/pricing.interface';
+
+import InformationBoostingRivals from '@/components/home/InformationBoostingRivals';
+
+import Reviews from '@/components/home/Reviews';
+
 import { useState } from 'react';
-import { ContainerFilter } from '../components/products/ContainerFilter';
-import { prepareProducts } from '../helpers';
-import { useFilteredProducts } from '../hooks';
-import { Pagination } from '../components/shared/Pagination';
-import InformationCoins from '../components/home/InformationCoins';
-import Reviews from '../components/home/Reviews';
-import { CardProductCompact } from '../components/products/CardProductCompact';
+
+import toast from 'react-hot-toast';
+
+
 
 export const DivisionRivalsPage = () => {
-	const [page, setPage] = useState(1);
-	const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
 
-	const {
-		data: products = [],
-		isLoading,
-		totalProducts
-	} = useFilteredProducts({
-		page,
-		platforms: selectedPlatforms,
-	});
+	const addItem = useCartStore(state => state.addItem);
 
-	// Filtramos solo los productos con name "Monedas" y los ordenamos por precio de menor a mayor
-	const preparedProducts = prepareProducts(products)
-		.filter(product => product.category === "divisionrivals")
-		.sort((a, b) => a.price - b.price);
+	const [successMessage, setSuccessMessage] = useState('');
+
+
+
+	const handleAddToCart = (item: CartItemWithPricing) => {
+
+		addItem(item);
+
+		setSuccessMessage(`✅ ${item.name} agregado al carrito`);
+
+		toast.success('Producto añadido al carrito', { position: 'bottom-right' });
+
+		setTimeout(() => setSuccessMessage(''), 3000);
+
+	};
+
+
 
 	return (
+
 		<>
-			{/* Contenedor único: filtros + productos + paginación */}
-			<div className="px-4 sm:px-6 lg:px-8 mb-8">
-				<div className="max-w-7xl mx-auto">
-					<div className=" rounded-xl shadow-md overflow-hidden">
-						
-						{/* Filtros */}
-						<div className="">
-							<ContainerFilter
-								setSelectedPlatforms={setSelectedPlatforms}
-								selectedPlatforms={selectedPlatforms}
-							/>
-						</div>
 
-						{/* Productos */}
-						{isLoading ? (
-							<div className="flex items-center justify-center h-[400px]">
-								<div className="animate-spin h-12 w-12 border-t-2 border-b-2 border-yellow-500"></div>
-							</div>
-						) : (
-							<div>
-								{preparedProducts.map((product, idx) => (
-									<div key={product.id}>
-										<CardProductCompact
-											img={product.images[0]}
-											name={product.name}
-											price={product.price}
-											slug={product.slug}
-											variants={product.variants}
-										/>
-										{/* Separador entre productos */}
-										{idx !== preparedProducts.length - 1 && (
-											<hr className="border-neutral-800 " />
-										)}
-									</div>
-								))}
+			<div className="py-4">
 
-								
-							</div>
-						)}
+				{successMessage && (
+
+					<div className="mx-auto mb-6 max-w-lg rounded-lg border border-green-700 bg-green-900/20 p-4 text-green-300">
+
+						{successMessage}
+
 					</div>
-					{/* Paginación */}
-								<div className="p-4">
-									<Pagination
-										totalItems={totalProducts}
-										page={page}
-										setPage={setPage}
-									/>
-								</div>
+
+				)}
+
+
+
+				<div className="flex justify-center">
+
+					<BoostPriceCalculator
+
+						category="divisionrivals"
+
+						pageTitle="Division Rivals Boosting"
+
+						pageSubtitle="Selecciona tu división destino — precio dinámico desde el panel admin"
+
+						onAddToCart={handleAddToCart}
+
+					/>
+
 				</div>
+
 			</div>
 
-			<InformationCoins />
+
+
+			<InformationBoostingRivals />
+
 			<Reviews />
+
 		</>
+
 	);
+
 };
+
+

@@ -86,8 +86,7 @@ export const UploaderImages = ({
 				{images.map((image, index) => (
 					<div key={index}>
 						<div className='border border-gray-200 w-full h-20 rounded-md p-1 relative lg:h-28'>
-							<img
-								src={image.previewUrl}
+							<img loading="lazy" src={image.previewUrl}
 								alt={`Preview ${index}`}
 								className='rounded-md w-full h-full object-contain'
 							/>

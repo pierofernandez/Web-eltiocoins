@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 
+type OfferPopup = {
+  image_url: string;
+  mobile_image_url?: string | null;
+  link_url: string;
+};
+
 export const Cookie = () => {
   const [mostrar, setMostrar] = useState(false);
-  const [offer, setOffer] = useState<{ image_url: string; link_url: string } | null>(null);
+  const [offer, setOffer] = useState<OfferPopup | null>(null);
 
   useEffect(() => {
     const yaMostrado = sessionStorage.getItem("ofertaMostrada");
@@ -20,10 +26,10 @@ export const Cookie = () => {
       if (activeOffer) {
         setOffer(activeOffer);
       } else {
-        // Fallback
         setOffer({
           image_url: "/img/oferta.webp",
-          link_url: "/monedas"
+          mobile_image_url: "/img/oferta.webp",
+          link_url: "/monedas",
         });
       }
 
@@ -36,19 +42,32 @@ export const Cookie = () => {
 
   if (!mostrar || !offer) return null;
 
+  const mobileSrc = offer.mobile_image_url || offer.image_url;
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="relative">
-        <a href={offer.link_url} rel="noopener noreferrer">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      {/* Contenedor ajustado al tamaño real de la imagen */}
+      <div className="relative inline-block w-fit max-w-full">
+        <a href={offer.link_url} rel="noopener noreferrer" className="block leading-none">
           <img
+            loading="lazy"
+            src={mobileSrc}
+            alt="Oferta"
+            className="h-auto max-h-[81vh] max-w-[81vw] cursor-pointer rounded-lg shadow-2xl md:hidden"
+          />
+          <img
+            loading="lazy"
             src={offer.image_url}
             alt="Oferta"
-            className="max-w-[90vw] max-h-[90vh] md:max-w-[500px] md:max-h-[80vh] h-auto rounded shadow-lg cursor-pointer"
+            className="hidden h-auto max-h-[82.8vh] w-auto max-w-[min(82.8vw,810px)] cursor-pointer rounded-lg shadow-2xl md:block"
           />
         </a>
+
         <button
+          type="button"
           onClick={() => setMostrar(false)}
-          className="absolute top-2 right-2 text-white rounded-full px-3 py-1 text-sm shadow"
+          aria-label="Cerrar oferta"
+          className="absolute right-0 top-0 z-10 flex h-9 w-9 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full bg-black/85 text-base font-bold text-white shadow-lg ring-2 ring-white/25 transition hover:bg-black"
         >
           ✕
         </button>
@@ -56,4 +75,3 @@ export const Cookie = () => {
     </div>
   );
 };
-

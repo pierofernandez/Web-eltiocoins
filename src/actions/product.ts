@@ -4,16 +4,38 @@ import { extractFilePath } from "../helpers";
 
 
 
-export const getProducts = async (page: number) => {
+export const getProducts = async ({
+	page = 1,
+	search = '',
+	category = 'all',
+	platform = 'all',
+}: {
+	page?: number;
+	search?: string;
+	category?: string;
+	platform?: string;
+}) => {
 	const itemsPerPage = 10;
 	const from = (page - 1) * itemsPerPage;
 	const to = from + itemsPerPage - 1;
 
-	const { data: products, error, count } = await supabase
+	let query = supabase
 		.from('products')
-		.select('*, variants(*)', { count: 'exact' })
-		.order('created_at', { ascending: false })
-		.range(from, to);
+		.select('*, variants(*)', { count: 'exact' });
+
+	if (search) {
+		query = query.ilike('name', `%${search}%`);
+	}
+	if (category && category !== 'all') {
+		query = query.eq('category', category);
+	}
+	if (platform && platform !== 'all') {
+		query = query.eq('platform', platform);
+	}
+
+	query = query.order('created_at', { ascending: false }).range(from, to);
+
+	const { data: products, error, count } = await query;
 
 	if (error) {
 		console.log(error.message);
@@ -21,7 +43,7 @@ export const getProducts = async (page: number) => {
 	}
 
 	return { products, count };
-}
+};
 
 export const getFilteredProducts = async ({
 	page = 1,
@@ -99,6 +121,21 @@ export const getProductBySlug = async (slug: string) => {
 	return data;
 };
 
+export const getProductById = async (id: string) => {
+	const { data, error } = await supabase
+		.from('products')
+		.select('*, variants(*)')
+		.eq('id', id)
+		.single();
+
+	if (error) {
+		console.log(error.message);
+		throw new Error(error.message);
+	}
+
+	return data;
+};
+
 export default getProductBySlug;
 
 export const searchProducts = async (searchTerm: string) => {
@@ -148,8 +185,8 @@ export const createProduct = async (productInput: ProductInput) => {
 				if (error) throw new Error(error.message);
 
 				const imageUrl = `${supabase.storage
-						.from('product-images')
-						.getPublicUrl(data.path).data.publicUrl
+					.from('product-images')
+					.getPublicUrl(data.path).data.publicUrl
 					}`;
 
 				return imageUrl;
@@ -171,8 +208,6 @@ export const createProduct = async (productInput: ProductInput) => {
 			product_id: product.id,
 			stock: variant.stock,
 			price: variant.price,
-			color: variant.color,
-			color_name: variant.colorName,
 		}));
 
 		const { error: variantsError } = await supabase
@@ -343,8 +378,6 @@ export const updateProduct = async (
 					product_id: productId,
 					stock: variant.stock,
 					price: variant.price,
-					color: variant.color,
-					color_name: variant.colorName,
 				})),
 				{
 					onConflict: 'id',
@@ -366,8 +399,6 @@ export const updateProduct = async (
 					product_id: productId,
 					stock: variant.stock,
 					price: variant.price,
-					color: variant.color,
-					color_name: variant.colorName,
 				}))
 			)
 			.select();
@@ -382,18 +413,14 @@ export const updateProduct = async (
 	const currentVariantIds = [
 		...existingVariants.map(v => v.id),
 		...newVariantIds,
-	];
+	].filter((id): id is string => !!id);
 
-	// 5.4 Eliminar las variantes que no están en la lista de IDs
+	// 5.4 Eliminar las variantes que no están en la lista de IDs de este producto
 	const { error: deleteVariantsError } = await supabase
 		.from('variants')
 		.delete()
 		.eq('product_id', productId)
-		.not(
-			'id',
-			'in',
-			`(${currentVariantIds ? currentVariantIds.join(',') : 0})` // (UIWE2030230-2230000, UIWE2030230-2230001, ...)
-		);
+		.not('id', 'in', `(${currentVariantIds.join(',')})`);
 
 	if (deleteVariantsError)
 		throw new Error(deleteVariantsError.message);

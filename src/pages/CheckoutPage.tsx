@@ -34,8 +34,7 @@ export const CheckoutPage = () => {
       <nav className="relative z-20 bg-black/40 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-center">
           <Link to="/" className="flex items-center gap-2">
-            <img
-              src="/img/logotiocoins.webp"
+            <img loading="lazy" src="/img/logotiocoins.webp"
               alt="Logo"
               className="h-8 w-auto sm:h-10"
             />

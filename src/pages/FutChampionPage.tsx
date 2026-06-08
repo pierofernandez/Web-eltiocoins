@@ -6,7 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 import { BsChatLeftText } from 'react-icons/bs';
 import { ProductDescription } from '../components/one-product/ProductDescription';
 import { GridImages } from '../components/one-product/GridImages';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tag } from '../components/shared/Tag';
 import { Loader } from '../components/shared/Loader';
 import { useProduct } from '../hooks/products/UseProduct';
@@ -17,22 +17,12 @@ import toast from 'react-hot-toast';
 import { useCartStore } from '../store/cart.store';
 import { useNavigate } from 'react-router-dom';
 
-interface Acc {
-	[key: string]: {
-		name: string;
-	};
-}
-
 export const FutChampionPage = () => {
 	const { slug } = useParams<{ slug: string }>();
 
 	const [currentSlug, setCurrentSlug] = useState(slug);
 
 	const { product, isLoading, isError } = useProduct(currentSlug || '');
-
-	const [selectedColor, setSelectedColor] = useState<string | null>(
-		null
-	);
 
 	const [selectedVariant, setSelectedVariant] =
 		useState<VariantProduct | null>(null);
@@ -45,44 +35,12 @@ export const FutChampionPage = () => {
 	const { currency, rates, baseCurrency } = useCurrencyStore();
 	const navigate = useNavigate();
 
-	// Agrupamos las variantes por color
-	const colors = useMemo(() => {
-		return (
-			product?.variants.reduce(
-				(acc: Acc, variant: VariantProduct) => {
-					const { color, color_name } = variant;
-					if (!acc[color]) {
-						acc[color] = {
-							name: color_name,
-						};
-					}
-
-					return acc;
-				},
-				{} as Acc
-			) || {}
-		);
-	}, [product?.variants]);
-
-	// Obtener el primer color predeterminado si no se ha seleccionado ninguno
-	const availableColors = Object.keys(colors);
+	// Establecer la primera variante por defecto
 	useEffect(() => {
-		if (!selectedColor && availableColors.length > 0) {
-			setSelectedColor(availableColors[0]);
+		if (product?.variants && product.variants.length > 0) {
+			setSelectedVariant(product.variants[0]);
 		}
-	}, [availableColors, selectedColor]);
-
-	// Actualizar el almacenamiento seleccionado cuando cambia el color
-	useEffect(() => {
-		if (selectedColor) {
-			const variant = product?.variants.find(
-				variant =>
-					variant.color === selectedColor
-			);
-
-			setSelectedVariant(variant as VariantProduct);
-		}
-	}, [selectedColor, product?.variants]);
+	}, [product]);
 
 	// Obtener el stock
 	const isOutOfStock = selectedVariant?.stock === 0;
@@ -95,7 +53,7 @@ export const FutChampionPage = () => {
 				productId: product?.id || '',
 				name: product?.name || '',
 				image: product?.images[0] || '',
-				color: selectedVariant.color_name,
+				color: '',
 				price: selectedVariant.price,
 				quantity: count,
 			});
@@ -113,7 +71,7 @@ export const FutChampionPage = () => {
 				productId: product?.id || '',
 				name: product?.name || '',
 				image: product?.images[0] || '',
-				color: selectedVariant.color_name,
+				color: '',
 				price: selectedVariant.price,
 				quantity: count,
 			});
@@ -125,8 +83,6 @@ export const FutChampionPage = () => {
 	//RESETEAR EL SLUG ACTUAL CUANDO CAMBIA EN LA URL
 	useEffect(() => {
 		setCurrentSlug(slug);
-
-		setSelectedColor(null);
 		setSelectedVariant(null);
 	}, [slug]);
 
@@ -203,8 +159,8 @@ export const FutChampionPage = () => {
 								<p className='text-sm font-medium text-gray-300'>Cantidad:</p>
 
 								<div className='flex gap-8 px-6 py-4 bg-gray-800 border border-gray-600 w-fit rounded-full hover:bg-gray-700 transition-colors'>
-									<button 
-										onClick={decrement} 
+									<button
+										onClick={decrement}
 										disabled={count === 1}
 										className='text-gray-300 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed'
 									>
@@ -213,7 +169,7 @@ export const FutChampionPage = () => {
 									<span className='text-white text-lg font-semibold min-w-[24px] text-center'>
 										{count}
 									</span>
-									<button 
+									<button
 										onClick={increment}
 										className='text-gray-300 hover:text-white'
 									>
@@ -224,14 +180,14 @@ export const FutChampionPage = () => {
 
 							{/* BOTONES ACCIÓN */}
 							<div className='flex flex-col gap-4'>
-								<button 
-									className='bg-gray-700 hover:bg-gray-600 text-white uppercase font-semibold tracking-widest text-sm py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg' 
+								<button
+									className='bg-gray-700 hover:bg-gray-600 text-white uppercase font-semibold tracking-widest text-sm py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg'
 									onClick={addToCart}
 								>
 									Agregar al carro
 								</button>
-								<button 
-									className='bg-green-500 hover:bg-green-600 text-white uppercase font-semibold tracking-widest text-sm py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg' 
+								<button
+									className='bg-green-500 hover:bg-green-600 text-white uppercase font-semibold tracking-widest text-sm py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg'
 									onClick={buyNow}
 								>
 									Comprar ahora

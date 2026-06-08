@@ -1,18 +1,21 @@
 import { StateCreator, create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { ICartItem } from '../components/shared/CartItem';
+import { CartItemWithPricing } from '../components/interfaces/pricing.interface';
+import { AutoPurchaseFormValues } from '../lib/validators';
 
 export interface CartState {
-  items: ICartItem[];
+  items: CartItemWithPricing[];
   totalItemsInCart: number;
-  subtotal: number;       // 👈 nuevo
+  subtotal: number;
   discountCode: string | null;
   discount: number;
   totalAmount: number;
+  autoDeliveryData: AutoPurchaseFormValues | null;
 
-  addItem: (item: ICartItem) => void;
+  addItem: (item: CartItemWithPricing) => void;
   removeItem: (variantId: string) => void;
   updateQuantity: (variantId: string, quantity: number) => void;
+  setAutoDeliveryData: (data: AutoPurchaseFormValues | null) => void;
   cleanCart: () => void;
   applyDiscount: (code: string, amount: number) => void;
   clearDiscount: () => void;
@@ -25,6 +28,7 @@ const storeApi: StateCreator<CartState> = (set) => ({
   discountCode: null,
   discount: 0,
   totalAmount: 0,
+  autoDeliveryData: null,
 
   addItem: (item) => {
     set((state) => {
@@ -95,6 +99,10 @@ const storeApi: StateCreator<CartState> = (set) => ({
     });
   },
 
+  setAutoDeliveryData: (data) => {
+    set({ autoDeliveryData: data });
+  },
+
   cleanCart: () => {
     set({
       items: [],
@@ -103,6 +111,7 @@ const storeApi: StateCreator<CartState> = (set) => ({
       discountCode: null,
       discount: 0,
       totalAmount: 0,
+      autoDeliveryData: null,
     });
   },
 
@@ -141,6 +150,14 @@ export const useCartStore = create<CartState>()(
   devtools(
     persist(storeApi, {
       name: 'cart-store',
+      partialize: (state) => ({
+        items: state.items,
+        totalItemsInCart: state.totalItemsInCart,
+        subtotal: state.subtotal,
+        discountCode: state.discountCode,
+        discount: state.discount,
+        totalAmount: state.totalAmount,
+      }),
     })
   )
 );

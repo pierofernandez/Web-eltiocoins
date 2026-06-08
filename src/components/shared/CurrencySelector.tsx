@@ -31,11 +31,9 @@ export const CurrencySelector = () => {
     <div className="relative">
       {/* Visual del selector (responsive) */}
       <div className="flex items-center gap-2 bg-zinc-800 border border-zinc-600 hover:border-green-400 text-white rounded-md px-2 py-1 cursor-pointer min-w-[78px] sm:min-w-[120px] md:min-w-[160px] transition">
-        <img
-          src={current.flagSrc}
+        <img loading="lazy" src={current.flagSrc}
           alt={current.name}
           className="w-4 h-3 sm:w-5 sm:h-3.5 md:w-6 md:h-4 object-cover rounded-[2px]"
-          loading="lazy"
         />
         {/* En móviles: código; en sm+: código + nombre */}
         <span className="text-xs sm:text-sm font-semibold leading-none">

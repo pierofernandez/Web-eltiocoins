@@ -32,8 +32,7 @@ const Card: React.FC<CardProps> = ({ image, title, description, link, gradient, 
                     {/* Image Container */}
                     <div className="flex items-center justify-center mb-6">
                         <div className="w-24 h-24 rounded-2xl overflow-hidden border-zinc-600 group-hover:border-zinc-500 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-black/20">
-                            <img 
-                                src={image} 
+                            <img loading="lazy" src={image} 
                                 alt={title} 
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" 
                             />

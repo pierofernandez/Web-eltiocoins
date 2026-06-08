@@ -28,7 +28,7 @@ export const ItemsCheckout = () => {
 			setError('');
 		} else {
 			setDiscount(0);
-			setError('Código inválido o expirado');
+			setError('Código inválido');
 		}
 	};
 
@@ -50,8 +50,7 @@ export const ItemsCheckout = () => {
 							{/* Imagen del producto */}
 							<div className="relative flex-shrink-0">
 								<div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-lg flex items-center justify-center border border-white/10">
-									<img
-										src={item.image}
+									<img loading="lazy" src={item.image}
 										alt={item.name}
 										className="w-12 h-12 sm:w-16 sm:h-16 object-contain"
 									/>

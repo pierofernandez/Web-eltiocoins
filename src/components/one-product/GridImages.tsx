@@ -14,8 +14,7 @@ export const GridImages = ({ images }: Props) => {
 	return (
 		<div className='flex-1 flex flex-col gap-3 relative'>
 			<div className='lg:h-[500px]'>
-				<img
-					src={activeImage}
+				<img loading="lazy" src={activeImage}
 					alt='Imagen de Producto'
 					className='h-full w-full object-contain'
 				/>
@@ -33,8 +32,7 @@ export const GridImages = ({ images }: Props) => {
 								: 'border-transparent'
 						} rounded-lg hover:border-black focus:outline-none`}
 					>
-						<img
-							src={image}
+						<img loading="lazy" src={image}
 							alt={`Thumbnail ${index + 1}`}
 							className='w-full h-ful object-cover rounded-lg'
 						/>

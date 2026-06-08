@@ -2,11 +2,11 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useOrder, useUser } from '../hooks';
 import { Loader } from '../components/shared/Loader';
 import { CiCircleCheck } from 'react-icons/ci';
-import { formatPrice } from '../helpers';
+import { formatDateLong, formatPrice, generateOrderReceiptPdf } from '../helpers';
 import { supabase } from '../supabase/client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useCurrencyStore } from '../store/currency.store';
-import { FaWhatsapp, FaInstagram } from 'react-icons/fa';
+import { FaWhatsapp, FaInstagram, FaDownload } from 'react-icons/fa';
 
 export const ThankyouPage = () => {
 	const { id } = useParams<{ id: string }>();
@@ -14,6 +14,33 @@ export const ThankyouPage = () => {
 	const { isLoading: isLoadingSession } = useUser();
 	const { currency, rates, baseCurrency } = useCurrencyStore();
 	const navigate = useNavigate();
+	const [isDownloading, setIsDownloading] = useState(false);
+
+	const handleDownloadReceipt = () => {
+		if (!data || !id) return;
+
+		setIsDownloading(true);
+		try {
+			generateOrderReceiptPdf({
+				orderId: Number(id),
+				customerName: data.customer.full_name,
+				customerEmail: data.customer.email,
+				createdAt: formatDateLong(data.create_at),
+				status: data.status === 'Pending' ? 'Confirmado' : data.status,
+				paymentMethod: 'PayPal',
+				total: formatPrice(data.totalAmount, currency, rates, baseCurrency),
+				items: data.orderItems.map((item) => ({
+					name: item.productName ?? 'Producto',
+					quantity: item.quantity,
+					price: formatPrice(item.price, currency, rates, baseCurrency),
+					subtotal: formatPrice(item.price * item.quantity, currency, rates, baseCurrency),
+				})),
+				address: data.address?.city ? data.address : null,
+			});
+		} finally {
+			setIsDownloading(false);
+		}
+	};
 
 	useEffect(() => {
 		supabase.auth.onAuthStateChange(async (event, session) => {
@@ -30,8 +57,7 @@ export const ThankyouPage = () => {
 		<div className='flex flex-col min-h-screen bg-[#0e0f11] text-white'>
 			<header className='flex items-center justify-center flex-col px-10 py-8 bg-gradient-to-r from-purple-700 to-pink-600 shadow-lg'>
 				<Link to='/' className='text-4xl font-bold tracking-tight md:text-5xl'>
-					<img
-						src="/img/logotiocoins.webp"
+					<img loading="lazy" src="/img/logotiocoins.webp"
 						alt="logotiocoins"
 						className='max-w-24 drop-shadow-lg'
 					/>
@@ -49,12 +75,14 @@ export const ThankyouPage = () => {
 				<div className='w-full md:w-[600px] bg-[#18191c] border border-[#2d2f33] p-6 rounded-lg space-y-4 shadow-md'>
 					<h3 className='text-lg font-semibold text-green-400'>Tu pedido está confirmado</h3>
 					<p className='text-sm text-gray-300'>
-						Gracias por realizar tu compra en <strong>El Tio Coins</strong>. Para realizar la transferencia, usa los siguientes datos:
+						Gracias por realizar tu compra en <strong>El Tio Coins</strong>. Te enviamos un correo de confirmación a{' '}
+						<strong>{data.customer.email}</strong>.
 					</p>
 
 					<div className='text-sm text-gray-300 space-y-1'>
+						<p><strong>Nº de pedido:</strong> #{id}</p>
 						<p><strong>Método de pago:</strong> PayPal</p>
-						<p><strong>Fecha de creación:</strong> {data.create_at}</p>
+						<p><strong>Fecha de creación:</strong> {formatDateLong(data.create_at)}</p>
 						<p><strong>Email PayPal:</strong> {data.customer.email}</p>
 						<p><strong>Estado del pago:</strong> Confirmado</p>
 					</div>
@@ -85,13 +113,23 @@ export const ThankyouPage = () => {
 				</div>
 
 				<div className='w-full md:w-[600px] bg-[#18191c] border border-[#2d2f33] p-6 rounded-lg space-y-4 shadow-md'>
-					<h3 className='text-lg font-semibold text-blue-400'>Detalles del pedido</h3>
+					<div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
+						<h3 className='text-lg font-semibold text-blue-400'>Detalles del pedido</h3>
+						<button
+							type='button'
+							onClick={handleDownloadReceipt}
+							disabled={isDownloading}
+							className='flex items-center justify-center gap-2 rounded-lg border border-[#00FF87]/40 bg-[#00FF87]/10 px-4 py-2 text-sm font-bold text-[#00FF87] transition hover:bg-[#00FF87]/20 disabled:opacity-50'
+						>
+							<FaDownload size={14} />
+							{isDownloading ? 'Generando PDF...' : 'Descargar recibo PDF'}
+						</button>
+					</div>
 
 					<ul className='space-y-4'>
 						{data.orderItems.map((item, index) => (
 							<li key={index} className='flex items-center gap-4'>
-								<img
-									src={item.productImage}
+								<img loading="lazy" src={item.productImage}
 									alt={item.productName}
 									className='w-16 h-16 object-contain border border-gray-600 rounded'
 								/>

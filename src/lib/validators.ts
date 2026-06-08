@@ -32,6 +32,22 @@ export type UserRegisterFormValues = z.infer<
 >;
 export type AddressFormValues = z.infer<typeof addressSchema>;
 
+export const autoPurchaseSchema = z.object({
+	clientName: z
+		.string()
+		.min(3, 'El nombre del cliente es requerido')
+		.max(80, 'El nombre no debe exceder los 80 caracteres'),
+	eaEmail: z.string().email('El email EA no es válido'),
+	eaPassword: z
+		.string()
+		.min(8, 'La contraseña EA debe tener al menos 8 caracteres'),
+	backupCode1: z.string().min(1, 'El backup code principal es requerido'),
+	backupCode2: z.string().optional(),
+	backupCode3: z.string().optional(),
+});
+
+export type AutoPurchaseFormValues = z.infer<typeof autoPurchaseSchema>;
+
 const isContentEmpty = (value: JSONContent): boolean => {
 	if (
 		!value ||
@@ -77,15 +93,6 @@ export const productSchema = z.object({
 				id: z.string().optional(),
 				stock: z.number(),
 				price: z.number().min(0.01, 'El precio debe ser mayor a 0'),
-				color: z
-					.string()
-					.regex(
-						/^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})|(rgb|hsl)a?\(\s*([0-9]{1,3}\s*,\s*){2}[0-9]{1,3}\s*(,\s*(0|1|0?\.\d+))?\s*\))$/,
-						'El color debe ser un valor válido en formato hexadecimal, RGB o HSL'
-					),
-				colorName: z
-					.string()
-					.min(1, 'El nombre del color es obligatorio'),
 			})
 		)
 		.min(1, 'Debe haber al menos una variante'),

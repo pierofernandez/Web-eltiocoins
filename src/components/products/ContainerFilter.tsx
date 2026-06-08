@@ -9,11 +9,15 @@ const availablePlatform = [
 interface Props {
 	selectedPlatforms: string[];
 	setSelectedPlatforms: (platforms: string[]) => void;
+	orderPrice?: 'asc' | 'desc';
+	setOrderPrice?: (order: 'asc' | 'desc') => void;
 }
 
 export const ContainerFilter = ({
 	selectedPlatforms,
 	setSelectedPlatforms,
+	orderPrice,
+	setOrderPrice,
 }: Props) => {
 	const handlePlatformChange = (platform: string) => {
 		if (selectedPlatforms.includes(platform)) {
@@ -31,16 +35,15 @@ export const ContainerFilter = ({
 					{availablePlatform.map(({ name, icon: Icon, color }) => {
 						const isSelected = selectedPlatforms.includes(name);
 						const displayName = name === 'PS' ? 'PS4/PS5' : name;
-						
+
 						return (
 							<button
 								key={name}
 								onClick={() => handlePlatformChange(name)}
-								className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-200 hover:scale-105 ${
-									isSelected
+								className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-200 hover:scale-105 ${isSelected
 										? `${color} border-transparent text-white shadow-md`
 										: 'border-gray-900 text-gray-300'
-								}`}
+									}`}
 							>
 								<div className={`p-1 rounded ${isSelected ? 'bg-white/20' : color} text-white`}>
 									<Icon className='text-sm' />
@@ -61,7 +64,7 @@ export const ContainerFilter = ({
 						</div>
 						<span>Comodidad</span>
 					</div>
-					
+
 					<div className='flex items-center gap-2'>
 						<div className='w-4 h-4 bg-orange-500 rounded flex items-center justify-center'>
 							<span className='text-white text-xs font-bold'>%</span>
@@ -78,7 +81,7 @@ export const ContainerFilter = ({
 
 				{/* Contador y botón limpiar - oculto en mobile */}
 				{selectedPlatforms.length > 0 && (
-					<div className='hidden md:flex items-center gap-3 ml-auto'>
+					<div className={`hidden md:flex items-center gap-3 ${!setOrderPrice ? 'ml-auto' : ''}`}>
 						<span className='text-sm text-gray-300'>
 							{selectedPlatforms.length} activo{selectedPlatforms.length > 1 ? 's' : ''}
 						</span>
@@ -88,6 +91,20 @@ export const ContainerFilter = ({
 						>
 							Limpiar
 						</button>
+					</div>
+				)}
+
+				{/* Select de ordenamiento por precio */}
+				{setOrderPrice && (
+					<div className={`flex items-center gap-2 ${selectedPlatforms.length === 0 ? 'ml-auto' : ''}`}>
+						<select
+							className='bg-slate-900 border border-gray-700 text-sm text-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-1 focus:ring-orange-500 transition-all cursor-pointer'
+							value={orderPrice}
+							onChange={(e) => setOrderPrice(e.target.value as 'asc' | 'desc')}
+						>
+							<option value='asc' className='bg-slate-900'>Menor a mayor precio</option>
+							<option value='desc' className='bg-slate-900'>Mayor a menor precio</option>
+						</select>
 					</div>
 				)}
 			</div>

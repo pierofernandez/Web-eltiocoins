@@ -18,11 +18,16 @@ export const navbarLinks = [
     },
     {
         id: 4,
-        title: 'Boosting División Rivals',
-        href: '/divisionrivals',
+        title: 'Boosting Objetivos',
+        href: '/objetivos',
     },
     {
         id: 5,
+        title: 'División Rivals',
+        href: '/divisionrivals',
+    },
+    {
+        id: 6,
         title: '¿Cómo Comprar?',
         href: '/paso-a-paso',
     },
@@ -68,6 +73,12 @@ export const dashboardLinks = [
         id: 3,
         title: 'Banners/Ofertas',
         href: '/dashboard/banners',
+        icon: <FaImage size={25} />,
+    },
+    {
+        id: 4,
+        title: 'Precios',
+        href: '/dashboard/precios',
         icon: <FaImage size={25} />,
     },
 ]

@@ -1,4 +1,4 @@
-import { Color, Product, VariantProduct } from "../components/interfaces";
+import { Product, VariantProduct } from "../components/interfaces";
 
 
 // Función para formatear y convertir el precio entre monedas
@@ -34,41 +34,15 @@ export const formatPrice = (
 // Función para preparar los productos 
 export const prepareProducts = (products: Product[]) => {
 	return products.map(product => {
-		// Agrupar las variantes por color
-		const colors = product.variants.reduce(
-			(acc: Color[], variant: VariantProduct) => {
-				const existingColor = acc.find(
-					item => item.color === variant.color
-				);
-
-				if (existingColor) {
-					// Si ya existe el color, comparamos los precios
-					existingColor.price = Math.min(
-						existingColor.price,
-						variant.price
-					);
-				} // Mantenemos el precio mínimo
-				else {
-					acc.push({
-						color: variant.color,
-						price: variant.price,
-						name: variant.color_name,
-					});
-				}
-
-				return acc;
-			},
-			[]
-		);
-
-        // Obtener el precio más bajo de las variantes agrupadas
-		const price = Math.min(...colors.map(item => item.price));
+		// Obtener el precio más bajo de las variantes
+		const price = product.variants.length > 0
+			? Math.min(...product.variants.map((v: VariantProduct) => v.price))
+			: 0;
 
 		// Devolver el producto formateado
 		return {
 			...product,
 			price,
-			colors: colors.map(({ name, color }) => ({ name, color })),
 			variants: product.variants,
 		};
 	});
@@ -76,7 +50,7 @@ export const prepareProducts = (products: Product[]) => {
 
 //funcion para formatear fecha a fonrmato 3 de enero de 2025
 
-export const formatDateLong = (date: string) : string => {
+export const formatDateLong = (date: string): string => {
 	const dateObject = new Date(date);
 	return dateObject.toLocaleDateString('es-ES', {
 		year: 'numeric',
@@ -86,7 +60,9 @@ export const formatDateLong = (date: string) : string => {
 };
 
 //funcion para formatear la fecha a formato dd/mm/yyyy
-export const formatDate = (date: string) : string => {
+export * from './generateOrderReceiptPdf';
+
+export const formatDate = (date: string): string => {
 	const dateObject = new Date(date);
 	return dateObject.toLocaleDateString('es-ES', {
 		year: 'numeric',
@@ -134,15 +110,12 @@ export const extractFilePath = (url: string) => {
 //funcion para traer las tasas de cambio desde exchangerate.host
 
 const fetchRates = async (base: string = 'USD') => {
-  // Usar una API gratuita que no requiere clave de acceso
-  const res = await fetch(`https://api.fxratesapi.com/latest?base=${base}`);
-  if (!res.ok) throw new Error("Error al traer tasas de cambio");
-  const data = await res.json();
-  return data.rates as Record<string, number>;
+	// Usar una API gratuita que no requiere clave de acceso
+	const res = await fetch(`https://api.fxratesapi.com/latest?base=${base}`);
+	if (!res.ok) throw new Error("Error al traer tasas de cambio");
+	const data = await res.json();
+	return data.rates as Record<string, number>;
 };
 export default fetchRates;
 
-
-//hook para convertir precios usando las tasas de cambio y la moneda seleccionada
-
-
+export * from './pricing.helpers';

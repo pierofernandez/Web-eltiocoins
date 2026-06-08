@@ -8,6 +8,7 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SectionFormProduct } from './SectionFormProduct';
 import { InputForm } from './InputForm';
+import { SelectForm } from './SelectForm';
 import { FeaturesInput } from './FeaturesInput';
 import { useEffect } from 'react';
 import { generateSlug } from '../../../helpers';
@@ -16,7 +17,7 @@ import { UploaderImages } from './UploaderImages';
 import { Editor } from './Editor';
 import {
     useCreateProduct,
-    useProduct,
+    useProductById,
     useUpdateProduct,
 } from '../../../hooks';
 import { Loader } from '../../shared/Loader';
@@ -29,54 +30,49 @@ interface Props {
 
 export const FormProduct = ({ titleForm }: Props) => {
     const {
-		register,
-		handleSubmit,
-		formState: { errors },
-		setValue,
-		watch,
-		control,
-	} = useForm<ProductFormValues>({
-		resolver: zodResolver(productSchema),
-	});
+        register,
+        handleSubmit,
+        formState: { errors },
+        setValue,
+        watch,
+        control,
+        reset,
+    } = useForm<ProductFormValues>({
+        resolver: zodResolver(productSchema),
+    });
 
-    const { slug } = useParams<{ slug: string }>();
+    const { id } = useParams<{ id: string }>();
 
-    const { product, isLoading } = useProduct(slug || '');
-	const { mutate: createProduct, isPending } = useCreateProduct();
-	const { mutate: updateProduct, isPending: isUpdatePending } =
-		useUpdateProduct(product?.id || '');
+    const { product, isLoading } = useProductById(id || '');
+    const { mutate: createProduct, isPending } = useCreateProduct();
+    const { mutate: updateProduct, isPending: isUpdatePending } =
+        useUpdateProduct(product?.id || '');
 
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
 
     useEffect(() => {
         if (product && !isLoading) {
-            setValue('name', product.name);
-            setValue('slug', product.slug);
-            setValue('category', product.category);
-            setValue('platform', product.platform);
-            setValue(
-                'features',
-                product.features.map((f: string) => ({ value: f }))
-            );
-            setValue('description', product.description as JSONContent);
-            setValue('images', product.images);
-            setValue(
-                'variants',
-                product.variants.map(v => ({
+            reset({
+                name: product.name,
+                slug: product.slug,
+                category: product.category,
+                platform: product.platform,
+                features: (product.features || []).map((f: string) => ({ value: f })),
+                description: product.description as JSONContent,
+                images: product.images || [],
+                variants: (product.variants || []).map(v => ({
                     id: v.id,
                     stock: v.stock,
                     price: v.price,
-                    color: v.color,
-                    colorName: v.color_name,
-                }))
-            );
+                })),
+            });
         }
-    }, [product, isLoading, setValue]);
+    }, [product, isLoading, reset]);
 
     const onSubmit = handleSubmit(data => {
         const features = data.features.map(feature => feature.value);
-        if (slug) {
+        if (id) {
             updateProduct({
                 name: data.name,
                 category: data.category,
@@ -104,20 +100,20 @@ export const FormProduct = ({ titleForm }: Props) => {
     const watchName = watch('name');
 
     useEffect(() => {
-        if (!watchName) return;
+        if (!watchName || id) return;
 
         const generatedSlug = generateSlug(watchName);
         setValue('slug', generatedSlug, { shouldValidate: true });
-    }, [watchName, setValue]);
+    }, [watchName, setValue, id]);
 
     if (isPending || isUpdatePending || isLoading) return <Loader />;
 
     return (
         <div className='flex flex-col gap-6 relative '>
-            <div className='text-black flex justify-between items-center'>
+            <div className='flex items-center justify-between text-black dark:text-stone-100'>
                 <div className='flex items-center gap-3'>
                     <button
-                        className='bg-white p-1.5 rounded-md shadow-sm border border-slate-200 transition-all group hover:scale-105'
+                        className='rounded-md border border-slate-200 bg-white p-1.5 shadow-sm transition-all group hover:scale-105 dark:border-stone-600 dark:bg-stone-800'
                         onClick={() => navigate(-1)}
                     >
                         <IoIosArrowBack
@@ -161,30 +157,38 @@ export const FormProduct = ({ titleForm }: Props) => {
                         errors={errors}
                     />
 
-                    <InputForm
-                        type='text'
+                    <SelectForm
                         label='platform'
                         name='platform'
-                        placeholder='XBOX | PS | PC'
                         register={register}
                         errors={errors}
                         required
+                        options={[
+                            { label: 'PC', value: 'PC' },
+                            { label: 'PS', value: 'PS' },
+                            { label: 'XBOX', value: 'XBOX' },
+                            { label: 'ALL', value: 'ALL' },
+                        ]}
                     />
 
-                    <InputForm
-                        type='text'
+                    <SelectForm
                         label='category'
                         name='category'
-                        placeholder='monedas, fut champions, division rivals'
                         register={register}
                         errors={errors}
                         required
+                        options={[
+                            { label: 'Monedas', value: 'monedas' },
+                            { label: 'Division Rivals', value: 'divisionrivals' },
+                            { label: 'Fut Champions', value: 'futchampions' },
+                            { label: 'Objetivos', value: 'objetivos' },
+                        ]}
                     />
                 </SectionFormProduct>
 
                 <SectionFormProduct
                     titleSection='Variantes del Producto'
-                    className='lg:col-span-2 h-fit text-black'
+                    className='lg:col-span-2 h-fit text-black dark:text-stone-100'
                 >
                     <VariantsInput
                         control={control}

@@ -16,8 +16,7 @@ export const WhatsApp: React.FC = () => {
         rel="noopener noreferrer"
         style={styles.button}
       >
-        <img
-          src="/img/WhatsApp.svg.webp" 
+        <img loading="lazy" src="/img/WhatsApp.svg.webp" 
           alt="WhatsApp"
           style={styles.icon}
         />

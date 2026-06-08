@@ -28,7 +28,7 @@ export const InputForm = ({
 			<div className='flex justify-between items-center'>
 				<label
 					htmlFor={name}
-					className='text-xs font-bold tracking-tight capitalize text-slate-900'
+					className='text-xs font-bold capitalize tracking-tight text-slate-900 dark:text-stone-200'
 				>
 					{label}:
 				</label>
@@ -45,7 +45,7 @@ export const InputForm = ({
 			</div>
 
 			<div
-				className={`border border-gray-300 rounded-md overflow-hidden gap-5 items-center ${
+				className={`items-center gap-5 overflow-hidden rounded-md border border-gray-300 dark:border-stone-600 ${
 					errors[name] ? 'border-red-500' : ''
 				}`}
 			>
@@ -53,7 +53,7 @@ export const InputForm = ({
 					type={type}
 					placeholder={placeholder}
 					id={name}
-					className={`py-1.5 text-sm px-3 font-medium tracking-tighter w-full text-slate-600 outline-none focus:outline-none ${className}`}
+					className={`w-full px-3 py-1.5 text-sm font-medium tracking-tighter text-slate-600 outline-none focus:outline-none dark:bg-stone-800 dark:text-stone-100 ${className}`}
 					autoComplete='off'
 					{...register(name)}
 				/>

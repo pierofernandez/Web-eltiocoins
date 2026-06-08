@@ -3,12 +3,12 @@ export const InformationCoins = () => {
     return (
         <div className="relative py-16 md:py-24">
             {/* Background gaming effect */}
-            
+
             <div className="relative z-10">
                 {/* Header Section */}
                 <div className="text-center mb-16">
                     <h1 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
-                        ¿Qué son las monedas EA FC 25?
+                        ¿Qué son las monedas EA FC 26?
                     </h1>
                     <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 mx-auto rounded-full"></div>
                 </div>
@@ -26,7 +26,7 @@ export const InformationCoins = () => {
                                 <h2 className="text-2xl font-bold text-white">Monedas Virtuales</h2>
                             </div>
                             <p className="text-gray-300 leading-relaxed text-lg">
-                                Las FC 25 Coins son una moneda virtual que se utiliza en el modo FC 25 Ultimate Team (FUT) de la serie de videojuegos FC desarrollada por EA Sports. Los jugadores usan FC Coins para comprar sobres, canjear por mejores jugadores y mejorar sus equipos.
+                                Las FC 26 Coins son una moneda virtual que se utiliza en el modo FC 26 Ultimate Team (FUT) de la serie de videojuegos FC desarrollada por EA Sports. Los jugadores usan FC Coins para comprar sobres, canjear por mejores jugadores y mejorar sus equipos.
                             </p>
                         </div>
                     </div>
@@ -34,7 +34,7 @@ export const InformationCoins = () => {
                     {/* Gaming Methods Section */}
                     <div className="text-center mb-16">
                         <h1 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-green-400 via-emerald-500 to-teal-600 bg-clip-text text-transparent drop-shadow-lg">
-                            ¿Cómo conseguir monedas EA FC 25?
+                            ¿Cómo conseguir monedas EA FC 26?
                         </h1>
                         <div className="w-24 h-1 bg-gradient-to-r from-green-400 to-teal-600 mx-auto rounded-full"></div>
                     </div>
@@ -250,7 +250,7 @@ export const InformationCoins = () => {
                                 </div>
                                 <h2 className="text-3xl font-bold text-white">eltiocoins.com</h2>
                             </div>
-                            
+
                             <div className="grid md:grid-cols-2 gap-8">
                                 <div className="space-y-4">
                                     <div className="flex items-start">
@@ -262,7 +262,7 @@ export const InformationCoins = () => {
                                             <p className="text-gray-300">Plataforma líder con miles de clientes satisfechos en todas las plataformas</p>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="flex items-start">
                                         <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center mr-3 mt-1">
                                             <span className="text-white text-sm">✓</span>
@@ -272,7 +272,7 @@ export const InformationCoins = () => {
                                             <p className="text-gray-300">Entrega de monedas y atención al cliente disponible todo el año</p>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="flex items-start">
                                         <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mr-3 mt-1">
                                             <span className="text-white text-sm">✓</span>
@@ -283,7 +283,7 @@ export const InformationCoins = () => {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div className="space-y-4">
                                     <div className="flex items-start">
                                         <div className="w-8 h-8 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-lg flex items-center justify-center mr-3 mt-1">
@@ -294,7 +294,7 @@ export const InformationCoins = () => {
                                             <p className="text-gray-300">Investigación diaria de mercado para ofrecer los mejores precios</p>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="flex items-start">
                                         <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-600 rounded-lg flex items-center justify-center mr-3 mt-1">
                                             <span className="text-white text-sm">✓</span>
@@ -304,7 +304,7 @@ export const InformationCoins = () => {
                                             <p className="text-gray-300">Equipo profesional que completa pedidos en tiempo récord</p>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="flex items-start">
                                         <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mr-3 mt-1">
                                             <span className="text-white text-sm">✓</span>
@@ -316,11 +316,11 @@ export const InformationCoins = () => {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div className="mt-8 p-6 bg-gradient-to-r from-cyan-600/20 to-indigo-600/20 rounded-xl border border-cyan-500/30">
                                 <p className="text-center text-gray-300 text-lg leading-relaxed">
-                                    <strong className="text-cyan-400">¡Bienvenido a eltiocoins!</strong> A partir de ahora, eres nuestro cliente más afortunado. 
-                                    Compra FC 25 Coins de forma rápida, económica y segura en la plataforma más confiable del mercado.
+                                    <strong className="text-cyan-400">¡Bienvenido a eltiocoins!</strong> A partir de ahora, eres nuestro cliente más afortunado.
+                                    Compra FC 26 Coins de forma rápida, económica y segura en la plataforma más confiable del mercado.
                                 </p>
                             </div>
                         </div>

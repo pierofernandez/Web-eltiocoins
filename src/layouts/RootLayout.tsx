@@ -9,6 +9,7 @@ import { NavbarMobile } from '../components/shared/NavbarMobile';
 import { Navbar } from '../components/shared/Navbar';
 import { useCurrencyStore } from '../store/currency.store';
 import { NavigationButton } from '../components/home/NavigationButton';
+import { LivePurchaseNotification } from '../components/home/LivePurchaseNotification';
 
 export const RootLayout = () => {
 	const { pathname } = useLocation();
@@ -23,16 +24,18 @@ export const RootLayout = () => {
 	}, [loadRates]);
 
 	return (
-		<div className='h-screen  flex flex-col font-montserrat'>
+		<div className='flex min-h-screen flex-col overflow-x-hidden font-montserrat'>
 			<Navbar />
 
 			{(pathname === '/') && <Banner />}
 
-			<main className='container my-8 flex-1 '>
+			<main className='container my-8 min-w-0 flex-1 overflow-x-hidden'>
 				<Outlet />
 			</main>
 
 			<NavigationButton />
+
+			<LivePurchaseNotification />
 
 			{pathname === '/' && <Newsletter />}
 

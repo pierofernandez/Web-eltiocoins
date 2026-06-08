@@ -1,8 +1,74 @@
 import { FaHeart, FaComment, FaInstagram, FaTwitch } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+
+const INSTAGRAM_POSTS = [
+  {
+    id: 1,
+    name: "Rocío Valentina",
+    img: "/img/rocio.webp",
+    likes: "11.0k",
+    comments: "9,000",
+    color: "purple"
+  },
+  {
+    id: 2,
+    name: "22corbacho",
+    img: "/img/corbacho.webp",
+    likes: "1.1k",
+    comments: "40",
+    color: "pink"
+  },
+  {
+    id: 3,
+    name: "ZekaGamers",
+    img: "/img/zekagamers.webp",
+    likes: "1.0k",
+    comments: "330",
+    color: "blue"
+  }
+];
 
 export const FeatureGrid = () => {
   const [isCardVisible, setIsCardVisible] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Autoplay para móvil (3 segundos)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (window.innerWidth < 640) { // Solo en móvil
+        const nextIndex = (currentIndex + 1) % INSTAGRAM_POSTS.length;
+        setCurrentIndex(nextIndex);
+        scrollToIndex(nextIndex);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex]);
+
+  const scrollToIndex = (index: number) => {
+    if (scrollRef.current) {
+      const itemWidth = scrollRef.current.offsetWidth * 0.85; // Basado en el w-[85vw]
+      const gap = 24; // gap-6 es 24px
+      scrollRef.current.scrollTo({
+        left: index * (itemWidth + gap),
+        behavior: "smooth"
+      });
+    }
+  };
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollLeft, offsetWidth } = e.currentTarget;
+    if (window.innerWidth < 640) {
+      const itemWidth = offsetWidth * 0.85;
+      const gap = 24;
+      const index = Math.round(scrollLeft / (itemWidth + gap));
+      if (index !== currentIndex && index < INSTAGRAM_POSTS.length) {
+        setCurrentIndex(index);
+      }
+    }
+  };
+
   return (
     <section className=" px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -27,10 +93,9 @@ export const FeatureGrid = () => {
             <div className="bg-black/40 backdrop-blur-sm rounded-xl p-4 border border-pink-500/20 flex items-center gap-4 transform hover:scale-105 transition-transform duration-300">
               <div className="relative">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-yellow-500 rounded-full blur opacity-70"></div>
-                <img
-                  src="/img/corbacho22.webp"
+                <img loading="lazy" src="/img/corbacho22.webp"
                   alt="Corbacho"
-                  className="relative w-12 sm:w-14 lg:w-16 h-12 sm:h-14 lg:h-16 rounded-full object-cover border-2 border-pink-500"
+                  className="relative w-12 sm:w-14 lg:w-16 h-12 sm:h-14 lg:h-16 rounded-full object-cover object-top border-2 border-pink-500"
                 />
               </div>
               <div className="flex-1 min-w-0">
@@ -58,10 +123,9 @@ export const FeatureGrid = () => {
             <div className="bg-black/40 backdrop-blur-sm rounded-xl p-4 border border-purple-500/20 flex items-center gap-4 transform hover:scale-105 transition-transform duration-300">
               <div className="relative">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur opacity-70"></div>
-                <img
-                  src="/img/rociovalentina.webp"
+                <img loading="lazy" src="/img/rociovalentina.webp"
                   alt="Rocío Valentina"
-                  className="relative w-12 sm:w-14 lg:w-16 h-12 sm:h-14 lg:h-16 rounded-full object-cover border-2 border-purple-500"
+                  className="relative w-12 sm:w-14 lg:w-16 h-12 sm:h-14 lg:h-16 rounded-full object-cover object-top border-2 border-purple-500"
                 />
               </div>
               <div className="flex-1 min-w-0">
@@ -97,84 +161,59 @@ export const FeatureGrid = () => {
             </p>
           </div>
 
-          {/* Posts */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Post Rocío */}
-            <div className="group relative bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 group-hover:opacity-75 transition-opacity duration-300"></div>
-              <div className="relative aspect-square">
-                <img
-                  src="/img/rocio.webp"
-                  alt="Instagram Post 1"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center justify-between text-white">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-1">
-                        <FaHeart className="text-pink-500" />
-                        <span className="text-sm">11.0k</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <FaComment className="text-blue-400" />
-                        <span className="text-sm">9,000</span>
+          {/* Posts Carousel/Grid */}
+          <div className="relative group/carousel">
+            <div
+              ref={scrollRef}
+              onScroll={handleScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 sm:grid sm:grid-cols-3 sm:pb-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {INSTAGRAM_POSTS.map((post) => (
+                <div
+                  key={post.id}
+                  className="flex-none w-[85vw] sm:w-auto snap-center group relative bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 group-hover:opacity-75 transition-opacity duration-300"></div>
+                  <div className="relative aspect-square">
+                    <img loading="lazy" src={post.img}
+                      alt={`Instagram Post ${post.id}`}
+                      className="w-full h-full object-cover object-top"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center justify-between text-white">
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-1">
+                            <FaHeart className="text-pink-500" />
+                            <span className="text-sm">{post.likes}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <FaComment className="text-blue-400" />
+                            <span className="text-sm">{post.comments}</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
 
-            {/* Post Corbacho */}
-            <div className="group relative bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 group-hover:opacity-75 transition-opacity duration-300"></div>
-              <div className="relative aspect-square">
-                <img
-                  src="/img/corbacho.webp"
-                  alt="Instagram Post 2"
-                  className="w-full h-full object-cover"
+            {/* Paginación - Dots (Solo Móvil) */}
+            <div className="flex sm:hidden justify-center gap-2 mt-2">
+              {INSTAGRAM_POSTS.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setCurrentIndex(idx);
+                    scrollToIndex(idx);
+                  }}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${currentIndex === idx
+                    ? "w-6 bg-pink-500"
+                    : "w-1.5 bg-zinc-600 hover:bg-zinc-500"
+                    }`}
+                  aria-label={`Ir al post ${idx + 1}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center justify-between text-white">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-1">
-                        <FaHeart className="text-pink-500" />
-                        <span className="text-sm">1.1k</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <FaComment className="text-blue-400" />
-                        <span className="text-sm">40</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Post Zeka */}
-            <div className="group relative bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 group-hover:opacity-75 transition-opacity duration-300"></div>
-              <div className="relative aspect-square">
-                <img
-                  src="/img/zekagamers.webp"
-                  alt="Instagram Post 3"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center justify-between text-white">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-1">
-                        <FaHeart className="text-pink-500" />
-                        <span className="text-sm">1.0k</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <FaComment className="text-blue-400" />
-                        <span className="text-sm">330</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 

@@ -12,7 +12,7 @@
 }
 
 body {
-    @apply bg-[#151616] text-white;
+    @apply overflow-x-hidden bg-[#151616] text-white;
   }
 
 .btn-primary {
@@ -21,6 +21,18 @@ body {
 
 .btn-secondary-outline {
 	@apply border border-slate-400 text-slate-600 py-2 px-3 text-sm font-medium rounded-md;
+}
+
+.dark .btn-paginated {
+	@apply border-slate-600 text-slate-200 hover:bg-slate-700 hover:text-white disabled:border-slate-800 disabled:text-slate-600 disabled:hover:bg-transparent;
+}
+
+.dark .btn-primary {
+	@apply bg-[#00FF87] text-black hover:bg-green-400;
+}
+
+.dark .btn-secondary-outline {
+	@apply border-slate-600 text-slate-200 hover:bg-slate-800;
 }
 
 /* Para Chrome, Safari, Edge y Opera */
@@ -33,4 +45,46 @@ input::-webkit-inner-spin-button{
 /* Para firefox */
 input[type=number]{
 	-moz-appearance: textfield;
+}
+
+/* Slider de precios — barra blanca, thumb verde EA FC */
+.pricing-range-slider {
+	-webkit-appearance: none;
+	appearance: none;
+	background: transparent;
+}
+
+.pricing-range-slider::-webkit-slider-runnable-track {
+	height: 8px;
+	border-radius: 9999px;
+	background: #ffffff;
+}
+
+.pricing-range-slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 22px;
+	height: 22px;
+	margin-top: -7px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, #00FF87, #22c55e);
+	border: 2px solid #fff;
+	box-shadow: 0 0 12px rgba(0, 255, 135, 0.5);
+	cursor: pointer;
+}
+
+.pricing-range-slider::-moz-range-track {
+	height: 8px;
+	border-radius: 9999px;
+	background: #ffffff;
+}
+
+.pricing-range-slider::-moz-range-thumb {
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, #00FF87, #22c55e);
+	border: 2px solid #fff;
+	box-shadow: 0 0 12px rgba(0, 255, 135, 0.5);
+	cursor: pointer;
 }

@@ -506,7 +506,7 @@ export const JuegaYGanaPage = () => {
                                             }`}
                                         >
                                             {(rowIndex === 1 && colIndex === 1 && !cell) ? (
-                                                <img src={logotiocoins} alt="Logo Tio Coins" className="w-12 h-12 md:w-20 md:h-20 object-contain opacity-80" />
+                                                <img loading="lazy" src={logotiocoins} alt="Logo Tio Coins" className="w-12 h-12 md:w-20 md:h-20 object-contain opacity-80" />
                                             ) : cell}
                                         </motion.button>
                                     ))

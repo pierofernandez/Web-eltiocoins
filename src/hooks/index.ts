@@ -5,9 +5,11 @@ export * from './products/useProducts';
 export * from './products/useFilteredProducts';
 export * from './products/useHomeProducts';
 export * from './products/UseProduct';
+export * from './products/useProductById';
 
+/* PRICING */
 
-
+export * from './pricing/usePricingTiers';
 /* AUTH */
 
 export * from './auth/useLogin';

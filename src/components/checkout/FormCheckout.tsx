@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputAddress } from './InputAddress';
-import { AddressFormValues, addressSchema } from '../../lib/validators';
+import { AddressFormValues, addressSchema, AutoPurchaseFormValues } from '../../lib/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCartStore } from '../../store/cart.store';
 import { useDiscountStore } from '../../store/discount.store';
@@ -14,9 +14,23 @@ import { FaMapMarkerAlt, FaCreditCard, FaArrowLeft, FaArrowRight, FaPaypal, FaLo
 import './PayPalStyles.css';
 import { formatPrice } from '../../helpers';
 import { useCurrencyStore } from '../../store/currency.store';
+import { AutoPurchaseForm } from '../monedas/AutoPurchaseForm';
 
 export const FormCheckout = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const cleanCart = useCartStore(state => state.cleanCart);
+  const cartItems = useCartStore(state => state.items);
+  const totalAmount = useCartStore(state => state.totalAmount);
+  const autoDeliveryData = useCartStore(state => state.autoDeliveryData);
+  const setAutoDeliveryData = useCartStore(state => state.setAutoDeliveryData);
+
+  const hasAutoMonedas = useMemo(
+    () => cartItems.some((item) => item.category === 'monedas' && item.purchaseMode === 'auto'),
+    [cartItems]
+  );
+
+  const [currentStep, setCurrentStep] = useState(
+    hasAutoMonedas && autoDeliveryData ? 2 : 1
+  );
   const [deliveryData, setDeliveryData] = useState<AddressFormValues | null>(null);
 
   const {
@@ -31,9 +45,6 @@ export const FormCheckout = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const isFormValid = Object.keys(errors).length === 0;
-  const cleanCart = useCartStore(state => state.cleanCart);
-  const cartItems = useCartStore(state => state.items);
-  const totalAmount = useCartStore(state => state.totalAmount);
   const { discount } = useDiscountStore();
   const finalAmount = totalAmount - discount;
   const navigate = useNavigate();
@@ -57,11 +68,35 @@ export const FormCheckout = () => {
     setCurrentStep(2);
   });
 
+  const onSubmitAutoDeliveryData = (data: AutoPurchaseFormValues) => {
+    setAutoDeliveryData(data);
+    setCurrentStep(2);
+  };
+
   const onSubmitPayment = () => {
-    if (!deliveryData) return;
+    if (hasAutoMonedas) {
+      if (!autoDeliveryData) {
+        setPaymentError('Completa los datos de tu cuenta EA antes de pagar.');
+        setCurrentStep(1);
+        return;
+      }
+    } else if (!deliveryData) {
+      return;
+    }
 
     const orderInput = {
-      address: deliveryData,
+      ...(hasAutoMonedas
+        ? {
+            autoDelivery: {
+              clientName: autoDeliveryData!.clientName,
+              eaEmail: autoDeliveryData!.eaEmail,
+              eaPassword: autoDeliveryData!.eaPassword,
+              backupCode1: autoDeliveryData!.backupCode1,
+              backupCode2: autoDeliveryData!.backupCode2,
+              backupCode3: autoDeliveryData!.backupCode3,
+            },
+          }
+        : { address: deliveryData! }),
       cartItems: cartItems.map(item => ({
         variantId: item.variantId,
         quantity: item.quantity,
@@ -120,7 +155,9 @@ export const FormCheckout = () => {
           }`}
         >
           <FaMapMarkerAlt className="text-sm" />
-          <span className="font-medium">Datos de Cliente</span>
+          <span className="font-medium">
+            {hasAutoMonedas ? 'Datos EA' : 'Datos de Cliente'}
+          </span>
         </motion.div>
         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
           currentStep === 2 ? 'bg-[#00FF87] text-black' : 'bg-gray-600 text-gray-400'
@@ -140,81 +177,94 @@ export const FormCheckout = () => {
       </div>
 
       {currentStep === 1 ? (
-        <motion.form 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className='flex flex-col gap-6' 
-          onSubmit={onSubmitDeliveryData}
-        >
-          <div className='bg-[#121212]/90 rounded-xl p-6 border border-[#00FF87]/20'>
-            <div className='flex items-center gap-3 mb-4'>
-              <div className='w-10 h-10 bg-[#00FF87]/20 rounded-full flex items-center justify-center'>
-                <FaMapMarkerAlt className='text-[#00FF87]' />
-              </div>
-              <div>
-                <h3 className='text-xl font-bold text-white'>Información del Cliente</h3>
-                <p className='text-gray-400 text-sm'>Completa tus datos para recibir tu pedido</p>
-              </div>
-            </div>
-
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-              <InputAddress
-                register={register}
-                errors={errors}
-                name='state'
-                placeholder='Estado / Provincia'
-                className='bg-[#1E1E1E] border border-[#00FF87]/20 text-white placeholder-gray-500 p-3 rounded-lg focus:border-[#00FF87] focus:ring-2 focus:ring-[#00FF87]/30 transition-all duration-300'
-              />
-
-              <InputAddress
-                register={register}
-                errors={errors}
-                name='city'
-                placeholder='Ciudad'
-                className='bg-[#1E1E1E] border border-[#00FF87]/20 text-white placeholder-gray-500 p-3 rounded-lg focus:border-[#00FF87] focus:ring-2 focus:ring-[#00FF87]/30 transition-all duration-300'
-              />
-            </div>
-
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-4'>
-              <InputAddress
-                register={register}
-                errors={errors}
-                name='postalcode'
-                placeholder='Código Postal (Opcional)'
-                className='bg-[#1E1E1E] border border-[#00FF87]/20 text-white placeholder-gray-500 p-3 rounded-lg focus:border-[#00FF87] focus:ring-2 focus:ring-[#00FF87]/30 transition-all duration-300'
-              />
-
-              <select
-                className='bg-[#1E1E1E] border border-[#00FF87]/20 text-white p-3 rounded-lg focus:border-[#00FF87] focus:ring-2 focus:ring-[#00FF87]/30 transition-all duration-300'
-                {...register('country')}
-              >
-                <option value='' className='text-black'>Seleccionar país</option>
-                <option value='Ecuador' className='text-black'>Ecuador</option>
-                <option value='Chile' className='text-black'>Chile</option>
-                <option value='España' className='text-black'>España</option>
-                <option value='Honduras' className='text-black'>Honduras</option>
-                <option value='USA' className='text-black'>USA</option>
-                <option value='Guatemala' className='text-black'>Guatemala</option>
-                <option value='Mexico' className='text-black'>Mexico</option>
-                <option value='Peru' className='text-black'>Peru</option>
-                <option value='Argentina' className='text-black'>Argentina</option>
-                <option value='Colombia' className='text-black'>Colombia</option>
-                <option value='El Salvador' className='text-black'>El Salvador</option>
-              </select>
-            </div>
-          </div>
-
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            type="submit"
-            disabled={!isFormValid}
-            className="bg-gradient-to-r from-[#00FF87] to-gray-700 text-black py-4 px-8 rounded-xl font-bold text-lg shadow-xl hover:from-[#00e676] hover:to-gray-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+        hasAutoMonedas ? (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
           >
-            <span>Continuar al Pago</span>
-            <FaArrowRight />
-          </motion.button>
-        </motion.form>
+            <AutoPurchaseForm
+              defaultValues={autoDeliveryData ?? undefined}
+              onSubmit={onSubmitAutoDeliveryData}
+              submitLabel="Continuar al Pago"
+            />
+          </motion.div>
+        ) : (
+          <motion.form
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className='flex flex-col gap-6'
+            onSubmit={onSubmitDeliveryData}
+          >
+            <div className='bg-[#121212]/90 rounded-xl p-6 border border-[#00FF87]/20'>
+              <div className='flex items-center gap-3 mb-4'>
+                <div className='w-10 h-10 bg-[#00FF87]/20 rounded-full flex items-center justify-center'>
+                  <FaMapMarkerAlt className='text-[#00FF87]' />
+                </div>
+                <div>
+                  <h3 className='text-xl font-bold text-white'>Información del Cliente</h3>
+                  <p className='text-gray-400 text-sm'>Completa tus datos para recibir tu pedido</p>
+                </div>
+              </div>
+
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                <InputAddress
+                  register={register}
+                  errors={errors}
+                  name='state'
+                  placeholder='Estado / Provincia'
+                  className='bg-[#1E1E1E] border border-[#00FF87]/20 text-white placeholder-gray-500 p-3 rounded-lg focus:border-[#00FF87] focus:ring-2 focus:ring-[#00FF87]/30 transition-all duration-300'
+                />
+
+                <InputAddress
+                  register={register}
+                  errors={errors}
+                  name='city'
+                  placeholder='Ciudad'
+                  className='bg-[#1E1E1E] border border-[#00FF87]/20 text-white placeholder-gray-500 p-3 rounded-lg focus:border-[#00FF87] focus:ring-2 focus:ring-[#00FF87]/30 transition-all duration-300'
+                />
+              </div>
+
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-4'>
+                <InputAddress
+                  register={register}
+                  errors={errors}
+                  name='postalcode'
+                  placeholder='Código Postal (Opcional)'
+                  className='bg-[#1E1E1E] border border-[#00FF87]/20 text-white placeholder-gray-500 p-3 rounded-lg focus:border-[#00FF87] focus:ring-2 focus:ring-[#00FF87]/30 transition-all duration-300'
+                />
+
+                <select
+                  className='bg-[#1E1E1E] border border-[#00FF87]/20 text-white p-3 rounded-lg focus:border-[#00FF87] focus:ring-2 focus:ring-[#00FF87]/30 transition-all duration-300'
+                  {...register('country')}
+                >
+                  <option value='' className='text-black'>Seleccionar país</option>
+                  <option value='Ecuador' className='text-black'>Ecuador</option>
+                  <option value='Chile' className='text-black'>Chile</option>
+                  <option value='España' className='text-black'>España</option>
+                  <option value='Honduras' className='text-black'>Honduras</option>
+                  <option value='USA' className='text-black'>USA</option>
+                  <option value='Guatemala' className='text-black'>Guatemala</option>
+                  <option value='Mexico' className='text-black'>Mexico</option>
+                  <option value='Peru' className='text-black'>Peru</option>
+                  <option value='Argentina' className='text-black'>Argentina</option>
+                  <option value='Colombia' className='text-black'>Colombia</option>
+                  <option value='El Salvador' className='text-black'>El Salvador</option>
+                </select>
+              </div>
+            </div>
+
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              type="submit"
+              disabled={!isFormValid}
+              className="bg-gradient-to-r from-[#00FF87] to-gray-700 text-black py-4 px-8 rounded-xl font-bold text-lg shadow-xl hover:from-[#00e676] hover:to-gray-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+            >
+              <span>Continuar al Pago</span>
+              <FaArrowRight />
+            </motion.button>
+          </motion.form>
+        )
       ) : (
         <motion.div 
           initial={{ opacity: 0, x: 20 }}
@@ -304,7 +354,7 @@ export const FormCheckout = () => {
               >
                 <PayPalButtons
                   forceReRender={[finalAmountForPayPal, paypalCurrency]}
-                  disabled={isPending || isProcessing}
+                  disabled={isPending || isProcessing || (hasAutoMonedas && !autoDeliveryData)}
                   style={{
                     layout: "vertical",
                     color: "gold",
@@ -384,7 +434,7 @@ export const FormCheckout = () => {
             className="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-3 px-6 rounded-xl font-semibold hover:from-gray-800 hover:to-black transition-all duration-300 flex items-center justify-center gap-3"
           >
             <FaArrowLeft />
-            <span>Volver a Datos</span>
+            <span>{hasAutoMonedas ? 'Volver a Datos EA' : 'Volver a Datos'}</span>
           </motion.button>
         </motion.div>
       )}

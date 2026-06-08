@@ -16,8 +16,15 @@ export const BannerManager = () => {
     });
 
     // Current offer state (the first one is usually the active one)
-    const [currentOffer, setCurrentOffer] = useState<{ id?: string; image_file: File | null; link_url: string; is_active: boolean }>({
-        image_file: null,
+    const [currentOffer, setCurrentOffer] = useState<{
+        id?: string;
+        desktop_file: File | null;
+        mobile_file: File | null;
+        link_url: string;
+        is_active: boolean;
+    }>({
+        desktop_file: null,
+        mobile_file: null,
         link_url: '/monedas',
         is_active: true
     });
@@ -36,7 +43,8 @@ export const BannerManager = () => {
             if (offersData.length > 0) {
                 setCurrentOffer({
                     id: offersData[0].id,
-                    image_file: null,
+                    desktop_file: null,
+                    mobile_file: null,
                     link_url: offersData[0].link_url,
                     is_active: offersData[0].is_active
                 });
@@ -85,8 +93,8 @@ export const BannerManager = () => {
     };
 
     const handleUpdateOffer = async () => {
-        if (!currentOffer.id && !currentOffer.image_file) {
-            alert('Por favor selecciona una imagen para la nueva oferta');
+        if (!currentOffer.id && (!currentOffer.desktop_file || !currentOffer.mobile_file)) {
+            alert('Por favor selecciona ambas imágenes (Desktop y Mobile) para la nueva oferta');
             return;
         }
 
@@ -94,11 +102,13 @@ export const BannerManager = () => {
             setLoading(true);
             await updateOffer({
                 id: currentOffer.id,
-                image_file: currentOffer.image_file || undefined,
+                desktop_file: currentOffer.desktop_file || undefined,
+                mobile_file: currentOffer.mobile_file || undefined,
                 link_url: currentOffer.link_url,
                 is_active: currentOffer.is_active
             });
             alert('Oferta actualizada correctamente');
+            setCurrentOffer((prev) => ({ ...prev, desktop_file: null, mobile_file: null }));
             await fetchData();
         } catch (error) {
             alert('Error al actualizar la oferta');
@@ -110,11 +120,11 @@ export const BannerManager = () => {
     if (loading && banners.length === 0) return <div className="p-10 text-white">Cargando...</div>;
 
     return (
-        <div className="space-y-10 p-5 text-white bg-stone-900 min-h-screen">
-            <h1 className="text-3xl font-bold border-b border-stone-700 pb-2">Gestión de Banners y Ofertas</h1>
+    <div className="min-h-screen space-y-10 bg-gray-100 p-5 text-stone-800 transition-colors dark:bg-stone-950 dark:text-white">
+            <h1 className="border-b border-gray-200 pb-2 text-3xl font-bold dark:border-stone-700">Gestión de Banners y Ofertas</h1>
 
             {/* BANNER SECTION */}
-            <section className="bg-stone-800 p-6 rounded-lg shadow-xl">
+            <section className="rounded-lg bg-white p-6 shadow-xl dark:bg-stone-800">
                 <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
                     Banners del Inicio
                 </h2>
@@ -122,7 +132,7 @@ export const BannerManager = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                     {banners.map((banner) => (
                         <div key={banner.id} className="bg-stone-700 rounded-md overflow-hidden relative group">
-                            <img src={banner.desktop_url} alt="Banner" className="w-full h-32 object-cover" />
+                            <img loading="lazy" src={banner.desktop_url} alt="Banner" className="w-full h-32 object-cover" />
                             <div className="p-3 flex justify-between items-center">
                                 <span className="text-sm text-stone-300">Orden: {banner.display_order}</span>
                                 <button
@@ -177,7 +187,7 @@ export const BannerManager = () => {
             </section>
 
             {/* OFFER SECTION */}
-            <section className="bg-stone-800 p-6 rounded-lg shadow-xl">
+            <section className="rounded-lg bg-white p-6 shadow-xl dark:bg-stone-800">
                 <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
                     Imagen de Oferta (Pop-up)
                 </h2>
@@ -185,9 +195,25 @@ export const BannerManager = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-4">
                         {offers[0] && (
-                            <div className="border border-stone-700 rounded-md overflow-hidden bg-stone-900/50 p-2">
-                                <p className="text-xs text-stone-500 mb-1 text-center font-mono">Vista Previa Actual</p>
-                                <img src={offers[0].image_url} alt="Offer pop up" className="max-h-64 mx-auto object-contain rounded" />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="border border-stone-700 rounded-md overflow-hidden bg-stone-900/50 p-2">
+                                    <p className="text-xs text-stone-500 mb-1 text-center font-mono">Vista Previa Desktop</p>
+                                    <img
+                                        loading="lazy"
+                                        src={offers[0].image_url}
+                                        alt="Oferta desktop"
+                                        className="max-h-48 mx-auto object-contain rounded"
+                                    />
+                                </div>
+                                <div className="border border-stone-700 rounded-md overflow-hidden bg-stone-900/50 p-2">
+                                    <p className="text-xs text-stone-500 mb-1 text-center font-mono">Vista Previa Mobile</p>
+                                    <img
+                                        loading="lazy"
+                                        src={offers[0].mobile_image_url || offers[0].image_url}
+                                        alt="Oferta mobile"
+                                        className="max-h-48 mx-auto object-contain rounded"
+                                    />
+                                </div>
                             </div>
                         )}
 
@@ -207,10 +233,24 @@ export const BannerManager = () => {
 
                     <div className="space-y-5">
                         <div>
-                            <label className="block text-sm text-stone-400 mb-1">Nueva Imagen (opcional si ya existe)</label>
+                            <label className="block text-sm text-stone-400 mb-1">
+                                Imagen Desktop {offers[0] ? '(opcional)' : '(requerida)'}
+                            </label>
                             <input
                                 type="file"
-                                onChange={(e) => setCurrentOffer({ ...currentOffer, image_file: e.target.files?.[0] || null })}
+                                accept="image/*"
+                                onChange={(e) => setCurrentOffer({ ...currentOffer, desktop_file: e.target.files?.[0] || null })}
+                                className="w-full text-sm bg-stone-800 border border-stone-600 rounded p-2"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm text-stone-400 mb-1">
+                                Imagen Mobile {offers[0] ? '(opcional)' : '(requerida)'}
+                            </label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => setCurrentOffer({ ...currentOffer, mobile_file: e.target.files?.[0] || null })}
                                 className="w-full text-sm bg-stone-800 border border-stone-600 rounded p-2"
                             />
                         </div>

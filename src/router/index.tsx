@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RootLayout } from "../layouts/RootLayout";
-import { HomePage, DivisionRivalsPage, FutChampionsPage, MonedasPage, MonedaPage, LoginPage, RegisterPage, OrdersUserPage, ThankyouPage, OrderUserPage, ComplaintsBook, PasoAPasoPage, JuegaYGanaPage } from "../pages";
+import { HomePage, DivisionRivalsPage, FutChampionsPage, MonedasPage, MonedaPage, ObjetivosPage, ObjetivoPage, LoginPage, RegisterPage, OrdersUserPage, ThankyouPage, OrderUserPage, ComplaintsBook, PasoAPasoPage, JuegaYGanaPage } from "../pages";
 import { FutChampionPage } from "../pages/FutChampionPage";
 import { DivisionRivalPage } from "../pages/DivisionRivalPage";
 import { ClientLayout } from "../layouts/ClientLayout";
@@ -21,8 +21,10 @@ import { DashboardProductSlugPage } from "../pages/dashboard/DashboardProductSlu
 import { DashboardOrdersPage } from "../pages/dashboard/DashboardOrdersPage";
 import { DashboardOrderPage } from "../pages/dashboard/DashboardOrderPage";
 import { DashboardBannersPage } from "../pages/dashboard/DashboardBannersPage";
+import { DashboardPricesPage } from "../pages/dashboard/DashboardPricesPage";
 
 export const router = createBrowserRouter([
+
     {
         path: '/',
         element: <RootLayout />,
@@ -54,6 +56,14 @@ export const router = createBrowserRouter([
             {
                 path: 'divisionrivals/:slug',
                 element: <DivisionRivalPage />
+            },
+            {
+                path: 'objetivos',
+                element: <ObjetivosPage />
+            },
+            {
+                path: 'objetivos/:slug',
+                element: <ObjetivoPage />
             },
             {
                 path: 'paso-a-paso',
@@ -154,7 +164,7 @@ export const router = createBrowserRouter([
                 element: <DashboardNewProductPage />
             },
             {
-                path: 'productos/editar/:slug',
+                path: 'productos/editar/:id',
                 element: <DashboardProductSlugPage />
             },
             {
@@ -168,6 +178,10 @@ export const router = createBrowserRouter([
             {
                 path: 'banners',
                 element: <DashboardBannersPage />
+            },
+            {
+                path: 'precios',
+                element: <DashboardPricesPage />
             }
         ]
     }

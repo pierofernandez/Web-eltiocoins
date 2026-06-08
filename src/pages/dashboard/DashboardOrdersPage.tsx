@@ -8,7 +8,7 @@ export const DashboardOrdersPage = () => {
 	if (isLoading || !data) return <Loader />;
 
 	return (
-		<div className='space-y-5 text-black'>
+		<div className='space-y-5 text-black dark:text-stone-100'>
 			<h1 className='text-2xl font-bold'>Órdenes</h1>
 
 			<TableOrdersAdmin orders={data} />

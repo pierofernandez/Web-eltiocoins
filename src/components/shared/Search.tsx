@@ -60,8 +60,7 @@ export const Search = () => {
 										closeSheet();
 									}}
 								>
-									<img
-										src={product.images[0]}
+									<img loading="lazy" src={product.images[0]}
 										alt={product.name}
 										className='h-20 w-20 object-contain p-3'
 									/>
@@ -69,10 +68,6 @@ export const Search = () => {
 									<div className='flex flex-col gap-1 text-white'>
 										<p className='text-sm font-semibold group-hover:underline'>
 											{product.name}
-										</p>
-
-										<p className='text-[13px] text-gray-400'>
-											{product.variants[0].color_name}
 										</p>
 
 										<p className='text-sm font-medium text-gray-400'>

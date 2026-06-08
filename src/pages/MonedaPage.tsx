@@ -6,7 +6,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { BsChatLeftText } from 'react-icons/bs';
 import { ProductDescription } from '../components/one-product/ProductDescription';
 import { GridImages } from '../components/one-product/GridImages';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tag } from '../components/shared/Tag';
 import { Loader } from '../components/shared/Loader';
 import { useProduct } from '../hooks/products/UseProduct';
@@ -16,25 +16,12 @@ import toast from 'react-hot-toast';
 import { useCartStore } from '../store/cart.store';
 import { useCurrencyStore } from '../store/currency.store';
 
-interface Acc {
-	[key: string]: {
-		name: string;
-	};
-}
-
 export const MonedaPage = () => {
 	const { slug } = useParams<{ slug: string }>();
 
 	const [currentSlug, setCurrentSlug] = useState(slug);
 
 	const { product, isLoading, isError } = useProduct(currentSlug || '');
-
-
-	const [selectedColor, setSelectedColor] = useState<string | null>(
-		null
-	);
-
-
 
 
 	const [selectedVariant, setSelectedVariant] =
@@ -49,42 +36,15 @@ export const MonedaPage = () => {
 
 	const navigate = useNavigate();
 
-	// Agrupamos las variantes por color
-	const colors = useMemo(() => {
-		return (
-			product?.variants.reduce(
-				(acc: Acc, variant: VariantProduct) => {
-					const { color, color_name } = variant;
-					if (!acc[color]) {
-						acc[color] = {
-							name: color_name,
-						};
-					}
-
-					return acc;
-				},
-				{} as Acc
-			) || {}
-		);
-	}, [product?.variants]);
-
-	// Obtener el primer color predeterminado si no se ha seleccionado ninguno
-	const availableColors = Object.keys(colors);
+	// Establecer la primera variante por defecto
 	useEffect(() => {
-		if (!selectedColor && availableColors.length > 0) {
-			setSelectedColor(availableColors[0]);
+		if (product?.variants && product.variants.length > 0) {
+			setSelectedVariant(product.variants[0]);
 		}
-	}, [availableColors, selectedColor]);
-
-
-
-
+	}, [product]);
 
 	// Obtener el stock
 	const isOutOfStock = selectedVariant?.stock === 0;
-
-
-
 
 	// Función para añadir al carrito
 	const addToCart = () => {
@@ -94,7 +54,7 @@ export const MonedaPage = () => {
 				productId: product?.id || '',
 				name: product?.name || '',
 				image: product?.images[0] || '',
-				color: selectedVariant.color_name,
+				color: '',
 				price: selectedVariant.price,
 				quantity: count,
 			});
@@ -112,7 +72,7 @@ export const MonedaPage = () => {
 				productId: product?.id || '',
 				name: product?.name || '',
 				image: product?.images[0] || '',
-				color: selectedVariant.color_name,
+				color: '',
 				price: selectedVariant.price,
 				quantity: count,
 			});
@@ -126,8 +86,6 @@ export const MonedaPage = () => {
 
 	useEffect(() => {
 		setCurrentSlug(slug);
-
-		setSelectedColor(null);
 		setSelectedVariant(null);
 	}, [slug]);
 

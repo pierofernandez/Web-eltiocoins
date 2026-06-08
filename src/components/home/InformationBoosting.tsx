@@ -7,7 +7,7 @@ export const InformationBoosting = () => {
                 {/* Header Section */}
                 <div className="text-center mb-10 sm:mb-12 md:mb-16">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent drop-shadow-lg">
-                        EA FC 25 Boosting
+                        EA FC 26 Boosting
                     </h1>
                     <div className="w-16 sm:w-20 md:w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 mx-auto rounded-full"></div>
                 </div>
@@ -26,13 +26,13 @@ export const InformationBoosting = () => {
                             </div>
                             <div className="text-gray-300 leading-relaxed text-base sm:text-lg space-y-3 sm:space-y-4">
                                 <p>
-                                    Creo que todos los jugadores han experimentado alguna vez que, debido a tareas tediosas o la dificultad en el sistema de clasificación, el progreso del juego se queda estancado. Si, desafortunadamente, estás enfrentando este problema, deberías probar el servicio de FC 25 boosting. La esencia del servicio de boosting es contratar a otros jugadores para que jueguen contigo o por ti. Con un servicio de boosting, pueden subir de nivel a las divisiones que son imposibles de alcanzar por sí mismos, cargar con la pesada carga de las tareas diarias tediosas en los FUT boosters y, en última instancia, disfrutar más de su experiencia de juego.
+                                    Creo que todos los jugadores han experimentado alguna vez que, debido a tareas tediosas o la dificultad en el sistema de clasificación, el progreso del juego se queda estancado. Si, desafortunadamente, estás enfrentando este problema, deberías probar el servicio de FC 26 boosting. La esencia del servicio de boosting es contratar a otros jugadores para que jueguen contigo o por ti. Con un servicio de boosting, pueden subir de nivel a las divisiones que son imposibles de alcanzar por sí mismos, cargar con la pesada carga de las tareas diarias tediosas en los FUT boosters y, en última instancia, disfrutar más de su experiencia de juego.
                                 </p>
                                 <p>
-                                    Hay varios tipos de juegos en el modo Ultimate Team de FC 25: Rivales de División, Liga de Campeones, Batalla de Escuadras y modo Draft. Los servicios de boosting de EA FC se clasifican según los diferentes tipos de juego y las necesidades de los jugadores.
+                                    Hay varios tipos de juegos en el modo Ultimate Team de FC 26: Rivales de División, Liga de Campeones, Batalla de Escuadras y modo Draft. Los servicios de boosting de EA FC se clasifican según los diferentes tipos de juego y las necesidades de los jugadores.
                                 </p>
                                 <p>
-                                    Las recompensas en estos modos suelen requerir que los jugadores mantengan una racha ganadora o ganen un cierto número de juegos. Esto es una carga pesada para los jugadores que no son muy hábiles. Sin embargo, el FC 25 boosting es justo el servicio que ayuda a los jugadores que carecen de las habilidades necesarias. Los FIFA boosters ayudarán a los jugadores a alcanzar los rangos deseados en estos modos y a ganar recompensas.
+                                    Las recompensas en estos modos suelen requerir que los jugadores mantengan una racha ganadora o ganen un cierto número de juegos. Esto es una carga pesada para los jugadores que no son muy hábiles. Sin embargo, el FC 26 boosting es justo el servicio que ayuda a los jugadores que carecen de las habilidades necesarias. Los FIFA boosters ayudarán a los jugadores a alcanzar los rangos deseados en estos modos y a ganar recompensas.
                                 </p>
                             </div>
                         </div>
@@ -58,7 +58,7 @@ export const InformationBoosting = () => {
                                     <h3 className="text-lg sm:text-xl font-bold text-white">Ahorro de Tiempo</h3>
                                 </div>
                                 <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
-                                    En juegos deportivos competitivos como FC 25, los desarrolladores de juegos utilizan varios medios para extender el tiempo en línea de los jugadores. Por ejemplo, estos juegos siempre tienen recompensas que requieren completar ciertas tareas o jugar un número específico de partidos.
+                                    En juegos deportivos competitivos como FC 26, los desarrolladores de juegos utilizan varios medios para extender el tiempo en línea de los jugadores. Por ejemplo, estos juegos siempre tienen recompensas que requieren completar ciertas tareas o jugar un número específico de partidos.
                                 </p>
                             </div>
                         </div>
@@ -72,7 +72,7 @@ export const InformationBoosting = () => {
                                     <h3 className="text-lg sm:text-xl font-bold text-white">Habilidades y Cartas</h3>
                                 </div>
                                 <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
-                                    A diferencia de los juegos de fútbol reales, en FC 25, los jugadores juegan uno contra uno. Para sobresalir en los juegos de EA FC, necesitas tanto cartas de jugadores de alto OVR como habilidades excepcionales. Sin embargo, no todos tienen tiempo para mejorar sus habilidades de juego y coleccionar cartas de alto OVR.
+                                    A diferencia de los juegos de fútbol reales, en FC 26, los jugadores juegan uno contra uno. Para sobresalir en los juegos de EA FC, necesitas tanto cartas de jugadores de alto OVR como habilidades excepcionales. Sin embargo, no todos tienen tiempo para mejorar sus habilidades de juego y coleccionar cartas de alto OVR.
                                 </p>
                             </div>
                         </div>
@@ -86,7 +86,7 @@ export const InformationBoosting = () => {
                                     <h3 className="text-lg sm:text-xl font-bold text-white">Tareas Diarias</h3>
                                 </div>
                                 <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
-                                    El servicio de boosting de FC 25 puede encargarse de las tareas diarias repetitivas para las que no tienes tiempo o no quieres hacer. Esto puede ahorrarte mucho tiempo. También pueden ayudarte a subir de nivel tu cuenta a divisiones más altas, desbloqueando más recompensas y prestigio.
+                                    El servicio de boosting de FC 26 puede encargarse de las tareas diarias repetitivas para las que no tienes tiempo o no quieres hacer. Esto puede ahorrarte mucho tiempo. También pueden ayudarte a subir de nivel tu cuenta a divisiones más altas, desbloqueando más recompensas y prestigio.
                                 </p>
                             </div>
                         </div>
@@ -120,7 +120,7 @@ export const InformationBoosting = () => {
                             {
                                 icon: "🏆",
                                 title: "FC Division Rivals",
-                                description: "Este es el modo de clasificación de FC 25. Hay un total de 10 divisiones y cada división se divide en una serie de pasos. Los profesionales de FUT boosters EA FC 25 pueden ayudarte a ganar suficientes juegos para desbloquear recompensas semanales o elevar tu cuenta a la división que deseas para desbloquear recompensas por hitos.",
+                                description: "Este es el modo de clasificación de FC 26. Hay un total de 10 divisiones y cada división se divide en una serie de pasos. Los profesionales de FUT boosters EA FC 26 pueden ayudarte a ganar suficientes juegos para desbloquear recompensas semanales o elevar tu cuenta a la división que deseas para desbloquear recompensas por hitos.",
                                 color: "from-yellow-500 to-orange-600",
                                 bgColor: "from-yellow-900/90 via-orange-800/90 to-yellow-900/90",
                                 borderColor: "border-yellow-700/50",
@@ -182,21 +182,21 @@ export const InformationBoosting = () => {
                             </div>
                             <div className="space-y-3 sm:space-y-4 md:space-y-6 text-gray-300 leading-relaxed text-base sm:text-lg">
                                 <p>
-                                    Cuando busques la mejor plataforma en línea para comprar el servicio de boosting de FC 25, no busques más allá de U7BUY. Los boosters están calificados y ofrecen tarifas asequibles para ayudarte a alcanzar tus metas. Puedes seguir el progreso de tu pedido y comunicarte con tu FUT booster.
+                                    Cuando busques la mejor plataforma en línea para comprar el servicio de boosting de FC 26, no busques más allá de U7BUY. Los boosters están calificados y ofrecen tarifas asequibles para ayudarte a alcanzar tus metas. Puedes seguir el progreso de tu pedido y comunicarte con tu FUT booster.
                                 </p>
                                 <p>
-                                    Puedes estar seguro de que tus necesidades de boosting de EA FC serán atendidas por profesionales que conocen el juego de arriba a abajo. Además, puedes discutir fácilmente cualquier pregunta que puedas tener sobre tu oferta preferida de FIFA 25 boosting con el vendedor.
+                                    Puedes estar seguro de que tus necesidades de boosting de EA FC serán atendidas por profesionales que conocen el juego de arriba a abajo. Además, puedes discutir fácilmente cualquier pregunta que puedas tener sobre tu oferta preferida de FIFA 26 boosting con el vendedor.
                                 </p>
                                 <p>
                                     eltiocoins otorga gran importancia a la seguridad de tu información y dinero. Por eso hemos implementado un sistema de seguridad para proteger tu información y dinero. Estos incluyen muchos métodos de pago seguros. El proceso de compra será muy eficiente.
                                 </p>
                                 <p>
-                                    Protegemos la privacidad de tu cuenta y proporcionamos atención al cliente 24 horas. Ya sea que necesites FC coins, entrenamiento, boosting o jugadores FC 25, eltiocoins te tiene cubierto. No esperes. Haz tus pedidos y disfruta de la mejor experiencia de compra con eltiocoins.
+                                    Protegemos la privacidad de tu cuenta y proporcionamos atención al cliente 24 horas. Ya sea que necesites FC coins, entrenamiento, boosting o jugadores FC 26, eltiocoins te tiene cubierto. No esperes. Haz tus pedidos y disfruta de la mejor experiencia de compra con eltiocoins.
                                 </p>
                             </div>
                             <div className="mt-6 sm:mt-8 p-4 sm:p-6 bg-gradient-to-r from-cyan-600/20 to-indigo-600/20 rounded-xl border border-cyan-500/30">
                                 <p className="text-center text-gray-300 text-base sm:text-lg leading-relaxed">
-                                    <strong className="text-cyan-400">¡Bienvenido a eltiocoins!</strong> La plataforma más confiable para servicios de boosting de EA FC 25.
+                                    <strong className="text-cyan-400">¡Bienvenido a eltiocoins!</strong> La plataforma más confiable para servicios de boosting de EA FC 26.
                                 </p>
                             </div>
                         </div>

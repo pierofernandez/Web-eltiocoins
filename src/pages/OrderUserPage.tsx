@@ -79,8 +79,7 @@ export const OrderUserPage = () => {
 										<td className='p-6'>
 											<div className='flex gap-4 items-center'>
 												<div className='relative group'>
-													<img
-														src={product.productImage}
+													<img loading="lazy" src={product.productImage}
 														alt={product.productName}
 														className='h-20 w-20 object-contain rounded-xl border-2 border-slate-200 dark:border-slate-600 group-hover:shadow-lg transition-shadow duration-300'
 													/>
@@ -115,8 +114,7 @@ export const OrderUserPage = () => {
 						{order.orderItems.map((product, index) => (
 							<div key={index} className='bg-gradient-to-r from-slate-50 to-slate-100/50 dark:from-slate-700 dark:to-slate-600 rounded-xl p-4 border border-slate-200 dark:border-slate-600 hover:shadow-lg transition-all duration-300'>
 								<div className='flex gap-4 items-start mb-4'>
-									<img
-										src={product.productImage}
+									<img loading="lazy" src={product.productImage}
 										alt={product.productName}
 										className='h-16 w-16 object-contain rounded-lg border border-slate-200 dark:border-slate-600'
 									/>
