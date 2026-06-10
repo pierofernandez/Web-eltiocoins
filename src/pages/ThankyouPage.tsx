@@ -35,7 +35,14 @@ export const ThankyouPage = () => {
 					price: formatPrice(item.price, currency, rates, baseCurrency),
 					subtotal: formatPrice(item.price * item.quantity, currency, rates, baseCurrency),
 				})),
-				address: data.address?.city ? data.address : null,
+				address: data.address?.city
+					? {
+							city: data.address.city,
+							state: data.address.state,
+							postalCode: data.address.postalCode ?? undefined,
+							country: data.address.country,
+						}
+					: null,
 			});
 		} finally {
 			setIsDownloading(false);

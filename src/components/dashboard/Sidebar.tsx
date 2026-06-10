@@ -21,6 +21,7 @@ export const Sidebar = () => {
                     <NavLink
                         key={link.id}
                         to={link.href}
+                        end={'end' in link ? link.end : undefined}
                         className={({ isActive }) =>
                             `flex items-center justify-center gap-3 rounded-md py-3 pl-0 transition-all duration-300 lg:justify-start lg:pl-5 ${
                                 isActive

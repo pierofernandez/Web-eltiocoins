@@ -54,7 +54,7 @@ const resolveCartItem = async (
 		pricingTierId: tier.id,
 		quantity: item.quantity,
 		price: item.price,
-		stock: tier.stock ?? linkedVariant.stock,
+		stock: tier.stock ?? linkedVariant.stock ?? 0,
 	};
 };
 
@@ -202,11 +202,11 @@ export const createOrder = async (order: OrderInput) => {
 				.eq('id', item.pricingTierId)
 				.maybeSingle();
 
-			if (tierData) {
-				const { error: updatedTierStockError } = await supabase
-					.from('pricing_tiers')
-					.update({ stock: tierData.stock - item.quantity })
-					.eq('id', item.pricingTierId);
+				if (tierData && tierData.stock !== null) {
+					const { error: updatedTierStockError } = await supabase
+						.from('pricing_tiers')
+						.update({ stock: tierData.stock - item.quantity })
+						.eq('id', item.pricingTierId);
 
 				if (updatedTierStockError) {
 					console.log(updatedTierStockError);
@@ -376,7 +376,7 @@ export const getAllOrders = async () => {
 	const { data, error } = await supabase
 		.from('orders')
 		.select(
-			'id, total_amount, status, created_at, customers(full_name, email), coin_auto_delivery(client_name, ea_email, ea_password, backup_code_1, backup_code_2, backup_code_3)'
+			'id, total_amount, status, created_at, customers(full_name, email), coin_auto_delivery!coin_auto_delivery_order_id_fkey(client_name, ea_email, ea_password, backup_code_1, backup_code_2, backup_code_3)'
 		)
 		.order('created_at', { ascending: false });
 
@@ -410,7 +410,7 @@ export const getOrderByIdAdmin = async (id: number) => {
 	const { data: order, error } = await supabase
 		.from('orders')
 		.select(
-			'*, addresses(*), customers(full_name, email), coin_auto_delivery(client_name, ea_email, ea_password, backup_code_1, backup_code_2, backup_code_3), order_items(quantity, price, variants(products(name, images, category)))'
+			'*, addresses(*), customers(full_name, email), coin_auto_delivery!coin_auto_delivery_order_id_fkey(client_name, ea_email, ea_password, backup_code_1, backup_code_2, backup_code_3), order_items(quantity, price, variants(products(name, images, category)))'
 		)
 		.eq('id', id)
 		.single();

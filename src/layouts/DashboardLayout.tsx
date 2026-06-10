@@ -1,5 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { Sidebar } from "../components/dashboard/Sidebar";
+import { NotificationBell } from "../components/dashboard/NotificationBell";
 import { useUser } from "../hooks";
 import { useState, useEffect } from "react";
 import { getUserRole, getSession } from "../actions";
@@ -49,6 +50,9 @@ export const DashboardLayout = () => {
                 <Sidebar />
 
                 <main className="container m-5 mt-7 ml-[140px] flex-1 lg:ml-[270px]">
+                    <div className="mb-6 flex items-center justify-end">
+                        <NotificationBell />
+                    </div>
                     <Outlet />
                 </main>
             </div>

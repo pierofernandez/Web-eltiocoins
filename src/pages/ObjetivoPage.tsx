@@ -35,6 +35,16 @@ export const ObjetivoPage = () => {
 
     const navigate = useNavigate();
 
+    // Número aleatorio de personas viendo (1 a 10), cambia cada cierto tiempo
+    const [viewers, setViewers] = useState(() => Math.floor(Math.random() * 10) + 1);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setViewers(Math.floor(Math.random() * 10) + 1);
+        }, Math.floor(Math.random() * 5000) + 5000);
+        return () => clearInterval(interval);
+    }, []);
+
     // Establecer la primera variante por defecto
     useEffect(() => {
         if (product?.variants && product.variants.length > 0) {
@@ -122,6 +132,14 @@ export const ObjetivoPage = () => {
                             {isOutOfStock && <Tag contentTag='agotado' />}
                         </div>
                     </div>
+
+                    <span className='inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800 w-fit'>
+                        <span className='relative flex h-2 w-2'>
+                            <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75'></span>
+                            <span className='relative inline-flex rounded-full h-2 w-2 bg-orange-600'></span>
+                        </span>
+                        {viewers} {viewers === 1 ? 'persona lo está viendo' : 'personas lo están viendo'} ahora mismo
+                    </span>
 
                     <Separator />
 

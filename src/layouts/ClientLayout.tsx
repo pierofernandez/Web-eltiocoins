@@ -32,11 +32,15 @@ export const ClientLayout = () => {
 	return (
 		<div className='flex flex-col gap-5'>
 			{/* Menú */}
-			<nav className='flex justify-center gap-10 text-sm font-medium'>
+			<nav className='mx-auto flex flex-wrap items-center justify-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/60 p-1.5 text-sm font-medium backdrop-blur-sm'>
 				<NavLink
 					to='/account/pedidos'
 					className={({ isActive }) =>
-						`${isActive ? 'underline' : 'hover:underline'}`
+						`rounded-full px-5 py-2 transition ${
+							isActive
+								? 'bg-[#70F468] text-black'
+								: 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
+						}`
 					}
 				>
 					Pedidos
@@ -44,17 +48,18 @@ export const ClientLayout = () => {
 
 				{role === 'admin' && (
 					<NavLink
-						to='/dashboard/productos'
-						className="flex items-center gap-1 hover:underline"
+						to='/dashboard'
+						className='flex items-center gap-1.5 rounded-full px-5 py-2 text-zinc-300 transition hover:bg-zinc-800 hover:text-white'
 					>
 						Dashboard
-						<HiOutlineExternalLink 
-							size={16}
-							className="inline-block" />
+						<HiOutlineExternalLink size={16} className='inline-block' />
 					</NavLink>
-				)};
+				)}
 
-				<button className='hover:underline' onClick={handleLogout}>
+				<button
+					className='rounded-full px-5 py-2 text-zinc-300 transition hover:bg-red-500/10 hover:text-red-400'
+					onClick={handleLogout}
+				>
 					Cerrar sesión
 				</button>
 			</nav>

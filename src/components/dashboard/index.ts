@@ -1,4 +1,6 @@
 export * from './Sidebar'
+export * from './NotificationBell'
+export * from './DashboardCharts'
 //ORDENES
 
 

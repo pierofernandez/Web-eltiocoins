@@ -26,6 +26,7 @@ export * from './CheckoutPendingPage';
 
 //Dashboards 
 
+export * from './dashboard/DashboardHomePage';
 export * from './dashboard/DashboardProductsPage';
 export * from './dashboard/DashboardNewProductPage';
 export * from './dashboard/DashboardProductSlugPage';

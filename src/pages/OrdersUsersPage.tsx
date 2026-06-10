@@ -14,25 +14,25 @@ export const OrdersUserPage = () => {
 
 	return (
 		<div className='flex flex-col gap-6 items-center'>
-			<div className='flex gap-2'>
-				<h1 className='text-3xl font-bold'>Pedidos</h1>
-				<span className='w-5 h-5 rounded-full bg-black text-white text-[11px] flex justify-center items-center mt-1'>
+			<div className='flex items-center gap-2'>
+				<h1 className='text-3xl font-bold text-white'>Pedidos</h1>
+				<span className='flex h-6 min-w-6 items-center justify-center rounded-full bg-[#70F468] px-1.5 text-xs font-bold text-black'>
 					{orders.length}
 				</span>
 			</div>
 
 			{orders.length === 0 ? (
-				<>
-					<p className='text-slate-600 text-[13px]'>
+				<div className='flex flex-col items-center gap-4 rounded-2xl border border-zinc-800 bg-zinc-900/60 px-8 py-12 text-center'>
+					<p className='text-sm text-zinc-400'>
 						Todavía no has hecho ningún pedido
 					</p>
 					<Link
 						to='/monedas'
-						className='bg-black text-white uppercase font-semibold tracking-widest text-xs py-4 rounded-full px-8'
+						className='rounded-full bg-[#70F468] px-8 py-4 text-xs font-semibold uppercase tracking-widest text-black transition hover:bg-[#5fe357]'
 					>
 						Empezar a comprar
 					</Link>
-				</>
+				</div>
 			) : (
 				<TableOrders orders={orders} />
 			)}

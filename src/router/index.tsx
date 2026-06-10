@@ -15,6 +15,7 @@ import { CheckoutSuccessPage } from "../pages/CheckoutSuccessPage";
 import { CheckoutFailurePage } from "../pages/CheckoutFailurePage";
 import { CheckoutPendingPage } from "../pages/CheckoutPendingPage";
 import { ProtectedRoute } from "../components/shared/ProtectedRoute";
+import { DashboardHomePage } from "../pages/dashboard/DashboardHomePage";
 import { DashboardProductsPage } from "../pages/dashboard/DashboardProductsPage";
 import { DashboardNewProductPage } from "../pages/dashboard/DashboardNewProductPage";
 import { DashboardProductSlugPage } from "../pages/dashboard/DashboardProductSlugPage";
@@ -153,7 +154,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Navigate to='dashboard/productos' />
+                element: <DashboardHomePage />
             },
             {
                 path: 'productos',

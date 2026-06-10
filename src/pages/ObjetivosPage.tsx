@@ -58,6 +58,7 @@ export const ObjetivosPage = () => {
                                                 price={product.price}
                                                 slug={product.slug}
                                                 variants={product.variants}
+                                                basePath="/objetivos"
                                             />
                                             {/* Separador entre productos */}
                                             {idx !== preparedProducts.length - 1 && (

@@ -1,73 +1,106 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../supabase/client';
-import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiMail, FiKey } from 'react-icons/fi';
+import { LuLoaderCircle } from 'react-icons/lu';
 
 export const ForgotPasswordPage = () => {
 	const [email, setEmail] = useState('');
 	const [message, setMessage] = useState('');
-	const [showPassword, setShowPassword] = useState(false);
-	const [password, setPassword] = useState('');
+	const [isError, setIsError] = useState(false);
+	const [isPending, setIsPending] = useState(false);
 
 	const handleReset = async (e: React.FormEvent) => {
 		e.preventDefault();
+		setIsPending(true);
+		setMessage('');
 
 		const { error } = await supabase.auth.resetPasswordForEmail(email, {
-			redirectTo: 'https://eltiocoins.com/update-password', // cambia esto si estás en producción
+			redirectTo: 'https://eltiocoins.com/update-password',
 		});
 
+		setIsPending(false);
+
 		if (error) {
+			setIsError(true);
 			setMessage('Error al enviar el correo. Intenta nuevamente.');
 		} else {
+			setIsError(false);
 			setMessage('Correo de recuperación enviado. Revisa tu bandeja de entrada.');
 		}
 	};
 
 	return (
-		<div className='h-full flex flex-col items-center mt-12 gap-5'>
-			<h1 className='text-3xl font-bold'>Recuperar contraseña</h1>
-			<p className='text-sm'>Ingresa tu correo para recibir el enlace de recuperación</p>
+		<div className='flex min-h-[80vh] items-center justify-center px-4 py-12'>
+			<div className='w-full max-w-md'>
+				<div className='relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/60 p-8 shadow-2xl backdrop-blur-sm'>
+					{/* Glow decorativo */}
+					<div className='pointer-events-none absolute -top-24 -right-24 h-48 w-48 rounded-full bg-[#70F468]/20 blur-3xl' />
 
-			<form
-				className='flex flex-col items-center gap-4 w-full mt-10 sm:w-[400px] lg:w-[500px]'
-				onSubmit={handleReset}
-			>
-				{/* Campo Email */}
-				<input
-					type='email'
-					placeholder='Tu correo electrónico'
-					className='border border-slate-200 text-black px-5 py-4 placeholder:text-black text-sm rounded-full w-full'
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-				/>
+					<div className='relative'>
+						{/* Encabezado */}
+						<div className='mb-8 text-center'>
+							<div className='mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#70F468]/15'>
+								<FiKey className='text-[#70F468]' size={26} />
+							</div>
+							<h1 className='text-3xl font-bold text-white'>Recuperar contraseña</h1>
+							<p className='mt-2 text-sm text-zinc-400'>
+								Ingresa tu correo para recibir el enlace de recuperación
+							</p>
+						</div>
 
-				{/* Aquí puedes agregar el campo de la contraseña en caso de que lo necesites */}
-				{/* Si deseas tener la funcionalidad de ver/ocultar la contraseña */}
-				{/* Este campo es opcional para esta página */}
-				<div className='relative w-full'>
-					<input
-						type={showPassword ? 'text' : 'password'}
-						placeholder='Ingresa tu nueva contraseña'
-						className='border border-slate-200 text-black px-5 py-4 placeholder:text-black text-sm rounded-full w-full pr-12'
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-					<button
-						type='button'
-						onClick={() => setShowPassword(!showPassword)}
-						className='absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500'
-					>
-						{showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
-					</button>
+						<form className='flex flex-col gap-4' onSubmit={handleReset}>
+							{/* Email */}
+							<div>
+								<label className='mb-1.5 block text-sm font-medium text-zinc-300'>
+									Correo electrónico
+								</label>
+								<div className='relative'>
+									<FiMail className='absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500' size={18} />
+									<input
+										type='email'
+										placeholder='tucorreo@email.com'
+										className='w-full rounded-xl border border-zinc-700 bg-zinc-800/60 py-3 pl-11 pr-4 text-sm text-white placeholder-zinc-500 transition focus:border-[#70F468] focus:outline-none focus:ring-2 focus:ring-[#70F468]/30'
+										value={email}
+										onChange={e => setEmail(e.target.value)}
+									/>
+								</div>
+							</div>
+
+							<button
+								disabled={isPending}
+								className='mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#70F468] py-3.5 text-sm font-bold uppercase tracking-widest text-black shadow-lg transition hover:bg-[#5fe357] active:scale-[0.99] disabled:opacity-60'
+							>
+								{isPending && <LuLoaderCircle className='animate-spin' size={18} />}
+								Enviar enlace
+							</button>
+						</form>
+
+						{/* Mensaje */}
+						{message && (
+							<p
+								className={`mt-4 rounded-lg p-3 text-center text-sm ${
+									isError
+										? 'bg-red-500/10 text-red-400'
+										: 'bg-[#70F468]/10 text-[#70F468]'
+								}`}
+							>
+								{message}
+							</p>
+						)}
+
+						<p className='mt-6 text-center text-sm text-zinc-400'>
+							¿Recordaste tu contraseña?
+							<Link
+								to='/login'
+								className='ml-2 font-semibold text-[#70F468] transition hover:underline'
+							>
+								Inicia sesión
+							</Link>
+						</p>
+					</div>
 				</div>
-
-				{/* Botón para enviar el enlace de recuperación */}
-				<button className='bg-[#70F468] text-black uppercase font-semibold tracking-widest text-xs py-4 rounded-full w-full'>
-					Enviar enlace
-				</button>
-			</form>
-
-			{/* Mensajes */}
-			{message && <p className='text-sm mt-4 text-white'>{message}</p>}
+			</div>
 		</div>
 	);
 };

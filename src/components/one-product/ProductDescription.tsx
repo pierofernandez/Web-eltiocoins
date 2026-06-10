@@ -13,7 +13,7 @@ export const ProductDescription = ({ content }: Props) => {
 		editable: false,
 		editorProps: {
 			attributes: {
-				class: 'prose prose-sm sm:prose-base max-w-none',
+				class: 'prose prose-invert prose-sm sm:prose-base max-w-none',
 			},
 		},
 	});

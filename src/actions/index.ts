@@ -4,3 +4,4 @@ export * from './order';
 export * from './email';
 export * from './banner';
 export * from './offer';
+export * from './dashboard';

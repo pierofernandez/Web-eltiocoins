@@ -11,6 +11,9 @@ export const useChangeStatusOrder = () => {
 			queryClient.invalidateQueries({
 				queryKey: ['orders', 'admin'],
 			});
+			queryClient.invalidateQueries({
+				queryKey: ['dashboard'],
+			});
 		},
 		onError: error => {
 			console.log(error);

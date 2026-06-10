@@ -3,7 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { useLogin, useUser } from '../hooks';
 import { Loader } from '../components/shared/Loader';
 import { LuLoaderCircle } from 'react-icons/lu';
-import { FiEye, FiEyeOff } from 'react-icons/fi'; // Iconos de ojito
+import { FiEye, FiEyeOff, FiMail, FiLock } from 'react-icons/fi';
 
 export const LoginPage = () => {
 	const [email, setEmail] = useState('');
@@ -24,88 +24,98 @@ export const LoginPage = () => {
 	if (session) return <Navigate to='/' />;
 
 	return (
-		<div className='h-full flex flex-col items-center mt-12 gap-5'>
-			<h1 className='text-4xl font-bold capitalize'>
-				Iniciar sesión
-			</h1>
+		<div className='flex min-h-[80vh] items-center justify-center px-4 py-12'>
+			<div className='w-full max-w-md'>
+				<div className='relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/60 p-8 shadow-2xl backdrop-blur-sm'>
+					{/* Glow decorativo */}
+					<div className='pointer-events-none absolute -top-24 -right-24 h-48 w-48 rounded-full bg-[#70F468]/20 blur-3xl' />
 
-			<p className='text-sm font-medium'>
-				¡Que bueno tenerte de vuelta!
-			</p>
-
-			{isPending ? (
-				<div className='w-full h-full flex justify-center mt-20'>
-					<LuLoaderCircle className='animate-spin' size={60} />
-				</div>
-			) : (
-				<>
-					<form
-						className='flex flex-col items-center gap-4 w-full mt-10 sm:w-[400px] lg:w-[500px]'
-						onSubmit={onLogin}
-					>
-						<input
-							type='email'
-							placeholder='Ingresa tu correo electrónico'
-							className='border border-slate-200 text-black px-5 py-4 placeholder:text-black text-sm rounded-full w-full'
-							value={email}
-							onChange={e => setEmail(e.target.value)}
-						/>
-
-						{/* Campo de contraseña */}
-						<div className='relative w-full'>
-							<input
-								type={showPassword ? 'text' : 'password'}
-								placeholder='Ingresa tu contraseña'
-								className='border border-slate-200 text-black px-5 py-4 placeholder:text-black text-sm rounded-full w-full pr-12'
-								value={password}
-								onChange={e => setPassword(e.target.value)}
-							/>
-							{/* Botón para mostrar/ocultar la contraseña */}
-							<button
-								type='button'
-								onClick={() => setShowPassword(!showPassword)}
-								className='absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-500'
-							>
-								{showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
-							</button>
+					<div className='relative'>
+						{/* Encabezado */}
+						<div className='mb-8 text-center'>
+							<h1 className='text-3xl font-bold text-white'>Iniciar sesión</h1>
+							<p className='mt-2 text-sm text-zinc-400'>
+								¡Qué bueno tenerte de vuelta!
+							</p>
 						</div>
 
-						{/* Enlace para recuperación de contraseña */}
-						<div className='w-full text-right'>
-							<Link
-								to='/forgot-password'
-								className='text-sm text-blue-300 underline'
-							>
-								¿Olvidaste tu contraseña?
-							</Link>
-						</div>
+						{isPending ? (
+							<div className='flex justify-center py-16'>
+								<LuLoaderCircle className='animate-spin text-[#70F468]' size={50} />
+							</div>
+						) : (
+							<>
+								<form className='flex flex-col gap-4' onSubmit={onLogin}>
+									{/* Email */}
+									<div>
+										<label className='mb-1.5 block text-sm font-medium text-zinc-300'>
+											Correo electrónico
+										</label>
+										<div className='relative'>
+											<FiMail className='absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500' size={18} />
+											<input
+												type='email'
+												placeholder='tucorreo@email.com'
+												className='w-full rounded-xl border border-zinc-700 bg-zinc-800/60 py-3 pl-11 pr-4 text-sm text-white placeholder-zinc-500 transition focus:border-[#70F468] focus:outline-none focus:ring-2 focus:ring-[#70F468]/30'
+												value={email}
+												onChange={e => setEmail(e.target.value)}
+											/>
+										</div>
+									</div>
 
-						<button className='bg-[#70F468] text-black uppercase font-semibold tracking-widest text-xs py-4 rounded-full mt-3 w-full'>
-							Iniciar sesión
-						</button>
-					</form>
+									{/* Contraseña */}
+									<div>
+										<label className='mb-1.5 block text-sm font-medium text-zinc-300'>
+											Contraseña
+										</label>
+										<div className='relative'>
+											<FiLock className='absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500' size={18} />
+											<input
+												type={showPassword ? 'text' : 'password'}
+												placeholder='Ingresa tu contraseña'
+												className='w-full rounded-xl border border-zinc-700 bg-zinc-800/60 py-3 pl-11 pr-12 text-sm text-white placeholder-zinc-500 transition focus:border-[#70F468] focus:outline-none focus:ring-2 focus:ring-[#70F468]/30'
+												value={password}
+												onChange={e => setPassword(e.target.value)}
+											/>
+											<button
+												type='button'
+												onClick={() => setShowPassword(!showPassword)}
+												className='absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 transition hover:text-zinc-300'
+											>
+												{showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+											</button>
+										</div>
+									</div>
 
-					<p className='text-sm text-white mt-4'>
-						¿No tienes una cuenta?
-						<Link to='/register' className='underline ml-2'>
-							Regístrate
-						</Link>
-					</p>
-					
-					{/* Información sobre el juego exclusivo */}
-					<div className='mt-6 p-4 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-lg border border-yellow-400/30 max-w-md text-center'>
-						<div className='text-2xl mb-2'>🎮</div>
-						<h3 className='text-white font-semibold mb-2'>¡Juego Exclusivo!</h3>
-						<p className='text-sm text-gray-300 mb-3'>
-							Una vez que inicies sesión, podrás acceder a nuestro juego "Michi vs Eltiocoins" y ganar descuentos en tus compras.
-						</p>
-						<div className='flex items-center justify-center gap-2 text-xs text-yellow-400'>
-							<span>🔒</span>
-							<span>Solo para usuarios registrados</span>
-						</div>
+									{/* Recuperar contraseña */}
+									<div className='text-right'>
+										<Link
+											to='/forgot-password'
+											className='text-sm text-[#70F468] transition hover:underline'
+										>
+											¿Olvidaste tu contraseña?
+										</Link>
+									</div>
+
+									<button className='mt-2 w-full rounded-xl bg-[#70F468] py-3.5 text-sm font-bold uppercase tracking-widest text-black shadow-lg transition hover:bg-[#5fe357] active:scale-[0.99]'>
+										Iniciar sesión
+									</button>
+								</form>
+
+								<p className='mt-6 text-center text-sm text-zinc-400'>
+									¿No tienes una cuenta?
+									<Link
+										to='/register'
+										className='ml-2 font-semibold text-[#70F468] transition hover:underline'
+									>
+										Regístrate
+									</Link>
+								</p>
+							</>
+						)}
 					</div>
-				</>
-			)}
+				</div>
+			</div>
 		</div>
 	);
 };

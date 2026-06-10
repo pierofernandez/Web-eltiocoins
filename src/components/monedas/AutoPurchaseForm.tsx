@@ -99,6 +99,55 @@ export const AutoPurchaseForm = ({
             )}
           </div>
 
+          <details className="group rounded-lg border border-amber-500/40 bg-amber-950/40 p-4">
+            <summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-semibold text-amber-300">
+              <span>🔑</span>
+              <span className="underline decoration-amber-400/60 underline-offset-2">
+                ¿Cómo obtener tus códigos de respaldo de EA?
+              </span>
+              <span className="ml-auto text-amber-400 transition-transform group-open:rotate-180">
+                ▾
+              </span>
+            </summary>
+
+            <div className="mt-3 space-y-4 text-xs leading-relaxed text-amber-100/90">
+              <ol className="list-decimal space-y-1 pl-5 marker:text-amber-400">
+                <li>Inicia sesión en tu cuenta de EA.</li>
+                <li>
+                  Ve a <strong className="text-amber-200">Seguridad → Códigos de Respaldo (Backup Codes)</strong>.
+                </li>
+                <li>Genera nuevos códigos si es necesario.</li>
+                <li>
+                  Copia los 3 primeros códigos disponibles y pégalos en cada recuadro
+                  correspondiente del formulario.
+                </li>
+              </ol>
+
+              <div>
+                <p className="font-semibold text-amber-200">📌 Enlace directo</p>
+                <ol className="mt-1 list-decimal space-y-1 pl-5 marker:text-amber-400">
+                  <li>Inicia sesión en tu cuenta de EA.</li>
+                  <li>
+                    Ve a:{' '}
+                    <a
+                      href="https://myaccount.ea.com/cp-ui/security/index"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="break-all text-amber-300 underline underline-offset-2 hover:text-amber-200"
+                    >
+                      https://myaccount.ea.com/cp-ui/security/index
+                    </a>
+                  </li>
+                  <li>
+                    En "Verificación de inicio de sesión", selecciona{' '}
+                    <strong className="text-amber-200">Ver códigos de respaldo</strong>.
+                  </li>
+                  <li>Copia uno de los códigos disponibles.</li>
+                </ol>
+              </div>
+            </div>
+          </details>
+
           <div>
             <label className={labelClass}>
               Backup Code Principal <span className="text-red-400">*</span>

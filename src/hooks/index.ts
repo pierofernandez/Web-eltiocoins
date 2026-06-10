@@ -34,3 +34,8 @@ export * from './orders/useChangeStatusOrder'
 export * from './products/useCreateProduct'
 export * from './products/useUpdateProduct'
 export * from './products/useDeleteProduct'
+
+/* DASHBOARD */
+
+export * from './dashboard/useDashboardMetrics'
+export * from './dashboard/useDashboardNotifications'
