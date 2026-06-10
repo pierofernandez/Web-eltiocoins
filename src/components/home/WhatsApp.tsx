@@ -1,9 +1,15 @@
 import React from 'react';
+import { useGlobalStore } from '../../store/global.store';
 
 export const WhatsApp: React.FC = () => {
   // Número de teléfono y mensaje predeterminado
   const phoneNumber = '+51977548397'; // Reemplaza con tu número de WhatsApp
   const defaultMessage = 'Hola, envíame tu captura de pago o preguntame si tienes alguna duda!.'; // Mensaje predeterminado
+
+  // Ocultar cuando el carrito está abierto para no tapar el precio
+  const isSheetOpen = useGlobalStore(state => state.isSheetOpen);
+  const sheetContent = useGlobalStore(state => state.sheetContent);
+  if (isSheetOpen && sheetContent === 'cart') return null;
 
   // URL de WhatsApp
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(defaultMessage)}`;

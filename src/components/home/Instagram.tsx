@@ -1,7 +1,13 @@
 import React from 'react';
+import { useGlobalStore } from '../../store/global.store';
 
 export const Instagram: React.FC = () => {
   const instagramUrl = 'https://www.instagram.com/direct/t/17842364825821576/'; // Reemplaza con tu usuario de Instagram
+
+  // Ocultar cuando el carrito está abierto para no tapar el precio
+  const isSheetOpen = useGlobalStore(state => state.isSheetOpen);
+  const sheetContent = useGlobalStore(state => state.sheetContent);
+  if (isSheetOpen && sheetContent === 'cart') return null;
 
   return (
     <div style={styles.container}>
