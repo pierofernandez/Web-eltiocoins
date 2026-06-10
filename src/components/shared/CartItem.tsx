@@ -1,4 +1,4 @@
-import { LuMinus, LuPlus } from 'react-icons/lu';
+import { LuMinus, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { formatPrice } from '../../helpers';
 import { useCurrencyStore } from '../../store/currency.store';
 import { useCartStore } from '../../store/cart.store';
@@ -32,46 +32,49 @@ export const CartItem = ({ item }: Props) => {
     : item.color || item.productId;
 
   return (
-    <li className="flex items-center gap-5 text-white bg-[#141414] p-4 rounded-lg shadow-[0_0_10px_#00ff8722]">
-      <div className="w-20 h-20 flex-shrink-0 rounded-md overflow-hidden border border-[#00FF87] bg-[#0d0d0d] shadow-[0_0_8px_#00ff8744]">
+    <li className="flex gap-4 rounded-xl border border-[#1f1f1f] bg-[#141414] p-3 text-white transition-colors duration-200 hover:border-[#00FF87]/30">
+      <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border border-[#2a2a2a] bg-[#0d0d0d]">
         <img loading="lazy" src={item.image}
           alt={item.name}
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
         />
       </div>
 
-      <div className="flex-1 space-y-2">
-        <div className="flex justify-between items-center">
-          <p className="font-semibold text-sm">{item.name}</p>
-          <p className="text-sm font-bold text-[#00FF87]">
-            {formatPrice(item.price, currency, rates, baseCurrency)}
-          </p>
+      <div className="flex flex-1 flex-col justify-between">
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold">{item.name}</p>
+            <p className="mt-0.5 text-xs text-gray-400">{subtitle}</p>
+          </div>
+          <button
+            className="flex-shrink-0 text-zinc-500 transition-colors hover:text-[#ff4d6d]"
+            onClick={() => removeItem(item.variantId)}
+            aria-label="Eliminar"
+          >
+            <LuTrash2 size={16} />
+          </button>
         </div>
 
-        <p className="text-xs text-gray-400">{subtitle}</p>
-
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-4 px-2 py-1 border border-[#2a2a2a] rounded-full bg-[#1a1a1a]">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3 rounded-full border border-[#2a2a2a] bg-[#1a1a1a] px-2 py-1">
             <button
               onClick={decrement}
               disabled={item.quantity === 1}
+              className="text-white transition-colors hover:text-[#00FF87] disabled:opacity-40"
             >
-              <LuMinus className="text-white" size={15} />
+              <LuMinus size={14} />
             </button>
-            <span className="text-white text-sm">
+            <span className="min-w-[18px] text-center text-sm font-semibold">
               {item.quantity}
             </span>
-            <button onClick={increment}>
-              <LuPlus className="text-white" size={15} />
+            <button onClick={increment} className="text-white transition-colors hover:text-[#00FF87]">
+              <LuPlus size={14} />
             </button>
           </div>
 
-          <button
-            className="text-[#ff4d6d] font-medium text-[11px] hover:underline"
-            onClick={() => removeItem(item.variantId)}
-          >
-            Eliminar
-          </button>
+          <p className="text-sm font-bold text-[#00FF87]">
+            {formatPrice(item.price * item.quantity, currency, rates, baseCurrency)}
+          </p>
         </div>
       </div>
     </li>
