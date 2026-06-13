@@ -82,6 +82,15 @@ export const AutoPurchaseForm = ({
             {errors.eaEmail && (
               <p className="mt-1 text-xs text-red-400">{errors.eaEmail.message}</p>
             )}
+
+            <div className="mt-2 flex gap-2 rounded-lg border border-orange-500/50 bg-orange-950/30 p-3">
+              <span className="text-base leading-none text-orange-400">⚠️</span>
+              <p className="text-xs leading-relaxed text-orange-200/90">
+                Asegúrate de que este sea tu correo de{' '}
+                <strong className="text-orange-300">EA (ea.com)</strong>, NO tu
+                correo personal, ni de Xbox o PSN.
+              </p>
+            </div>
           </div>
 
           <div>
@@ -110,41 +119,45 @@ export const AutoPurchaseForm = ({
               </span>
             </summary>
 
-            <div className="mt-3 space-y-4 text-xs leading-relaxed text-amber-100/90">
-              <ol className="list-decimal space-y-1 pl-5 marker:text-amber-400">
-                <li>Inicia sesión en tu cuenta de EA.</li>
+            <div className="mt-3 space-y-3 text-xs leading-relaxed text-amber-100/90">
+              <ol className="list-decimal space-y-1.5 pl-5 marker:text-amber-400">
                 <li>
-                  Ve a <strong className="text-amber-200">Seguridad → Códigos de Respaldo (Backup Codes)</strong>.
+                  Ingresa a tu cuenta EA aquí:{' '}
+                  <a
+                    href="https://myaccount.ea.com/cp-ui/security/index"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="break-all text-amber-300 underline underline-offset-2 hover:text-amber-200"
+                  >
+                    https://myaccount.ea.com/cp-ui/security/index
+                  </a>
                 </li>
-                <li>Genera nuevos códigos si es necesario.</li>
                 <li>
-                  Copia los 3 primeros códigos disponibles y pégalos en cada recuadro
-                  correspondiente del formulario.
+                  En <strong className="text-amber-200">Autenticación en dos pasos</strong>, presiona la flecha (›) que aparece a la derecha.
+                </li>
+                <li>
+                  Ingresa el código que EA te enviará por correo o a tu dispositivo de autenticación.
+                </li>
+                <li>
+                  Haz clic en <strong className="text-amber-200">Ver códigos de seguridad o respaldo</strong>.
+                </li>
+                <li>
+                  Copia los 3 primeros códigos disponibles, cada código en cada recuadro.
                 </li>
               </ol>
 
-              <div>
-                <p className="font-semibold text-amber-200">📌 Enlace directo</p>
-                <ol className="mt-1 list-decimal space-y-1 pl-5 marker:text-amber-400">
-                  <li>Inicia sesión en tu cuenta de EA.</li>
-                  <li>
-                    Ve a:{' '}
-                    <a
-                      href="https://myaccount.ea.com/cp-ui/security/index"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="break-all text-amber-300 underline underline-offset-2 hover:text-amber-200"
-                    >
-                      https://myaccount.ea.com/cp-ui/security/index
-                    </a>
-                  </li>
-                  <li>
-                    En "Verificación de inicio de sesión", selecciona{' '}
-                    <strong className="text-amber-200">Ver códigos de respaldo</strong>.
-                  </li>
-                  <li>Copia uno de los códigos disponibles.</li>
-                </ol>
-              </div>
+              <p className="rounded-md bg-amber-900/40 p-2 text-amber-200">
+                ⚠️ Si no ves "Ver códigos de seguridad", primero completa la verificación de seguridad.
+              </p>
+
+              <a
+                href="/paso-a-paso"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-semibold text-amber-300 underline underline-offset-2 hover:text-amber-200"
+              >
+                ▶ Ver video tutorial
+              </a>
             </div>
           </details>
 
