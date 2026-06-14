@@ -28,7 +28,7 @@ export const navbarLinks = [
     },
     {
         id: 6,
-        title: 'Conseguir Códigos',
+        title: '¿Cómo Comprar?',
         href: '/paso-a-paso',
     },
 

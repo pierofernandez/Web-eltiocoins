@@ -151,7 +151,7 @@ export const AutoPurchaseForm = ({
               </p>
 
               <a
-                href="/paso-a-paso"
+                href="/paso-a-paso#codigos-ea"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 font-semibold text-amber-300 underline underline-offset-2 hover:text-amber-200"
