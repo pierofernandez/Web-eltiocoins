@@ -5,6 +5,7 @@ import { useCurrencyStore } from '../../store/currency.store';
 import { formatPrice } from '../../helpers';
 import toast from 'react-hot-toast';
 import { VariantProduct } from '../interfaces';
+import { OptimizedImage } from '../shared/OptimizedImage';
 
 interface Props {
   img: string;
@@ -73,7 +74,7 @@ export const CardProductCompact = ({
           {/* Imagen - Izquierda */}
           <Link to={`${basePath}/${slug}`} className="flex-shrink-0">
             <div className="w-14 h-14 rounded-lg overflow-hidden bg-gray-100">
-              <img loading="lazy" src={img} alt={name} className="w-full h-full object-cover" />
+              <OptimizedImage src={img} alt={name} size="thumb" className="w-full h-full object-cover" />
             </div>
           </Link>
 
@@ -114,10 +115,7 @@ export const CardProductCompact = ({
         {/* Imagen pequeña - Izquierda con navegación */}
         <Link to={`${basePath}/${slug}`} className="flex-shrink-0">
           <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100">
-            <img loading="lazy" src={img}
-              alt={name}
-              className="w-full h-full object-cover"
-            />
+            <OptimizedImage src={img} alt={name} size="thumb" className="w-full h-full object-cover" />
           </div>
         </Link>
 

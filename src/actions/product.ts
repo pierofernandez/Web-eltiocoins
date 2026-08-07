@@ -1,6 +1,6 @@
 import { supabase } from "../supabase/client"
 import { ProductInput } from '../components/interfaces/product.interface';
-import { extractFilePath } from "../helpers";
+import { extractFilePath, compressImageFile } from "../helpers";
 
 
 
@@ -178,9 +178,17 @@ export const createProduct = async (productInput: ProductInput) => {
 
 		const uploadedImages = await Promise.all(
 			productInput.images.map(async image => {
+				const file = image instanceof File
+					? await compressImageFile(image, 'product')
+					: image;
+
+				if (!(file instanceof File)) {
+					throw new Error('Tipo de imagen no soportado');
+				}
+
 				const { data, error } = await supabase.storage
 					.from('product-images')
-					.upload(`${folderName}/${product.id}-${image.name}`, image);
+					.upload(`${folderName}/${product.id}-${file.name}`, file);
 
 				if (error) throw new Error(error.message);
 
@@ -336,10 +344,10 @@ export const updateProduct = async (
 	const uploadedImages = await Promise.all(
 		validImages.map(async image => {
 			if (image instanceof File) {
-				// Si la imagen no es una URL (es un archivo), entonces subela al bucket
+				const optimized = await compressImageFile(image, 'product');
 				const { data, error } = await supabase.storage
 					.from('product-images')
-					.upload(`${folderName}/${productId}-${image.name}`, image);
+					.upload(`${folderName}/${productId}-${optimized.name}`, optimized);
 
 				if (error) throw new Error(error.message);
 

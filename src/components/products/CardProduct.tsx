@@ -6,6 +6,7 @@ import { useCartStore } from '../../store/cart.store';
 import { useCurrencyStore } from '../../store/currency.store';
 import toast from 'react-hot-toast';
 import { VariantProduct } from '../interfaces';
+import { OptimizedImage } from '../shared/OptimizedImage';
 
 interface Props {
 	img: string;
@@ -71,10 +72,12 @@ export const CardProduct = ({
 			>
 				<div className='relative h-[210px] w-full overflow-hidden bg-gradient-to-br from-zinc-800 to-zinc-950 sm:h-[240px]'>
 					<div className='absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(112,244,104,0.08),transparent_60%)]'></div>
-					<img
-						loading='lazy'
+					<OptimizedImage
 						src={img}
 						alt={name}
+						size="card"
+						width={400}
+						height={240}
 						className='h-full w-full object-contain p-5 transition-transform duration-500 group-hover:scale-110'
 					/>
 					<div className='absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-zinc-900 to-transparent'></div>

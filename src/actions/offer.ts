@@ -1,4 +1,5 @@
 import { supabase } from "../supabase/client";
+import { compressImageFile } from "../helpers/compressImage";
 
 export interface Offer {
     id: string;
@@ -10,10 +11,11 @@ export interface Offer {
 }
 
 const uploadOfferImage = async (file: File, prefix: 'desktop' | 'mobile') => {
-    const path = `offers/${prefix}-${Date.now()}-${file.name}`;
+    const optimized = await compressImageFile(file, 'offer');
+    const path = `offers/${prefix}-${Date.now()}-${optimized.name}`;
     const { error } = await supabase.storage
         .from('product-images')
-        .upload(path, file);
+        .upload(path, optimized);
 
     if (error) throw new Error(error.message);
 

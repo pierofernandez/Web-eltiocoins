@@ -164,14 +164,16 @@ export const ThankyouPage = () => {
 						</div>
 						<div>
 							<p className='font-semibold text-white'>Método de pago:</p>
-							<p>Depósito bancario - {formatPrice(data.totalAmount, currency, rates, baseCurrency)}</p>
+							<p>PayPal - {formatPrice(data.totalAmount, currency, rates, baseCurrency)}</p>
 						</div>
-						<div>
-							<p className='font-semibold text-white'>Residencia:</p>
-							<p>{data.address.city}, {data.address.state}</p>
-							<p>{data.address.postalCode}</p>
-							<p>{data.address.country}</p>
-						</div>
+						{data.address?.city && (
+							<div>
+								<p className='font-semibold text-white'>Residencia:</p>
+								<p>{data.address.city}, {data.address.state}</p>
+								{data.address.postalCode && <p>{data.address.postalCode}</p>}
+								<p>{data.address.country}</p>
+							</div>
+						)}
 					</div>
 				</div>
 

@@ -1,5 +1,6 @@
-import { useEffect } from "react";
 import { useCurrencyStore } from "../../store/currency.store";
+
+type Currency = 'USD' | 'EUR' | 'PEN' | 'MXN' | 'CLP';
 
 const CURRENCIES = [
   { code: 'USD', name: 'Dólar', flagSrc: '/img/banderas/usa-flag.webp' },
@@ -10,19 +11,10 @@ const CURRENCIES = [
 ];
 
 export const CurrencySelector = () => {
-  const { currency, setCurrency, loadRates } = useCurrencyStore();
+  const { currency, setCurrency } = useCurrencyStore();
 
-  useEffect(() => {
-    loadRates();
-  }, [loadRates]);
-
-  const handleCurrencyChange = async (newCurrency: string) => {
-    console.log('Cambiando moneda a:', newCurrency);
-    setCurrency(newCurrency as any);
-    // Cargar las tasas de cambio cuando se cambia la moneda
-    console.log('Cargando tasas de cambio...');
-    await loadRates();
-    console.log('Tasas cargadas');
+  const handleCurrencyChange = (newCurrency: string) => {
+    setCurrency(newCurrency as Currency);
   };
 
   const current = CURRENCIES.find(c => c.code === currency) || CURRENCIES[0];

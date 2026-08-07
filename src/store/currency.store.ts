@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import fetchRates  from '../helpers';
+import fetchRates from '../helpers';
 
 type Currency = 'USD' | 'EUR' | 'PEN' | 'MXN' | 'CLP';
 
@@ -12,26 +12,30 @@ interface CurrencyStore {
   loadRates: () => Promise<void>;
 }
 
+let ratesLoadPromise: Promise<void> | null = null;
+
 export const useCurrencyStore = create<CurrencyStore>((set, get) => ({
   currency: 'USD',
-  baseCurrency: 'USD', // Moneda base donde se almacenan los precios
-  rates: { USD: 1 },
+  baseCurrency: 'USD',
+  rates: { USD: 1, EUR: 0.92, PEN: 3.75, MXN: 17.15, CLP: 950 },
   isLoadingRates: false,
   setCurrency: (c) => set({ currency: c }),
   loadRates: async () => {
-    try {
-      console.log('Iniciando carga de tasas...');
-      set({ isLoadingRates: true });
-      const { baseCurrency } = get();
-      console.log('Moneda base:', baseCurrency);
-      // Siempre cargar las tasas basadas en la moneda base, no en la moneda seleccionada
-      const rates = await fetchRates(baseCurrency);
-      console.log('Tasas obtenidas:', rates);
-      set({ rates, isLoadingRates: false });
-      console.log('Tasas guardadas en el store');
-    } catch (error) {
-      console.error('Error loading currency rates:', error);
-      set({ isLoadingRates: false });
-    }
+    if (ratesLoadPromise) return ratesLoadPromise;
+
+    ratesLoadPromise = (async () => {
+      try {
+        set({ isLoadingRates: true });
+        const { baseCurrency } = get();
+        const rates = await fetchRates(baseCurrency);
+        set({ rates, isLoadingRates: false });
+      } catch {
+        set({ isLoadingRates: false });
+      } finally {
+        ratesLoadPromise = null;
+      }
+    })();
+
+    return ratesLoadPromise;
   },
 }));

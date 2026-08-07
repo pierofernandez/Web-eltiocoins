@@ -176,27 +176,36 @@ export const OrderUserPage = () => {
 								<p className='text-lg font-bold text-white'>{order.customer.full_name}</p>
 							</div>
 
-							<div className='space-y-3 rounded-xl bg-zinc-800/60 p-4'>
-								<h3 className='border-b border-zinc-700 pb-2 text-sm font-semibold uppercase tracking-wider text-zinc-300'>Dirección de Envío</h3>
-								<div className='space-y-1 text-zinc-400'>
-									<p className='flex items-center gap-2'>
-										<span className='h-1.5 w-1.5 rounded-full bg-zinc-500'></span>
-										{order.address.city}
-									</p>
-									<p className='flex items-center gap-2'>
-										<span className='h-1.5 w-1.5 rounded-full bg-zinc-500'></span>
-										{order.address.state}
-									</p>
-									<p className='flex items-center gap-2'>
-										<span className='h-1.5 w-1.5 rounded-full bg-zinc-500'></span>
-										{order.address.postalCode}
-									</p>
-									<p className='flex items-center gap-2'>
-										<span className='h-1.5 w-1.5 rounded-full bg-zinc-500'></span>
-										{order.address.country}
-									</p>
+							{order.address ? (
+								<div className='space-y-3 rounded-xl bg-zinc-800/60 p-4'>
+									<h3 className='border-b border-zinc-700 pb-2 text-sm font-semibold uppercase tracking-wider text-zinc-300'>Dirección de Envío</h3>
+									<div className='space-y-1 text-zinc-400'>
+										<p className='flex items-center gap-2'>
+											<span className='h-1.5 w-1.5 rounded-full bg-zinc-500'></span>
+											{order.address.city}
+										</p>
+										<p className='flex items-center gap-2'>
+											<span className='h-1.5 w-1.5 rounded-full bg-zinc-500'></span>
+											{order.address.state}
+										</p>
+										{order.address.postalCode && (
+											<p className='flex items-center gap-2'>
+												<span className='h-1.5 w-1.5 rounded-full bg-zinc-500'></span>
+												{order.address.postalCode}
+											</p>
+										)}
+										<p className='flex items-center gap-2'>
+											<span className='h-1.5 w-1.5 rounded-full bg-zinc-500'></span>
+											{order.address.country}
+										</p>
+									</div>
 								</div>
-							</div>
+							) : (
+								<div className='space-y-3 rounded-xl bg-zinc-800/60 p-4'>
+									<h3 className='border-b border-zinc-700 pb-2 text-sm font-semibold uppercase tracking-wider text-zinc-300'>Entrega</h3>
+									<p className='text-zinc-400'>Compra automática de monedas — entrega digital.</p>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useCurrencyStore } from '@/store/currency.store';
 import { formatPrice } from '@/helpers';
 
@@ -8,13 +8,9 @@ interface PricingDisplayProps {
 }
 
 export const PricingDisplay = ({ priceUsd, localCurrency }: PricingDisplayProps) => {
-  const { currency, rates, baseCurrency, loadRates } = useCurrencyStore();
+  const { currency, rates, baseCurrency } = useCurrencyStore();
   const displayLocal = localCurrency ?? currency;
   const [showUsd, setShowUsd] = useState(false);
-
-  useEffect(() => {
-    loadRates();
-  }, [loadRates]);
 
   const localPrice = formatPrice(priceUsd, displayLocal, rates, baseCurrency);
   const usdPrice = formatPrice(priceUsd, 'USD', rates, baseCurrency);

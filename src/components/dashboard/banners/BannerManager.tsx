@@ -181,7 +181,7 @@ export const BannerManager = () => {
                         className="bg-cyan-600 hover:bg-cyan-500 disabled:bg-stone-600 px-6 py-2 rounded-md flex items-center gap-2 transition-all"
                     >
                         <IoIosAddCircleOutline size={22} />
-                        {loading ? 'Subiendo...' : 'Subir Banner'}
+                        {loading ? 'Optimizando y subiendo...' : 'Subir Banner'}
                     </button>
                 </div>
             </section>

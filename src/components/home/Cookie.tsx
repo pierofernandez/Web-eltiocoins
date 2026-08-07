@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { optimizeImageUrl } from '@/helpers/image.helpers';
 
 type OfferPopup = {
   image_url: string;
@@ -12,10 +13,14 @@ export const Cookie = () => {
 
   useEffect(() => {
     const yaMostrado = sessionStorage.getItem("ofertaMostrada");
+    if (yaMostrado) return;
 
-    if (!yaMostrado) {
+    // Retrasar popup para no competir con LCP del banner
+    const timer = window.setTimeout(() => {
       fetchOffer();
-    }
+    }, 3500);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   const fetchOffer = async () => {
@@ -42,7 +47,8 @@ export const Cookie = () => {
 
   if (!mostrar || !offer) return null;
 
-  const mobileSrc = offer.mobile_image_url || offer.image_url;
+  const mobileSrc = optimizeImageUrl(offer.mobile_image_url || offer.image_url, 'popup');
+  const desktopSrc = optimizeImageUrl(offer.image_url, 'popup');
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
@@ -57,7 +63,7 @@ export const Cookie = () => {
           />
           <img
             loading="lazy"
-            src={offer.image_url}
+            src={desktopSrc}
             alt="Oferta"
             className="hidden h-auto max-h-[82.8vh] w-auto max-w-[min(82.8vw,810px)] cursor-pointer rounded-lg shadow-2xl md:block"
           />

@@ -1,4 +1,5 @@
 import { supabase } from "../supabase/client";
+import { compressImageFile } from "../helpers/compressImage";
 
 export interface Banner {
     id: string;
@@ -24,22 +25,24 @@ export const getBanners = async () => {
 
 export const createBanner = async (banner: { desktop_file: File; mobile_file: File; display_order: number }) => {
     try {
+        const desktopFile = await compressImageFile(banner.desktop_file, 'banner-desktop');
+        const mobileFile = await compressImageFile(banner.mobile_file, 'banner-mobile');
+
         // 1. Upload desktop image
-        const desktopPath = `banners/desktop-${Date.now()}-${banner.desktop_file.name}`;
+        const desktopPath = `banners/desktop-${Date.now()}-${desktopFile.name}`;
         const { error: desktopError } = await supabase.storage
-            .from('product-images') // Reusing existing bucket or create a new one 'banners' if it exists. 
-            // Based on previous code, product-images is used.
-            .upload(desktopPath, banner.desktop_file);
+            .from('product-images')
+            .upload(desktopPath, desktopFile);
 
         if (desktopError) throw new Error(desktopError.message);
 
         const desktopUrl = supabase.storage.from('product-images').getPublicUrl(desktopPath).data.publicUrl;
 
         // 2. Upload mobile image
-        const mobilePath = `banners/mobile-${Date.now()}-${banner.mobile_file.name}`;
+        const mobilePath = `banners/mobile-${Date.now()}-${mobileFile.name}`;
         const { error: mobileError } = await supabase.storage
             .from('product-images')
-            .upload(mobilePath, banner.mobile_file);
+            .upload(mobilePath, mobileFile);
 
         if (mobileError) throw new Error(mobileError.message);
 

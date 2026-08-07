@@ -8,7 +8,6 @@ import { useDiscountStore } from '../../store/discount.store';
 import { ImSpinner2 } from 'react-icons/im';
 import { useCreateOrder } from '../../hooks';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaCreditCard, FaArrowLeft, FaArrowRight, FaPaypal, FaLock, FaShieldAlt } from 'react-icons/fa';
 import './PayPalStyles.css';
@@ -47,7 +46,6 @@ export const FormCheckout = () => {
   const isFormValid = Object.keys(errors).length === 0;
   const { discount } = useDiscountStore();
   const finalAmount = totalAmount - discount;
-  const navigate = useNavigate();
   const { currency, rates, baseCurrency } = useCurrencyStore();
 
   const paypalSupportedCurrencies = ['USD', 'EUR', 'MXN'] as const;
@@ -96,23 +94,25 @@ export const FormCheckout = () => {
               backupCode3: autoDeliveryData!.backupCode3,
             },
           }
-        : { address: deliveryData! }),
+        : {
+            address: {
+              city: deliveryData!.city,
+              state: deliveryData!.state,
+              postalCode: deliveryData!.postalcode,
+              country: deliveryData!.country,
+            },
+          }),
       cartItems: cartItems.map(item => ({
         variantId: item.variantId,
         quantity: item.quantity,
         price: item.price,
       })),
-      totalAmount,
+      totalAmount: finalAmount,
     };
 
     createOrder(orderInput, {
-      onSuccess: (order) => {
-        if (!order.id) {
-          console.error("Error: La orden creada no tiene un ID.");
-          return;
-        }
+      onSuccess: () => {
         cleanCart();
-        navigate(`/checkout/${order.id}/thank-you`);
       },
       onError: (error) => {
         console.error("Error al crear la orden:", error);

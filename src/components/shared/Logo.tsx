@@ -6,7 +6,16 @@ export const Logo = () => {
             to='/'
             className={'text-2x1 font-bold tracking-tighter transition-all '}
         >
-            <img loading="lazy" src="/img/logotiocoins.webp" alt="logotiocoins" className='max-w-10' />
+            <img
+                src="/img/logotiocoins.webp"
+                alt="logotiocoins"
+                width={40}
+                height={40}
+                fetchPriority="high"
+                loading="eager"
+                decoding="async"
+                className='max-w-10'
+            />
         </Link>
     );
 };

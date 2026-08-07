@@ -49,12 +49,16 @@ const resolveCartItem = async (
 		throw new Error('No se encontró la variante asociada al producto');
 	}
 
+	// stock null en pricing_tiers = sin límite de stock en ese tier
+	const effectiveStock =
+		tier.stock !== null ? tier.stock : Number.MAX_SAFE_INTEGER;
+
 	return {
 		variantId: linkedVariant.id,
 		pricingTierId: tier.id,
 		quantity: item.quantity,
 		price: item.price,
-		stock: tier.stock ?? linkedVariant.stock ?? 0,
+		stock: effectiveStock,
 	};
 };
 
@@ -333,12 +337,14 @@ export const getOrderById = async (orderId: number) => {
 		totalAmount: order.total_amount,
 		status: order.status,
 		create_at: order.created_at,
-		address: {
-			city: order.addresses?.city,
-			state: order.addresses?.state,
-			postalCode: order.addresses?.postalcode,
-			country: order.addresses?.country,
-		},
+		address: order.addresses
+			? {
+					city: order.addresses.city,
+					state: order.addresses.state,
+					postalCode: order.addresses.postalcode,
+					country: order.addresses.country,
+				}
+			: null,
 		orderItems: order.order_items.map(item => ({
 			quantity: item.quantity,
 			price: item.price,

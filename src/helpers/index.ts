@@ -107,15 +107,81 @@ export const extractFilePath = (url: string) => {
 	return parts[1];
 };
 
-//funcion para traer las tasas de cambio desde exchangerate.host
+// Tasas de cambio con caché local (evita 429 por exceso de peticiones)
 
-const fetchRates = async (base: string = 'USD') => {
-	// Usar una API gratuita que no requiere clave de acceso
-	const res = await fetch(`https://api.fxratesapi.com/latest?base=${base}`);
-	if (!res.ok) throw new Error("Error al traer tasas de cambio");
-	const data = await res.json();
-	return data.rates as Record<string, number>;
+const FX_CACHE_KEY = 'eltiocoins_fx_rates';
+const FX_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 horas
+
+const FALLBACK_RATES: Record<string, number> = {
+	USD: 1,
+	EUR: 0.92,
+	PEN: 3.75,
+	MXN: 17.15,
+	CLP: 950,
 };
+
+type CachedRates = {
+	base: string;
+	rates: Record<string, number>;
+	fetchedAt: number;
+};
+
+const readRatesCache = (base: string): Record<string, number> | null => {
+	try {
+		const raw = localStorage.getItem(FX_CACHE_KEY);
+		if (!raw) return null;
+
+		const cached: CachedRates = JSON.parse(raw);
+		if (cached.base !== base) return null;
+		if (Date.now() - cached.fetchedAt > FX_CACHE_TTL_MS) return null;
+
+		return cached.rates;
+	} catch {
+		return null;
+	}
+};
+
+const readStaleRatesCache = (base: string): Record<string, number> | null => {
+	try {
+		const raw = localStorage.getItem(FX_CACHE_KEY);
+		if (!raw) return null;
+
+		const cached: CachedRates = JSON.parse(raw);
+		return cached.base === base ? cached.rates : null;
+	} catch {
+		return null;
+	}
+};
+
+const writeRatesCache = (base: string, rates: Record<string, number>) => {
+	try {
+		const payload: CachedRates = { base, rates, fetchedAt: Date.now() };
+		localStorage.setItem(FX_CACHE_KEY, JSON.stringify(payload));
+	} catch {
+		// Ignorar si localStorage no está disponible
+	}
+};
+
+const fetchRates = async (base: string = 'USD'): Promise<Record<string, number>> => {
+	const cached = readRatesCache(base);
+	if (cached) return cached;
+
+	try {
+		const res = await fetch(`https://api.fxratesapi.com/latest?base=${base}`);
+		if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+		const data = await res.json();
+		const rates = (data.rates ?? FALLBACK_RATES) as Record<string, number>;
+		writeRatesCache(base, rates);
+		return rates;
+	} catch {
+		// Si la API falla (429, red, etc.), usar caché expirada o tasas fijas
+		return readStaleRatesCache(base) ?? { ...FALLBACK_RATES };
+	}
+};
+
 export default fetchRates;
 
 export * from './pricing.helpers';
+export * from './image.helpers';
+export * from './compressImage';

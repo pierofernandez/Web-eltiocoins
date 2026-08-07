@@ -42,24 +42,21 @@ export const UploaderImages = ({
 	}, [formImages, images.length, setValue]);
 
 
-	const handleImageChange = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		if (e.target.files) {
-			const newImages = Array.from(e.target.files).map(file => ({
-				file,
-				previewUrl: URL.createObjectURL(file),
-			}));
+	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (!e.target.files?.length) return;
 
-			const updatedImages = [...images, ...newImages];
+		const newImages = Array.from(e.target.files).map((file) => ({
+			file,
+			previewUrl: URL.createObjectURL(file),
+		}));
 
-			setImages(updatedImages);
-
-			setValue(
-				'images',
-				updatedImages.map(img => img.file || img.previewUrl)
-			);
-		}
+		const updatedImages = [...images, ...newImages];
+		setImages(updatedImages);
+		setValue(
+			'images',
+			updatedImages.map((img) => img.file || img.previewUrl)
+		);
+		e.target.value = '';
 	};
 
 	const handleRemoveImage = (index: number) => {
@@ -81,6 +78,9 @@ export const UploaderImages = ({
 				onChange={handleImageChange}
 				className='block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200'
 			/>
+			<p className='text-xs text-slate-500 mt-1'>
+				Las imágenes se comprimen a WebP automáticamente al guardar.
+			</p>
 
 			<div className='grid grid-cols-4 lg:grid-cols-2 gap-4'>
 				{images.map((image, index) => (
